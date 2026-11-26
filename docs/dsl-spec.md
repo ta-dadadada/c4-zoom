@@ -131,7 +131,7 @@ export interface DslDiagnostic {
 
 テストおよびブラウザ動作確認に使用する具体的な `.dsl` ファイルは `fixtures/dsl/` に配置しています。一覧・出典・チェック観点は [docs/test-samples.md](./test-samples.md) を参照してください。
 
-アプリ内の標準サンプルプリセットには以下を採用予定です：
+アプリ内の標準サンプルプリセットは以下の 4 本です。
 1. **CloudShop Multi-System（デフォルト）**: `fixtures/dsl/custom/cloudshop-multi-system.dsl`（3つの内部システムすべてが L1〜L3 を持つ主力デモ）
 2. **Big Bank plc（Structurizr 公式王道）**: `fixtures/dsl/upstream/big-bank-plc.dsl`（Apache-2.0 帰属表示付き）
 3. **NovaBank Event Mesh**: `fixtures/dsl/custom/novabank-event-driven.dsl`（双方向エッジ・トレース検証向け）

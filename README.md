@@ -13,6 +13,35 @@
 - **地図アプリらしい探索UI**: スポット検索＆Fly-toアニメーション、ズームレベル計・パンくず、ミニマップ、詳細インスペクタ、`.dsl` ファイルの D&D 読込＆サンプルプリセット切替
 - **モダン・カートグラフィー**: Apple Maps / Mapbox に着想を得た、クリーンで視認性の高い地図スタイル（HTML5 Canvas 2D 高DPI・60fps描画）
 
+## ローカルで起動
+
+mise で Node.js 26 と pnpm 10 を使用します。
+
+```sh
+mise install
+mise exec -- pnpm install --frozen-lockfile
+mise exec -- pnpm hooks:install
+mise exec -- pnpm dev
+```
+
+起動時に表示された URL を開くと、CloudShop の地図を探索できます。手元のモデルは「DSL を開く」か、画面に `.dsl` ファイルをドロップして読み込みます。スポット検索は `⌘K` / `Ctrl+K` / `/`、全体表示は `0`、各 C4 レベルへの移動は `1`〜`3` です。配置調整モード、または Alt / Option キーを押しながらのドラッグで要素を移動できます。
+
+DSL の解析と自動配置はブラウザ内で行います。最後に読み込んだ DSL、テーマ、配置差分は、そのブラウザの `localStorage` に保存されます。読込に失敗すると、診断に行と列を表示し、直前の地図を引き続き操作できます。
+
+### 検証
+
+```sh
+mise exec -- pnpm exec playwright install chromium
+mise exec -- pnpm lint
+mise exec -- pnpm fmt:check
+mise exec -- pnpm typecheck
+mise exec -- pnpm test
+mise exec -- pnpm test:e2e
+mise exec -- pnpm build
+```
+
+`mise exec -- pnpm preview` でビルド結果を確認できます。
+
 ## ドキュメント一覧
 
 | ファイル | 対象 | 言語 | 内容 |
@@ -26,7 +55,7 @@
 
 ## 技術スタック
 
-- **Package Manager / Toolchain**: `pnpm`, TypeScript, Vite, `oxlint`, `oxfmt`, `lefthook`, `lint-staged`
+- **Package Manager / Toolchain**: `mise`, Node.js 26, `pnpm`, TypeScript 7, Vite, `oxlint`, `oxfmt`, `lefthook`, `lint-staged`
 - **Frontend / UI**: React, Tailwind CSS v4 (`@tailwindcss/vite`), React Context + `useReducer` / `Ref`
 - **Map Rendering**: Custom HTML5 Canvas 2D (HiDPI / 60fps Semantic Zoom)
 - **Layout Engine**: `elkjs` (Compound / Hierarchical Graph Layout)

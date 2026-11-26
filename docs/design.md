@@ -47,7 +47,8 @@ export type ElementKind =
   | 'softwareSystem'
   | 'container'
   | 'component'
-  | 'group';
+  | 'group'
+  | 'element';                // カスタム要素
 
 export type C4Level = 1 | 2 | 3; // 1: Context, 2: Container, 3: Component
 
@@ -64,7 +65,7 @@ export interface C4Element {
   properties: Record<string, string>;
   parentId: string | null;    // ルート要素は null
   childrenIds: string[];
-  sourceRange?: SourceRange;  // DSL エディタ連動用の行・列位置
+  sourceRange?: SourceRange;  // DSL 上の定義位置（行・列）
 }
 
 export interface C4Relationship {
@@ -178,7 +179,7 @@ C4 の入れ子構造は複合グラフ（Compound Graph）そのものである
   - Container（子なし）基本サイズ: `220 × 104` / （子あり）: 子領域のバウンディングボックス＋パディングから自動算出
   - System（子なし）基本サイズ: `280 × 130` / （子あり）: 子コンテナ群のバウンディングボックス＋パディングから自動算出
   - Person 基本サイズ: `180 × 110`
-- **非同期実行**: 大規模モデルのレイアウト計算で UI をブロックしないよう、`elkjs` は Web Worker（または非同期 Promise）で実行し、完了後に現在のカメラ位置を維持しつつ滑らかに遷移する。
+- **非同期実行**: 大規模モデルのレイアウト計算で UI をブロックしないよう、`elkjs` は Web Worker（または非同期 Promise）で実行し、読込中は現在の地図を維持し、新しいモデルの配置が成功したら全体が収まる位置に切り替える。
 
 ### 5.2 手動位置微調整と空間記憶の永続化
 - **保存データ構造**: 絶対座標ではなく「自動レイアウト結果からの相対オフセット差分」を保持する。

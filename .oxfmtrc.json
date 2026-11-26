@@ -1,0 +1,4 @@
+{
+  "singleQuote": true,
+  "ignorePatterns": ["AGENTS*.md", "README.md", "docs/**", "fixtures/**", ".local/**", ".agents/**"]
+}

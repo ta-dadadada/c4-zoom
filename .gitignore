@@ -1,2 +1,9 @@
 .local
 *.local.md
+
+node_modules/
+dist/
+playwright-report/
+test-results/
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
