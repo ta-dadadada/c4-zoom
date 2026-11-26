@@ -4,6 +4,7 @@ const site = 'http://127.0.0.1:43791/c4-zoom/';
 
 export default defineConfig({
   testDir: './e2e',
+  retries: process.env.CI ? 2 : 0,
   use: {
     ...devices['Desktop Chrome'],
     viewport: { width: 1440, height: 900 },
