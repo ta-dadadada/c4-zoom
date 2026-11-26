@@ -8,5 +8,10 @@ export interface Sample {
 }
 
 export type Viewer =
-  | { mode: 'sample-site'; samples: readonly Sample[]; createWorker(): Worker }
+  | {
+      mode: 'sample-site';
+      samples: readonly Sample[];
+      repositoryUrl?: string;
+      createWorker(): Worker;
+    }
   | { mode: 'standalone'; payload?: C4ZoomBootstrapPayload };

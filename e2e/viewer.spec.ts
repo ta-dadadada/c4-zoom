@@ -308,6 +308,7 @@ test.describe('390 × 844 のタッチ画面', () => {
     const customer = await drawnLabel(page, 'Customer');
     expect(customer.y).toBeGreaterThan(top.y + top.height);
     await menu.click();
+    await expect(page.getByRole('link', { name: 'GitHub リポジトリを開く' })).toBeVisible();
     await page.getByRole('button', { name: 'ダークテーマに変更' }).click();
     await menu.click();
     await expect(page.locator('main')).toHaveAttribute('data-theme', 'dark');
@@ -577,6 +578,11 @@ test('既定サンプルと c4-zoom モデルでレベル一覧・兄弟巡回�
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await ready(page);
   await expect(page.locator('main')).toHaveAttribute('data-mode', 'sample-site');
+  const repoLink = page.getByRole('link', { name: 'GitHub リポジトリを開く' });
+  await expect(repoLink).toBeVisible();
+  await expect(repoLink).toHaveAttribute('href', 'https://github.com/ta-dadadada/c4-zoom');
+  await expect(repoLink).toHaveAttribute('target', '_blank');
+  await expect(repoLink).toHaveAttribute('rel', 'noopener noreferrer');
   await expect(presetPicker(page)).toHaveValue('cloudshop');
   await expect(presetPicker(page).locator('option[value]:not([value=""])').first()).toHaveAttribute(
     'value',
@@ -678,6 +684,7 @@ test('サイトと単一 HTML の両方から、配置とテーマを保持し�
   await expect(standalone.locator('main')).toHaveAttribute('data-theme', 'dark');
   await expect(workspaceButton(standalone, 'c4-zoom')).toBeVisible();
   await expect(presetPicker(standalone)).toHaveCount(0);
+  await expect(standalone.getByRole('link', { name: 'GitHub リポジトリを開く' })).toHaveCount(0);
   await search(standalone, 'Canvas 2D Cartography Renderer');
   await expect(standalone.getByRole('button', { name: 'この要素の位置をリセット' })).toBeVisible();
   const reexported = testInfo.outputPath('reexported.html');
@@ -709,6 +716,7 @@ test('CLI の事前配置済み HTML を file:// で開き、コンソールエ�
   await page.goto(pathToFileURL(output).href);
   await expect(page).toHaveTitle('c4-zoom');
   await expect(page.locator('main')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.getByRole('link', { name: 'GitHub リポジトリを開く' })).toHaveCount(0);
   await expect(workspaceButton(page, 'c4-zoom')).toBeVisible();
   await drawnLabel(page, 'c4-zoom');
   await search(page, 'Canvas 2D Cartography Renderer');

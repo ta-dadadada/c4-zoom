@@ -267,10 +267,25 @@ button:disabled {
   gap: 4px;
   min-height: 48px;
 }
-.source-toolbar :is(button, select) {
+.source-toolbar :is(button, select, a) {
   padding: 7px 8px;
   min-height: 34px;
   white-space: nowrap;
+}
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 7px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+.repo-link:hover {
+  background: var(--hover);
+}
+.repo-link svg {
+  flex: none;
 }
 .source-toolbar select {
   border-radius: 7px;
@@ -661,7 +676,8 @@ button:disabled {
     position: absolute;
     clip-path: inset(50%);
   }
-  .level-name {
+  .level-name,
+  .repo-label {
     display: none;
   }
 }
@@ -765,6 +781,9 @@ button:disabled {
   .source-toolbar select {
     max-width: 55%;
     min-height: 40px;
+  }
+  .repo-label {
+    display: inline;
   }
   .mobile-display-options {
     display: flex;
