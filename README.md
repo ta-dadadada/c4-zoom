@@ -56,6 +56,7 @@ pnpm c4-zoom build ./out/workspace.json -o ./architecture.html
 
 ## ドキュメント
 
+- **エージェント向けスキル**: [c4-zoom](./.agents/skills/c4-zoom/SKILL.md)（地図の閲覧、入力の診断、単一 HTML の書き出し。Claude Code からは `.claude/skills/c4-zoom` を経由）
 - **開発・検証・公開手順**: [docs/development.md](./docs/development.md)（ローカル開発、テスト、Git フック、GitHub Pages 公開、パッケージ構成）
 - **詳細設計**: [docs/design.md](./docs/design.md)
 - **入力仕様（Structurizr `workspace.json`）**: [docs/input-spec.md](./docs/input-spec.md)
