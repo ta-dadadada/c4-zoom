@@ -187,9 +187,13 @@ test('JSON をファイル選択・ドロップで開き、不正な入力でも
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await ready(page);
-  const fileChooser = page.waitForEvent('filechooser');
-  await page.keyboard.press('o');
-  await (await fileChooser).setFiles(filename('docs/architecture/workspace.json'));
+  await map(page).focus();
+  await expect(map(page)).toBeFocused();
+  const [fileChooser] = await Promise.all([
+    page.waitForEvent('filechooser'),
+    page.keyboard.press('o'),
+  ]);
+  await fileChooser.setFiles(filename('docs/architecture/workspace.json'));
   await expect(page.getByText('workspace.json', { exact: true })).toBeVisible();
   await expect(workspaceButton(page, 'c4-zoom')).toBeVisible();
   await search(page, 'Canvas 2D Cartography Renderer');
