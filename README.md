@@ -2,6 +2,8 @@
 
 **Structurizr 公式 `workspace.json` を、地図アプリのような連続セマンティック・ズームで自由に探索でき、そのまま 1 枚のスタンドアロン HTML として配布できる C4 アーキテクチャマップビューア。**
 
+**デモサイト**: https://ta-dadadada.github.io/c4-zoom/
+
 従来の C4 ツールが「個別ビュー（Context 図 / Container 図 / Component 図）間のページ切り替え」を基本とするのに対し、**c4-zoom** は `model` の入れ子構造から **1 枚の連続した空間地図** を自動生成します。DSL の構文解析は公式 [Structurizr](https://docs.structurizr.com/export) に委譲して 100% 公式互換の `workspace.json` を入力とし、サーバー不要・完全オフラインで動く単一 HTML として共有できます。
 
 ## 主な特徴
@@ -15,7 +17,9 @@
 
 ## サンプルサイト（デモ）
 
-GitHub Pages で公開するサンプルサイトでは、**c4-zoom 自身の C4 アーキテクチャ** をはじめとする複数のサンプルモデルを切り替えてそのまま探索できます。手元の `workspace.json` をブラウザへドラッグ＆ドロップして試し、そのまま単一 HTML として書き出すこともできます。
+👉 **https://ta-dadadada.github.io/c4-zoom/**
+
+GitHub Pages で公開しているサンプルサイトでは、**CloudShop Multi-System**・**Big Bank plc**・**c4-zoom 自身の C4 アーキテクチャ** など複数のモデルを切り替えてそのまま探索できます。手元の `workspace.json` をブラウザへドラッグ＆ドロップして試し、そのまま単一 HTML として書き出すこともできます。
 
 ## 使い方（DSL → 公式 JSON → 単一 HTML）
 
