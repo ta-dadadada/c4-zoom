@@ -11,7 +11,7 @@ Key reference documents:
 - `docs/design.md` (Japanese): Detailed product, spatial zoom, edge rollup, layout, rendering, and UI/UX specification.
 - `docs/dsl-spec.md` (Japanese): Supported Structurizr DSL core subset specification and error/fallback policies.
 - `docs/architecture/workspace.dsl` (Structurizr DSL): Self-hosted C4 architecture model of c4-zoom itself (L1–L3; used both as living architecture documentation and as a dogfooding verification fixture).
-- `docs/adr/` (Japanese, MADR): Architecture Decision Records (`0001`–`0005`) capturing key design and toolchain decisions.
+- `docs/adr/` (Japanese, MADR): Architecture Decision Records (`0001`–`0007`) capturing architecturally significant technical/structural decisions only (1 ADR = 1 decision; product scope & Non-Goals live in `docs/design.md`).
 - `docs/test-samples.md` (Japanese): Catalog of bundled DSL fixtures (`fixtures/dsl/upstream/` & `fixtures/dsl/custom/`), attribution/licenses, and verification checklists for both automated tests and manual browser checks.
 
 ## 2. Language Policy

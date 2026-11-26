@@ -20,7 +20,7 @@
 | [docs/design.md](./docs/design.md) | 開発者・人間向け | 日本語 | システム全体のアーキテクチャ、連続セマンティック・ズーム、エッジ集約、レイアウト、UI/ビジュアル詳細設計 |
 | [docs/dsl-spec.md](./docs/dsl-spec.md) | 開発者・ユーザー向け | 日本語 | 対応する Structurizr DSL サブセット仕様、エラー処理、サンプルプリセット方針 |
 | [docs/architecture/workspace.dsl](./docs/architecture/workspace.dsl) | 開発者・ドッグフーディング | Structurizr DSL | **c4-zoom 自身の C4 アーキテクチャ図**（L1〜L3。本アプリ自身で読み込んで探索可能） |
-| [docs/adr/README.md](./docs/adr/README.md) | 開発者・人間向け | 日本語 | Architecture Decision Records（主要設計・技術選定の決定記録 `0001`〜`0005`） |
+| [docs/adr/README.md](./docs/adr/README.md) | 開発者・人間向け | 日本語 | Architecture Decision Records（後戻りコストの高い技術・構造決定 `0001`〜`0007`） |
 | [docs/test-samples.md](./docs/test-samples.md) | 開発者・人間向け | 日本語 | テスト・動作確認用 DSL サンプル一覧（`fixtures/dsl/`）、出典・ライセンス、検証チェック観点 |
 | [AGENTS.md](./AGENTS.md) | AIエージェント向け | English | リポジトリ規約、責務分離ルール、言語ルール、開発・テストガイドライン |
 
