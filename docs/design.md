@@ -9,29 +9,33 @@
 ### 1.1 目指す体験
 「システムアーキテクチャを、Google Maps や Apple Maps を眺めるように直感的に旅する体験」を実現します。
 
-- **Architecture as Code をそのまま地図へ**: ユーザーは Structurizr DSL の `model` ブロックを書くだけでよく、`views` 定義を個別にメンテナンスしなくても 1 枚の探索可能な地図が自動生成される。
-- **空間記憶（Spatial Memory）の活用**: ページ切り替え（別図へのジャンプ）ではなく 1 枚の連続空間に全階層を配置することで、「決済システムは南西、認証は北側」といった地理的感覚が定着し、隣のシステムの中身へそのまま横移動して比較できる。
+- **Architecture as Code をそのまま地図へ**: 公式ツール（`structurizr-cli`）で変換した `workspace.json` を入力するだけで、`views` 定義に縛られず 1 枚の探索可能な地図が自動生成される。
+- **単一 HTML でそのまま配布**: サーバーや SaaS なしで、1 枚のスタンドアロン HTML として PR・Slack・社内ポータルへそのまま共有し、`file://` で開いて即座に探索できる。
+- **空間記憶（Spatial Memory）と瞬時ジャンプの両立**: 1 枚の連続空間に全階層を配置して横パン移動できる一方、C4 の L1 / L2 / L3 単位へ 1 クリック・1 キーでサッと飛べる。
 - **情報過多の解消**: 広域では抽象化されたランドマークと幹線だけを見せ、ズームインした場所だけ細部が立ち上がる **セマンティック・ズーム（LOD）** と **エッジの動的ロールアップ** により、大規模構成でもスパゲッティ化を防ぐ。
 
-### 1.2 スコープ（MVP）
-- **対象形態**: ブラウザ完結型 Web アプリ（`pnpm` + Vite + React + TypeScript + Tailwind CSS v4）
-- **入力**: Structurizr DSL コア構文サブセット（`.dsl` ファイルの D&D / ファイル選択読込・内蔵サンプルプリセット切替）
-  - ※ **アプリ内での DSL エディタ機能はスコープ外**とし、探索ビューアとしての体験完成度に集中する
+### 1.2 スコープ（v1.0）
+- **提供形態（2 モード）**:
+  1. **Standalone 単一 HTML 出力**: CLI（`c4-zoom build workspace.json -o architecture.html`）およびブラウザ内 Export で生成する完全オフライン動作の単一 HTML（`file://` 直開き対応）。
+  2. **GitHub Pages サンプルサイト（Interactive モード）**: **c4-zoom 自身の C4 モデル**を含む複数サンプルを切り替えて自由に探索でき、手元の `workspace.json` の D&D 読込や単一 HTML 書き出しも試せる公開デモサイト。
+- **入力**: Structurizr 公式 `workspace.json`（詳細は [docs/input-spec.md](./input-spec.md)）
 - **探索機能**:
   1. 連続セマンティック・ズーム＆慣性パン
-  2. ズーム連動のエッジ自動集約（ロールアップ）＆選択時の上流・下流トレース
-  3. スポット検索（`⌘K` / `/`）＆放物線 Fly-to カメラ移動
-  4. ズームレベル計・現在地パンくず・リアルタイムミニマップ
-  5. 詳細インスペクタパネル
-  6. `.dsl` ファイル読込（画面 D&D / ファイル選択）・サンプル切替・診断表示
-  7. ELK.js 階層自動レイアウト＋手動ドラッグ微調整の `localStorage` 永続化
+  2. C4 レベル単位のクイックジャンプ（スマート `1`/`2`/`3`・対象一覧ジャンパー・`[`/`]` 兄弟巡回・`Backspace` 階層アップ）
+  3. ズーム連動のエッジ自動集約（ロールアップ）＆選択時の上流・下流トレース
+  4. スポット検索（`⌘K` / `/`）＆放物線 Fly-to カメラ移動
+  5. ズームレベル計・現在地パンくず・リアルタイムミニマップ
+  6. 詳細インスペクタパネル
+  7. `workspace.json` 読込（画面 D&D / ファイル選択）・サンプル切替・診断表示・単一 HTML 書き出し
+  8. ELK.js 階層自動レイアウト＋手動ドラッグ微調整の `localStorage` 永続化（単一 HTML 書き出し時にもオフセット保持可能）
 
 ### 1.3 Non-Goals（あえてやらないこと）と背景
-MVP および現時点のプロダクト方針として、以下は意図的にスコープ外とします：
+現時点のプロダクト方針として、以下は意図的にスコープ外とします：
 
+- **自前 Structurizr DSL パーサーの実装・保守**: `!include`・`!extend`・`!script`・`!components` 等を含む公式仕様の完全追従は保守コストが大きいため、DSL パースは公式 `structurizr-cli` に委譲し、本アプリは公式 `workspace.json` のみに専念する（[ADR 0007](./adr/0007-parser-maintenance-boundary-and-workspace-json-option.md)）。
 - **アプリ内での DSL エディタ機能**: 構文ハイライトや編集体験の作り込みに工数が分散するのを避け、「地図として探索する体験」の完成度に集中するため。DSL の編集はユーザーが普段使う IDE／エディタで行う前提とする。
 - **GUI 作図エディタ（箱や線を直接描くツール）**: Architecture as Code（テキスト定義を Single Source of Truth とする）の利点を損なわないため。手動操作は「既存ノードの位置微調整」までに留める。
-- **サーバーサイド処理・外部 API へのモデル送信**: ブラウザ完結の手軽さと、社外秘になりやすいアーキテクチャ構成をローカル環境外へ送らないプライバシーを保つため。
+- **サーバーサイド処理・外部 API へのモデル送信**: ブラウザ完結・オフライン単一 HTML 動作の手軽さと、社外秘になりやすいアーキテクチャ構成を外部へ送らないプライバシーを保つため。
 - **個別ビュー間のページ切り替え UI**: 既存ツール（Structurizr UI / LikeC4 等）と同じ土俵ではなく、1 枚の連続空間で空間記憶を活かせる体験に特化するため。
 
 ---
@@ -212,14 +216,25 @@ C4 の入れ子構造は複合グラフ（Compound Graph）そのものである
 スポット検索やパンくずクリックで遠くのノードへ移動する際、単純な線形補間だと「ズームしたまま高速に横滑りして酔う」現象が起きます。
 Google Maps / Mapbox と同様の **Van Wijk & Nuij 方式（または簡易放物線ズーム軌道）** を採用し、移動距離が大きいほど **一度わずかにズームアウトして全体を見せてから目的地へズームインする** 気持ちよいカメラ移動（約 `550ms〜850ms`、Cubic Ease-In-Out）を実装します。ユーザー操作（ホイール・ドラッグ）が入ったら即座にアニメーションをキャンセルして主導権を返します。
 
-### 6.3 キーボードショートカット
+### 6.3 C4 レベル単位のクイックジャンプ仕様
+連続セマンティック・ズームの自由さは残しつつ、**ソフト・スナップ**（最適視点へ Fly-to し、着地後は再びホイール・パンで自由移動可能）により各 C4 レベルへ 1 アクションで移動できます：
+
+- **`1`（L1: Context / Landscape）**: 地図全体が収まり、かつ主要 System の画面サイズ `min(w*z, h*z)` が Collapsed 域（`< 140px`）に収まるよう `zoom` に上限クランプをかけて Fly-to（小規模モデルで L1 を押したのに L2 が開いてしまう現象を防止）。
+- **`2`（L2: Container）**: 対象 System（選択中要素の祖先 System → なければ画面中央最寄りの子 Container を持つ System）が画面の約 78% に収まり、`detailAlpha === 1.0`（`>= 260px`）かつ内部 Container の L3 が開きすぎない倍率へ Fly-to。
+- **`3`（L3: Component）**: 対象 Container（選択中要素の親 Container → なければ画面中央最寄りの子 Component を持つ Container）が画面の約 78% に収まり、`detailAlpha === 1.0` となる倍率へ Fly-to。L3 要素がないモデルでは `L3` ボタンを非活性表示。
+- **レベル別クイックジャンパー**: 左下の `L1 | L2 | L3` コントロールからポップオーバーを開き、L1（Landscape）・L2（全 System 一覧）・L3（System 別グループ化された全 Container 一覧）の任意のスポットへ 1 クリックで Fly-to。
+- **兄弟巡回＆階層アップ**: `[` / `]` で現在レベルの前後の System・Container へ巡回移動、`Backspace`（検索欄フォーカス外）またはパンくずクリックで 1 階層上へ Zoom Up。
+
+### 6.4 キーボードショートカット
 | キー | 動作 |
 | :--- | :--- |
 | `⌘K` / `Ctrl+K` / `/` | スポット検索バーへフォーカス |
 | `0` | 地図全体が収まる俯瞰ビューへ Fit（Fly-to） |
 | `+` / `-` | 画面中央基準でズームイン / ズームアウト |
-| `1` / `2` / `3` | 現在のフォーカス領域を L1 / L2 / L3 推奨倍率へズーム |
-| `O` | `.dsl` ファイル選択ダイアログを開く |
+| `1` / `2` / `3` | L1（Context）/ L2（Container）/ L3（Component）最適視点へスマート Fly-to |
+| `[` / `]` | 現在のレベル内で前／次の System または Container へ巡回 Fly-to |
+| `Backspace` | 1 階層上へ Zoom Up（L3 → L2 → L1） |
+| `O` | `workspace.json` ファイル選択ダイアログを開く |
 | `Esc` | 検索閉じ / ポップオーバー閉じ / ノード選択解除 |
 
 ---
@@ -247,42 +262,49 @@ MVP は明るく澄んだ **Cartography Light** をデフォルトとし、ト�
 
 ```text
 ┌────────────────────────────────────────────────────────────────────┐
-│ [🔍 Search spots (⌘K)...]  [🌐 Workspace > Shop > API] [Sample][📂]│
+│ [🔍 Search spots (⌘K)...] [🌐 Workspace > Core] [Sample][📂][⬇HTML]│
 │                                                                    │
 │                                                      ┌───────────┐ │
 │                                                      │ Inspector │ │
 │                      Full-bleed                      │ (Selected │ │
 │                 HTML5 Canvas 2D Map                  │  Node /   │ │
-│             (Drop .dsl file anywhere)                │  Trace)   │ │
+│         (Drop workspace.json anywhere in site)       │  Trace)   │ │
 │                                                      └───────────┘ │
 │                                                                    │
-│ [L1|L2|L3] [+][-][Fit][Layout][☀/🌙]                ┌─────────────┐ │
+│ [L1|L2|L3][▾][<][>] [+][-][Fit][Layout][☀/🌙]       ┌─────────────┐ │
 │                                                    │   Minimap   │ │
 └────────────────────────────────────────────────────┴─────────────┘
 ```
 
 - **左上**: スポット検索バー（インクリメンタル検索：名前・説明・技術・タグにヒット、↑↓＋Enter で即 Fly-to）＋ ビューポート現在地パンくず
-- **右上**: サンプルプリセット切替ドロップダウン、`.dsl` ファイル読込ボタン（画面全体 D&D にも対応）、パース警告／エラーがある場合の診断バッジ＆ポップオーバー
-- **左下**: ズームレベル計（L1/L2/L3）＋ ズームボタン / 全体フィット / レイアウト微調整モード切替 / テーマ切替
+- **右上**: サンプルプリセット切替ドロップダウン（Sample Site モード時）、`workspace.json` 読込ボタン（D&D 対応）、単一 HTML 書き出しボタン（`Export HTML`）、パース警告／エラーがある場合の診断バッジ＆ポップオーバー
+- **左下**: ズームレベル計（`L1 | L2 | L3`）＋ レベル別クイックジャンパー＆兄弟巡回 ＋ ズームボタン / 全体フィット / レイアウト微調整モード切替 / テーマ切替
 - **右下**: リアルタイムミニマップ（クリック＆ドラッグでカメラ移動可能）
-- **右パネル（選択時表示）**: 選択ノード/エッジの詳細（種別・技術・説明・タグ・プロパティ・外部 URL）、上流・下流の接続先リスト（クリックで相手先へ Fly-to）
+- **右パネル（選択時表示）**: 選択ノード/エッジの詳細（種別・技術・説明・タグ・プロパティ・検証済み外部 URL）、上流・下流の接続先リスト（クリックで相手先へ Fly-to）
 
 ---
 
-## 8. モジュール構成とデータフロー
+## 8. モジュール構成（pnpm workspace）とデータフロー
+
+`pnpm workspace` により 3 パッケージ（一方向 DAG）へ分割します（[ADR 0008](./adr/0008-pnpm-workspace-package-boundaries.md)）。
 
 ```mermaid
 flowchart LR
-    DSL["Structurizr DSL Text"] --> Parser["core/dsl<br/>Lexer & Parser"]
-    Parser -->|"C4Workspace + Diagnostics"| Store["App Store<br/>(Last-Known-Good)"]
-    Store --> Layout["core/layout<br/>ELK.js + Offsets"]
-    Layout -->|"PositionedGraph"| LOD["core/lod<br/>LOD & Edge Rollup"]
-    Camera["core/camera<br/>Pan / Zoom / Fly-to"] --> LOD
-    LOD -->|"RenderScene"| Renderer["core/renderer<br/>Canvas 2D Engine"]
-    Renderer -->|"HitTest / Viewport"| UI["ui/<br/>Floating Overlays"]
-    UI -->|"Search / Select / Edit"| Store
-    UI -->|"Fly-to / Pan"| Camera
+    DSL["Structurizr DSL"] -->|"structurizr-cli export -f json"| JSON["workspace.json"]
+    JSON --> Adapter["@c4-zoom/core/json<br/>JSON Adapter"]
+    Adapter -->|"C4Workspace + Diagnostics"| Layout["@c4-zoom/core/layout<br/>ELK.js + Offsets"]
+    Layout -->|"PositionedGraph"| Export["@c4-zoom/core/export<br/>Bootstrap Serializer"]
+    Export -->|"c4-zoom build"| SingleHTML["Standalone Single HTML<br/>(file:// ready)"]
+    Layout -->|"PositionedGraph"| LOD["@c4-zoom/core/lod<br/>LOD & Edge Rollup"]
+    Camera["@c4-zoom/core/camera<br/>Pan / Zoom / Level Jump"] --> LOD
+    LOD -->|"RenderScene"| Renderer["@c4-zoom/core/renderer<br/>Canvas 2D Engine"]
+    Renderer <-->|"HitTest / HUD"| Viewer["@c4-zoom/viewer<br/>React + Tailwind UI"]
 ```
+
+### 単一 HTML 出力と `file://` 動作設計（[ADR 0009](./adr/0009-standalone-single-html-template-injection.md)）
+- `@c4-zoom/viewer` は通常 SPA（GitHub Pages サンプルサイト用 `dist/site/`）と、JS・CSS を完全インライン化した単一 HTML テンプレート（`dist/template/viewer-template.html`）の 2 種類をビルドする。
+- CLI（`c4-zoom build workspace.json -o architecture.html`）は事前 ELK レイアウト済みペイロードを `<script id="c4-zoom-bootstrap" type="application/json">` へ注入して出力する。
+- `precomputedLayout` が埋め込まれている場合は ELK / Web Worker を起動せず 0ms で初回描画するため、`file://` 直開きでも origin 制約エラーを起こさず完全オフライン動作する。動的 JSON 再読込時は `file:` / singlefile 環境でメインスレッド非同期またはインラインフォールバックへ切り替える。
 
 ### パフォーマンス方針
 - **フラスタムカリング（Viewport Culling）**: 現在のビューポート矩形外にあるノードおよびエッジは描画をスキップ。
@@ -292,15 +314,18 @@ flowchart LR
 
 ---
 
-## 9. 永続化とエラーハンドリング
+## 9. 永続化・エラーハンドリング・セキュリティ
 
-- **状態管理**: React Context + `useReducer` で UI 状態を管理し、60fps で更新されるカメラ・アニメーション・ホバー等の高頻度状態は `Ref` に隔離して React 再レンダリングを防ぐ。
+- **状態管理**: React Context + `useReducer` で UI 状態を管理し、60fps で更新されるカメラ・アニメーション・ホバー等の高頻度状態は `Ref` に隔離して React 再レンダリングを防ぐ（[ADR 0006](./adr/0006-state-isolation-with-react-context-and-refs.md)）。
 - **ブラウザ自動保存 (`localStorage`)**:
-  - 最後に選択したサンプルプリセットまたは読み込んだ `.dsl` テキスト
+  - サンプルサイトで最後に選択したプリセットまたは読み込んだ `workspace.json`
   - ワークスペースごとの手動レイアウトオフセット
   - UI 設定（テーマ等）
-- **ファイル入力**:
-  - 画面上への `.dsl` ファイルドラッグ＆ドロップ読み込み
-  - ファイル選択ダイアログからの読み込み
-- **エラー耐性**:
-  - 読み込んだ `.dsl` に構文エラーがある場合は、行・列番号と理由を診断ポップオーバー／トーストに表示しつつ、地図キャンバスは直前の正常モデル（Last-Known-Good）をそのまま維持して操作を妨げない。
+- **ファイル入力・エラー耐性**:
+  - 画面上への `workspace.json` ドラッグ＆ドロップおよびファイル選択読込。
+  - 構文エラーや `model` 欠落がある場合は診断ポップオーバー／トーストに表示しつつ、地図キャンバスは直前の正常モデル（Last-Known-Good）を維持する。
+- **セキュリティ仕様**:
+  - **単一 HTML 埋込 XSS 防止**: ブートストラップ JSON シリアライズ時に `<`, `>`, `&`, `\u2028`, `\u2029` を `\uXXXX` へエスケープし、`<title>` も HTML エスケープする。
+  - **外部 URL 検証**: 要素の `url` をリンク描画する際は `http:` / `https:` のみ許可し、`target="_blank" rel="noopener noreferrer"` を付与する。
+  - **Prototype Pollution / 異常入力防御**: `properties` 等の展開時に `__proto__` / `constructor` / `prototype` を除外し、循環親子構造・異常サイズに対するガードを設ける。
+  - **CSP**: 外部通信を行わない設計を担保するため、Standalone HTML には外部接続を遮断する Content Security Policy メタタグを付与する。

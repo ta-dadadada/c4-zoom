@@ -1,7 +1,11 @@
 # 0002: Structurizr DSL コア構文サブセットのブラウザ内即時パースと寛容な互換方針
 
-- **Status**: Accepted
+- **Status**: Superseded by [0007](./0007-parser-maintenance-boundary-and-workspace-json-option.md)
 - **Date**: 2026-11-26
+- **Superseded Date**: 2026-11-27
+
+> [!NOTE]
+> 本決定は [ADR 0007](./0007-parser-maintenance-boundary-and-workspace-json-option.md) により置き換えられました。自前 Structurizr DSL パーサーは廃止し、DSL パースは公式 `structurizr-cli` へ委譲して公式 `workspace.json` を入力契約とします。
 
 ## Context
 

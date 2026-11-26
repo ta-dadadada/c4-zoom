@@ -1,67 +1,60 @@
 # テスト・動作確認用サンプル一覧 (`docs/test-samples.md`)
 
-本リポジトリでは、**自動テスト（Vitest）** および **ブラウザでの手動・結合動作確認** の両方で一貫して使えるよう、公式の Structurizr DSL サンプルと c4-zoom 固有の検証用サンプルを `fixtures/dsl/` に同梱しています。
+本リポジトリでは、**自動テスト（Vitest / Playwright）**・**GitHub Pages サンプルサイト**・**CLI 単一 HTML 出力の動作確認** で一貫して使えるよう、Structurizr 公式サンプルと c4-zoom 固有のサンプルを管理しています。
+
+DSL のパースは公式 `structurizr-cli` に委譲する方針（[ADR 0007](./adr/0007-parser-maintenance-boundary-and-workspace-json-option.md)）に基づき、変換元の `.dsl`（`fixtures/dsl/`, `docs/architecture/workspace.dsl`）から公式 CLI で生成した `workspace.json`（`fixtures/json/`, `docs/architecture/workspace.json`）をテストおよびサンプルサイトの入力データとします。
 
 ---
 
 ## 1. ディレクトリ構成
 
 ```text
-fixtures/dsl/
-├── upstream/                          # Structurizr 公式リポジトリ由来（Apache-2.0）
-│   ├── LICENSE-Apache-2.0.txt         # 帰属・ライセンス全文
-│   ├── big-bank-plc.dsl               # 王道フル階層リファレンス（L1〜L3 + deployment + views）
-│   ├── financial-risk-system.dsl      # 複数外部システム・タグ中心のコンテキストモデル
-│   ├── amazon-web-services.dsl        # deploymentNode 多用（未対応ブロック耐性テスト）
-│   ├── getting-started.dsl            # 最小構成ベースライン
-│   ├── spring-petclinic.dsl           # !identifiers hierarchical / !components / tag 単数形
-│   ├── groups-nested.dsl              # 多段ネスト group & ブロック無し group 構文
-│   ├── hierarchical-identifiers.dsl   # 階層識別子解決テスト
-│   └── this.dsl                       # this 自己参照・element キーワード検証
-└── custom/                            # c4-zoom 独自検証用フィクスチャ
-    ├── cloudshop-multi-system.dsl     # 複数内部システムがすべてL1〜L3を持つ主力動作確認モデル
-    ├── novabank-event-driven.dsl      # 双方向エッジ・長い依存チェーン・トレース検証モデル
-    └── invalid-syntax.dsl             # 構文エラー診断・Last-Known-Good維持テスト
+docs/architecture/
+├── workspace.dsl                      # c4-zoom 自身の C4 モデル（Single Source of Truth）
+└── workspace.json                     # 公式 structurizr-cli 出力（サンプルサイト先頭＆ドッグフーディング）
+
+fixtures/
+├── dsl/                               # 変換元 DSL（再生成・参照用）
+│   ├── upstream/                      # Structurizr 公式リポジトリ由来（Apache-2.0）
+│   └── custom/                        # c4-zoom 独自検証用モデル
+└── json/                              # 公式 structurizr-cli 変換済み workspace.json（自動テスト＆デモ用）
+    ├── upstream/
+    │   ├── big-bank-plc.json
+    │   ├── financial-risk-system.json
+    │   ├── amazon-web-services.json
+    │   ├── getting-started.json
+    │   ├── groups-nested.json
+    │   └── this.json
+    └── custom/
+        ├── cloudshop-multi-system.json
+        ├── novabank-event-driven.json
+        ├── invalid.json               # 構文エラー診断・Last-Known-Good テスト
+        └── missing-model.json         # スキーマ欠落診断テスト
 ```
 
 ---
 
-## 2. 公式サンプル一覧 (`fixtures/dsl/upstream/`)
+## 2. サンプルサイト（GitHub Pages）掲載プリセット
 
-すべてのファイルは [`structurizr/java`](https://github.com/structurizr/java)（`master` ブランチ、`structurizr-dsl/src/test/resources/dsl/` 配下）から取得しています。ライセンスは **Apache License 2.0**（[LICENSE-Apache-2.0.txt](../fixtures/dsl/upstream/LICENSE-Apache-2.0.txt)）です。
+| 順序 | サンプル名 | ソース JSON | 主な見どころ・検証観点 |
+| :---: | :--- | :--- | :--- |
+| 1 | **c4-zoom Architecture (Self)** | `docs/architecture/workspace.json` | **ドッグフーディング兼メインデモ**。`core` / `viewer` / `cli` / `sampleSite` の L1〜L3、グループ枠、エッジロールアップ、レベル別クイックジャンプ |
+| 2 | **CloudShop Multi-System** | `fixtures/json/custom/cloudshop-multi-system.json` | 複数内部システムがすべて L1〜L3 を持つモデルでの横パン・混合 LOD・動的ロールアップ |
+| 3 | **Big Bank plc (Structurizr Official)** | `fixtures/json/upstream/big-bank-plc.json` | C4 王道リファレンス（Apache-2.0）。親子両レベル定義エッジの統合集約・デプロイメント参照エッジの安全スキップ |
+| 4 | **NovaBank Event Mesh** | `fixtures/json/custom/novabank-event-driven.json` | 双方向ベジェ分離、循環を含む上流/下流トレース（`1-hop` vs `Transitive`） |
+| 5 | **Financial Risk System** | `fixtures/json/upstream/financial-risk-system.json` | L1 コンテキスト中心・複数外部システムの破線表現 |
 
-| ファイル | 構造・特徴 | 主な検証観点（自動テスト / 動作確認） |
-| :--- | :--- | :--- |
-| [big-bank-plc.dsl](../fixtures/dsl/upstream/big-bank-plc.dsl) | Person×3, System×5, Container×5, Component×6, `group`, `deploymentEnvironment`, `views`, `styles`, 小文字キーワード `softwaresystem` | **最優先リファレンス**。L1→L2→L3 の連続ズーム、親直接エッジと子ロールアップエッジの重複集約、未対応ブロック（`deploymentEnvironment` / `views`）の安全スキップ |
-| [getting-started.dsl](../fixtures/dsl/upstream/getting-started.dsl) | Person×1, System×1, 関係線×1 | 最小構成のパース・初期Fit表示・ベースライン回帰テスト |
-| [financial-risk-system.dsl](../fixtures/dsl/upstream/financial-risk-system.dsl) | 複数アクター＋複数外部/内部システムの L1 コンテキスト中心 | L1 ランドマーク配置、外部システム破線スタイル、多数エッジの視認性 |
-| [amazon-web-services.dsl](../fixtures/dsl/upstream/amazon-web-services.dsl) | `deploymentEnvironment` / `deploymentNode` / `infrastructureNode` 多用 | インフラ定義が多い実 `.dsl` を貼り付けても壊れず `model` 部分を綺麗に描画できるか |
-| [spring-petclinic.dsl](../fixtures/dsl/upstream/spring-petclinic.dsl) | `!identifiers hierarchical`, `tag`（単数）, `url`, `!components { ... }` ブロック | ブロック付き未対応ディレクティブのスキップ、`url` のインスペクタ表示、`tag` 単数形対応 |
-| [groups-nested.dsl](../fixtures/dsl/upstream/groups-nested.dsl) | 5段以上の `group` ネスト＋ブロック無し `group "API Layer"` | 入れ子 `group` のパース・ELK 階層レイアウト崩れ防止 |
-| [hierarchical-identifiers.dsl](../fixtures/dsl/upstream/hierarchical-identifiers.dsl) | `!identifiers hierarchical` でのドット区切り参照 | `parent.child` 形式の識別子解決ユニットテスト |
-| [this.dsl](../fixtures/dsl/upstream/this.dsl) | `custom -> this`、`element` キーワード | `this` 自己参照の解決、カスタム `element` の安全な扱い |
+※ `fixtures/dsl/upstream/` および対応する JSON の出典は [`structurizr/java`](https://github.com/structurizr/java)（Apache License 2.0、[LICENSE-Apache-2.0.txt](../fixtures/dsl/upstream/LICENSE-Apache-2.0.txt)）です。
 
 ---
 
-## 3. c4-zoom 独自サンプル一覧 (`fixtures/dsl/custom/`)
+## 3. 自動テスト・セキュリティ検証観点
 
-公開サンプルではカバーしにくい「複数システムの同時展開・横パン・双方向ロールアップ・異常系」を検証するためのサンプルです。
-
-| ファイル | 特徴 | 主な検証観点（自動テスト / 動作確認） |
-| :--- | :--- | :--- |
-| [cloudshop-multi-system.dsl](../fixtures/dsl/custom/cloudshop-multi-system.dsl) | 内部システム×3（Commerce / Fulfillment / Analytics）がすべて L2・L3 を保持。外部システム×3、グループ・DB・Kafka・gRPC/REST 混在 | **ブラウザ動作確認の主力**。左の Commerce を L3 まで展開しつつ右の Fulfillment が L1/L2 に見えるハイブリッド LOD、隣のシステムへの横パン移動、スポット検索＆放物線 Fly-to、動的エッジロールアップ |
-| [novabank-event-driven.dsl](../fixtures/dsl/custom/novabank-event-driven.dsl) | 双方向通信（`Transfer Endpoint <-> ML Scorer`, `Clearing Adapter <-> Clearing Network`）、Kafka 経由の多段依存チェーン | 双方向ベジェ曲線の分離描画、ノード選択時の上流/下流トレース（`1-hop` vs `Transitive` 切替）、循環参照を含むグラフでの無限ループ防止 |
-| [invalid-syntax.dsl](../fixtures/dsl/custom/invalid-syntax.dsl) | 未定義識別子参照＋末尾の未閉じ `}` | エラー行・列番号の正確な診断出力、ファイル読込（D&D等）時にキャンバスが真っ白にならず Last-Known-Good を維持することの確認 |
-| [workspace.dsl](../docs/architecture/workspace.dsl) | **c4-zoom 自身の C4 モデル**（UI・State・Core Engine の L1〜L3 + `group` + `views`） | **ドッグフーディング検証**。c4-zoom 自身を読み込んで自分の内部モジュール構造をズーム探索できることの確認 |
-
----
-
-## 4. フェーズ別の活用ルール
-
-- **Phase 1（DSL パーサー）**: `upstream/*.dsl` 全8本がエラー落ちせずパースできること（未対応ブロックは `info` 警告のみ）＋ `invalid-syntax.dsl` で正確なエラー行・列が返ることを Vitest で自動検証。
-- **Phase 2（ELK レイアウト）**: `big-bank-plc.dsl`、`groups-nested.dsl`、`cloudshop-multi-system.dsl` で親子包含関係・非重なり・決定性を自動検証。
-- **Phase 3（LOD・エッジロールアップ）**: `big-bank-plc.dsl`（親子重複エッジ）と `cloudshop-multi-system.dsl`（混合展開状態）、`novabank-event-driven.dsl`（双方向・循環依存トレース）を自動検証。
-- **Phase 4〜6（Canvas 描画・UI 結合動作確認）**:
-  - 初期ロードおよびプリセット切替に `cloudshop-multi-system.dsl` / `big-bank-plc.dsl` / `novabank-event-driven.dsl` / `getting-started.dsl` を使用。
-  - `.dsl` ドラッグ＆ドロップ読込の動作確認には `fixtures/dsl/upstream/*.dsl` をそのままブラウザへドロップして検証。
-  - 60fps パフォーマンス確認用には、テストコード内のジェネレータで 200〜500 ノード規模のストレスモデルを動的生成して計測する。
+- **単体テスト（Vitest）**:
+  - `packages/core/src/json`: 全 `fixtures/json/**` および `docs/architecture/workspace.json` の正規化、`group` 多段再構築、`location: "External"` 補完、`invalid.json` / `missing-model.json` の診断、`__proto__` / `constructor` / `prototype` の Prototype Pollution 防御。
+  - `packages/core/src/camera`: L1（Collapsed 上限クランプ）/ L2 / L3 スマートジャンプ、`[`/`]` 兄弟巡回、Zoom Up。
+  - `packages/core/src/export`: `</script><script>alert(1)</script>` や特殊改行を含むペイロードの安全エスケープ、`<title>` エスケープ。
+  - `packages/cli`: `build` コマンドの事前レイアウト埋込、`--overrides`、`--strict` 終了コード。
+- **E2E テスト（Playwright）**:
+  - サンプルサイトで `c4-zoom` 自身を含むプリセット切替、L1→L2→L3 クイックジャンプ、兄弟巡回、検索＆Fly-to、`workspace.json` の D&D 読込、不正 JSON での Last-Known-Good 維持、外部 `url` の `javascript:` 拒否。
+  - CLI が生成した単一 HTML を **`file://`（または静的ファイル）で開いて** コンソールエラーゼロ・ELK 計算待ちゼロで操作できること。

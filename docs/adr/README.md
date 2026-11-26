@@ -7,12 +7,14 @@
 | ID | タイトル | ステータス | 日付 |
 | :--- | :--- | :--- | :--- |
 | [0001](./0001-spatial-nesting-and-screen-space-lod.md) | 単一2D空間入れ子モデルと画面占有サイズ基準の連続 LOD | Accepted | 2026-11-26 |
-| [0002](./0002-structurizr-dsl-core-subset.md) | Structurizr DSL コア構文サブセットのブラウザ内即時パースと寛容な互換方針 | Accepted | 2026-11-26 |
+| [0002](./0002-structurizr-dsl-core-subset.md) | Structurizr DSL コア構文サブセットのブラウザ内即時パースと寛容な互換方針 | Superseded by 0007 | 2026-11-26 |
 | [0003](./0003-custom-canvas-2d-renderer-and-core-separation.md) | カスタム HTML5 Canvas 2D レンダラーの採用とコア／UIの厳格な責務分離 | Accepted | 2026-11-26 |
 | [0004](./0004-hybrid-elk-layout-with-relative-offsets.md) | ELK.js 階層自動レイアウトと手動相対オフセット永続化のハイブリッド方式 | Accepted | 2026-11-26 |
 | [0005](./0005-dynamic-edge-rollup-by-visible-anchor.md) | 画面展開状態に基づく動的アンカー射影とエッジロールアップ | Accepted | 2026-11-26 |
 | [0006](./0006-state-isolation-with-react-context-and-refs.md) | React Context + useReducer と高頻度 Canvas 状態の Ref 隔離 | Accepted | 2026-11-26 |
-| [0007](./0007-parser-maintenance-boundary-and-workspace-json-option.md) | DSL パーサーの保守境界と公式 `workspace.json` アダプタ導入の検討 | Proposed (Draft) | 2026-11-26 |
+| [0007](./0007-parser-maintenance-boundary-and-workspace-json-option.md) | Structurizr 公式 `workspace.json` への入力一本化と自前 DSL パーサー廃止 | Accepted | 2026-11-27 |
+| [0008](./0008-pnpm-workspace-package-boundaries.md) | pnpm workspace による 3 パッケージ分割（core / viewer / cli） | Accepted | 2026-11-27 |
+| [0009](./0009-standalone-single-html-template-injection.md) | ビルド済み単一 HTML テンプレートへの事前レイアウト済み JSON ペイロード注入方式 | Accepted | 2026-11-27 |
 
 ## 対象基準と運用ルール
 
