@@ -1,0 +1,17 @@
+{
+  "name": "@c4-zoom/cli",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "bin": {
+    "c4-zoom": "bin/c4-zoom.mjs"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@c4-zoom/core": "workspace:*",
+    "@c4-zoom/viewer": "workspace:*"
+  }
+}

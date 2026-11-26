@@ -1,0 +1,1574 @@
+{
+  "configuration" : { },
+  "description" : "複数システムがL1〜L3階層を持ち、システム横断で連携するc4-zoom動作確認用の主力サンプル",
+  "documentation" : { },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "Webまたはモバイルアプリから商品を購入する利用者",
+      "id" : "1",
+      "name" : "Customer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "customer"
+      },
+      "relationships" : [ {
+        "description" : "商品検索・購入",
+        "destinationId" : "7",
+        "id" : "39",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "商品検索・購入",
+        "destinationId" : "6",
+        "id" : "40",
+        "linkedRelationshipId" : "39",
+        "sourceId" : "1",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "商品検索・購入",
+        "destinationId" : "8",
+        "id" : "41",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,External"
+    }, {
+      "description" : "商品登録・在庫管理・出荷対応を行う店舗スタッフ",
+      "id" : "2",
+      "name" : "Merchant Staff",
+      "properties" : {
+        "structurizr.dsl.identifier" : "merchant"
+      },
+      "relationships" : [ {
+        "description" : "商品・在庫・売上を管理",
+        "destinationId" : "9",
+        "id" : "42",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "商品・在庫・売上を管理",
+        "destinationId" : "6",
+        "id" : "43",
+        "linkedRelationshipId" : "42",
+        "sourceId" : "2",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "売上・転換率を分析",
+        "destinationId" : "38",
+        "id" : "44",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "売上・転換率を分析",
+        "destinationId" : "33",
+        "id" : "45",
+        "linkedRelationshipId" : "44",
+        "sourceId" : "2",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,Internal"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "クレジットカード決済・返金処理を担う外部決済基盤",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "Stripe Payment",
+      "properties" : {
+        "structurizr.dsl.identifier" : "stripe"
+      },
+      "tags" : "Element,Software System,External",
+      "url" : "https://stripe.com"
+    }, {
+      "description" : "注文確認・発送通知メールを送信する外部メール基盤",
+      "documentation" : { },
+      "id" : "4",
+      "name" : "SendGrid Mail",
+      "properties" : {
+        "structurizr.dsl.identifier" : "sendgrid"
+      },
+      "relationships" : [ {
+        "description" : "注文・発送通知メール配信",
+        "destinationId" : "1",
+        "id" : "98",
+        "sourceId" : "4",
+        "tags" : "Relationship",
+        "technology" : "SMTP"
+      } ],
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "配送伝票発行と荷物追跡を提供する外部配送API",
+      "documentation" : { },
+      "id" : "5",
+      "name" : "Logistics Carrier",
+      "properties" : {
+        "structurizr.dsl.identifier" : "carrierApi"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "containers" : [ {
+        "description" : "顧客向けECサイト",
+        "documentation" : { },
+        "group" : "Client Channels",
+        "id" : "7",
+        "name" : "Web Storefront",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.webApp"
+        },
+        "relationships" : [ {
+          "description" : "API呼び出し",
+          "destinationId" : "10",
+          "id" : "46",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "HTTPS / JSON"
+        } ],
+        "tags" : "Element,Container,Web Browser",
+        "technology" : "Next.js / TypeScript"
+      }, {
+        "description" : "iOS / Android 向けショッピングアプリ",
+        "documentation" : { },
+        "group" : "Client Channels",
+        "id" : "8",
+        "name" : "Mobile App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.mobileApp"
+        },
+        "relationships" : [ {
+          "description" : "API呼び出し",
+          "destinationId" : "10",
+          "id" : "47",
+          "sourceId" : "8",
+          "tags" : "Relationship",
+          "technology" : "HTTPS / JSON"
+        } ],
+        "tags" : "Element,Container,Mobile App",
+        "technology" : "Flutter"
+      }, {
+        "description" : "店舗向け管理画面",
+        "documentation" : { },
+        "group" : "Client Channels",
+        "id" : "9",
+        "name" : "Merchant Portal",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.merchantPortal"
+        },
+        "relationships" : [ {
+          "description" : "管理API呼び出し",
+          "destinationId" : "10",
+          "id" : "48",
+          "sourceId" : "9",
+          "tags" : "Relationship",
+          "technology" : "HTTPS / JSON"
+        } ],
+        "tags" : "Element,Container,Web Browser",
+        "technology" : "React / TypeScript"
+      }, {
+        "description" : "認証・レート制限・ルーティングを担うエッジゲートウェイ",
+        "documentation" : { },
+        "id" : "10",
+        "name" : "API Gateway",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.gateway"
+        },
+        "relationships" : [ {
+          "description" : "注文系リクエスト転送",
+          "destinationId" : "12",
+          "id" : "49",
+          "sourceId" : "10",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "注文系リクエスト転送",
+          "destinationId" : "11",
+          "id" : "50",
+          "linkedRelationshipId" : "49",
+          "sourceId" : "10",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "商品系リクエスト転送",
+          "destinationId" : "18",
+          "id" : "51",
+          "sourceId" : "10",
+          "tags" : "Relationship",
+          "technology" : "gRPC"
+        }, {
+          "description" : "商品系リクエスト転送",
+          "destinationId" : "17",
+          "id" : "52",
+          "linkedRelationshipId" : "51",
+          "sourceId" : "10",
+          "technology" : "gRPC"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Envoy / Go"
+      }, {
+        "components" : [ {
+          "description" : "JWT検証と権限チェック",
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Auth Middleware",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.orderApi.authMiddleware"
+          },
+          "relationships" : [ {
+            "description" : "認証済みリクエスト委譲",
+            "destinationId" : "13",
+            "id" : "53",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        }, {
+          "description" : "RESTエンドポイントとリクエスト検証",
+          "documentation" : { },
+          "id" : "13",
+          "name" : "Order Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.orderApi.orderController"
+          },
+          "relationships" : [ {
+            "description" : "チェックアウト実行",
+            "destinationId" : "14",
+            "id" : "54",
+            "sourceId" : "13",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        }, {
+          "description" : "在庫仮押さえ〜決済確定のワークフロー制御",
+          "documentation" : { },
+          "id" : "14",
+          "name" : "Checkout Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.orderApi.checkoutService"
+          },
+          "relationships" : [ {
+            "description" : "決済オーソリ依頼",
+            "destinationId" : "15",
+            "id" : "55",
+            "sourceId" : "14",
+            "tags" : "Relationship"
+          }, {
+            "description" : "注文ステータス保存",
+            "destinationId" : "16",
+            "id" : "56",
+            "sourceId" : "14",
+            "tags" : "Relationship"
+          }, {
+            "description" : "OrderConfirmed イベント発行",
+            "destinationId" : "23",
+            "id" : "59",
+            "sourceId" : "14",
+            "tags" : "Relationship",
+            "technology" : "Kafka"
+          }, {
+            "description" : "在庫仮押さえ・確定",
+            "destinationId" : "26",
+            "id" : "71",
+            "sourceId" : "14",
+            "tags" : "Relationship",
+            "technology" : "gRPC"
+          }, {
+            "description" : "在庫仮押さえ・確定",
+            "destinationId" : "25",
+            "id" : "72",
+            "linkedRelationshipId" : "71",
+            "sourceId" : "14",
+            "technology" : "gRPC"
+          }, {
+            "description" : "在庫仮押さえ・確定",
+            "destinationId" : "24",
+            "id" : "73",
+            "linkedRelationshipId" : "71",
+            "sourceId" : "14",
+            "technology" : "gRPC"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        }, {
+          "description" : "外部決済ゲートウェイ向けHTTPクライアント",
+          "documentation" : { },
+          "id" : "15",
+          "name" : "Payment Adapter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.orderApi.paymentAdapter"
+          },
+          "relationships" : [ {
+            "description" : "決済オーソリ・売上確定",
+            "destinationId" : "3",
+            "id" : "68",
+            "sourceId" : "15",
+            "tags" : "Relationship",
+            "technology" : "HTTPS / REST"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go / HTTPS"
+        }, {
+          "description" : "注文集約の永続化",
+          "documentation" : { },
+          "id" : "16",
+          "name" : "Order Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.orderApi.orderRepo"
+          },
+          "relationships" : [ {
+            "description" : "注文データ読み書き",
+            "destinationId" : "21",
+            "id" : "57",
+            "sourceId" : "16",
+            "tags" : "Relationship",
+            "technology" : "SQL / TCP"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go / pgx"
+        } ],
+        "description" : "注文作成・決済連携・キャンセルを処理するAPIサーバー",
+        "documentation" : { },
+        "id" : "11",
+        "name" : "Order API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.orderApi"
+        },
+        "relationships" : [ {
+          "description" : "注文データ読み書き",
+          "destinationId" : "21",
+          "id" : "58",
+          "linkedRelationshipId" : "57",
+          "sourceId" : "11",
+          "technology" : "SQL / TCP"
+        }, {
+          "description" : "OrderConfirmed イベント発行",
+          "destinationId" : "23",
+          "id" : "60",
+          "linkedRelationshipId" : "59",
+          "sourceId" : "11",
+          "technology" : "Kafka"
+        }, {
+          "description" : "決済オーソリ・売上確定",
+          "destinationId" : "3",
+          "id" : "69",
+          "linkedRelationshipId" : "68",
+          "sourceId" : "11",
+          "technology" : "HTTPS / REST"
+        }, {
+          "description" : "在庫仮押さえ・確定",
+          "destinationId" : "26",
+          "id" : "74",
+          "linkedRelationshipId" : "71",
+          "sourceId" : "11",
+          "technology" : "gRPC"
+        }, {
+          "description" : "在庫仮押さえ・確定",
+          "destinationId" : "25",
+          "id" : "75",
+          "linkedRelationshipId" : "71",
+          "sourceId" : "11",
+          "technology" : "gRPC"
+        }, {
+          "description" : "在庫仮押さえ・確定",
+          "destinationId" : "24",
+          "id" : "76",
+          "linkedRelationshipId" : "71",
+          "sourceId" : "11",
+          "technology" : "gRPC"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Go / Gin"
+      }, {
+        "components" : [ {
+          "description" : "商品照会・更新ハンドラ",
+          "documentation" : { },
+          "id" : "18",
+          "name" : "Catalog Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.catalogApi.catalogHandler"
+          },
+          "relationships" : [ {
+            "description" : "商品マスタ取得・更新",
+            "destinationId" : "20",
+            "id" : "61",
+            "sourceId" : "18",
+            "tags" : "Relationship"
+          }, {
+            "description" : "全文検索クエリ",
+            "destinationId" : "22",
+            "id" : "62",
+            "sourceId" : "18",
+            "tags" : "Relationship",
+            "technology" : "HTTPS"
+          }, {
+            "description" : "インデックス更新通知",
+            "destinationId" : "19",
+            "id" : "64",
+            "sourceId" : "18",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        }, {
+          "description" : "商品更新を全文検索インデックスへ同期",
+          "documentation" : { },
+          "id" : "19",
+          "name" : "Search Indexer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.catalogApi.searchIndexer"
+          },
+          "relationships" : [ {
+            "description" : "ドキュメント登録",
+            "destinationId" : "22",
+            "id" : "65",
+            "sourceId" : "19",
+            "tags" : "Relationship",
+            "technology" : "HTTPS"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        }, {
+          "description" : "商品マスタ永続化",
+          "documentation" : { },
+          "id" : "20",
+          "name" : "Catalog Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "commerce.catalogApi.catalogRepo"
+          },
+          "relationships" : [ {
+            "description" : "商品マスタ読み書き",
+            "destinationId" : "21",
+            "id" : "66",
+            "sourceId" : "20",
+            "tags" : "Relationship",
+            "technology" : "SQL / TCP"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go / pgx"
+        } ],
+        "description" : "商品検索・価格・カテゴリ管理を提供するAPIサーバー",
+        "documentation" : { },
+        "id" : "17",
+        "name" : "Catalog API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.catalogApi"
+        },
+        "relationships" : [ {
+          "description" : "全文検索クエリ",
+          "destinationId" : "22",
+          "id" : "63",
+          "linkedRelationshipId" : "62",
+          "sourceId" : "17",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "商品マスタ読み書き",
+          "destinationId" : "21",
+          "id" : "67",
+          "linkedRelationshipId" : "66",
+          "sourceId" : "17",
+          "technology" : "SQL / TCP"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Go / gRPC"
+      }, {
+        "description" : "注文・商品・顧客データを永続化",
+        "documentation" : { },
+        "id" : "21",
+        "name" : "Commerce DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.commerceDb"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "PostgreSQL"
+      }, {
+        "description" : "高速な商品全文検索・ファセット検索",
+        "documentation" : { },
+        "id" : "22",
+        "name" : "Search Index",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.searchEngine"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "OpenSearch"
+      }, {
+        "description" : "注文・在庫・配送イベントを非同期連携",
+        "documentation" : { },
+        "id" : "23",
+        "name" : "Domain Event Bus",
+        "properties" : {
+          "structurizr.dsl.identifier" : "commerce.eventBus"
+        },
+        "relationships" : [ {
+          "description" : "OrderConfirmed 購読",
+          "destinationId" : "29",
+          "id" : "83",
+          "sourceId" : "23",
+          "tags" : "Relationship",
+          "technology" : "Kafka"
+        }, {
+          "description" : "OrderConfirmed 購読",
+          "destinationId" : "28",
+          "id" : "84",
+          "linkedRelationshipId" : "83",
+          "sourceId" : "23",
+          "technology" : "Kafka"
+        }, {
+          "description" : "OrderConfirmed 購読",
+          "destinationId" : "24",
+          "id" : "85",
+          "linkedRelationshipId" : "83",
+          "sourceId" : "23",
+          "technology" : "Kafka"
+        }, {
+          "description" : "全ドメインイベント購読",
+          "destinationId" : "35",
+          "id" : "99",
+          "sourceId" : "23",
+          "tags" : "Relationship",
+          "technology" : "Kafka"
+        }, {
+          "description" : "全ドメインイベント購読",
+          "destinationId" : "34",
+          "id" : "100",
+          "linkedRelationshipId" : "99",
+          "sourceId" : "23",
+          "technology" : "Kafka"
+        }, {
+          "description" : "全ドメインイベント購読",
+          "destinationId" : "33",
+          "id" : "101",
+          "linkedRelationshipId" : "99",
+          "sourceId" : "23",
+          "technology" : "Kafka"
+        } ],
+        "tags" : "Element,Container,Queue",
+        "technology" : "Apache Kafka"
+      } ],
+      "description" : "商品閲覧・カート・注文受付・決済オーケストレーションを担う中核システム",
+      "documentation" : { },
+      "id" : "6",
+      "name" : "Commerce Platform",
+      "properties" : {
+        "structurizr.dsl.identifier" : "commerce"
+      },
+      "relationships" : [ {
+        "description" : "決済オーソリ・売上確定",
+        "destinationId" : "3",
+        "id" : "70",
+        "linkedRelationshipId" : "68",
+        "sourceId" : "6",
+        "technology" : "HTTPS / REST"
+      }, {
+        "description" : "在庫仮押さえ・確定",
+        "destinationId" : "26",
+        "id" : "77",
+        "linkedRelationshipId" : "71",
+        "sourceId" : "6",
+        "technology" : "gRPC"
+      }, {
+        "description" : "在庫仮押さえ・確定",
+        "destinationId" : "25",
+        "id" : "78",
+        "linkedRelationshipId" : "71",
+        "sourceId" : "6",
+        "technology" : "gRPC"
+      }, {
+        "description" : "在庫仮押さえ・確定",
+        "destinationId" : "24",
+        "id" : "79",
+        "linkedRelationshipId" : "71",
+        "sourceId" : "6",
+        "technology" : "gRPC"
+      }, {
+        "description" : "OrderConfirmed 購読",
+        "destinationId" : "29",
+        "id" : "86",
+        "linkedRelationshipId" : "83",
+        "sourceId" : "6",
+        "technology" : "Kafka"
+      }, {
+        "description" : "OrderConfirmed 購読",
+        "destinationId" : "28",
+        "id" : "87",
+        "linkedRelationshipId" : "83",
+        "sourceId" : "6",
+        "technology" : "Kafka"
+      }, {
+        "description" : "全ドメインイベント購読",
+        "destinationId" : "35",
+        "id" : "102",
+        "linkedRelationshipId" : "99",
+        "sourceId" : "6",
+        "technology" : "Kafka"
+      }, {
+        "description" : "全ドメインイベント購読",
+        "destinationId" : "34",
+        "id" : "103",
+        "linkedRelationshipId" : "99",
+        "sourceId" : "6",
+        "technology" : "Kafka"
+      }, {
+        "description" : "全ドメインイベント購読",
+        "destinationId" : "33",
+        "id" : "104",
+        "linkedRelationshipId" : "99",
+        "sourceId" : "6",
+        "technology" : "Kafka"
+      } ],
+      "tags" : "Element,Software System,Core"
+    }, {
+      "containers" : [ {
+        "components" : [ {
+          "description" : "仮押さえ・確定・解放API",
+          "documentation" : { },
+          "id" : "26",
+          "name" : "Reservation Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "fulfillment.inventoryApi.reservationHandler"
+          },
+          "relationships" : [ {
+            "description" : "在庫台帳更新",
+            "destinationId" : "27",
+            "id" : "80",
+            "sourceId" : "26",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Rust"
+        }, {
+          "description" : "在庫移動履歴の整合性管理",
+          "documentation" : { },
+          "id" : "27",
+          "name" : "Stock Ledger",
+          "properties" : {
+            "structurizr.dsl.identifier" : "fulfillment.inventoryApi.stockLedger"
+          },
+          "relationships" : [ {
+            "description" : "在庫レコード更新",
+            "destinationId" : "32",
+            "id" : "81",
+            "sourceId" : "27",
+            "tags" : "Relationship",
+            "technology" : "SQL / TCP"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Rust"
+        } ],
+        "description" : "在庫引当・入出庫管理を行うマイクロサービス",
+        "documentation" : { },
+        "id" : "25",
+        "name" : "Inventory Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "fulfillment.inventoryApi"
+        },
+        "relationships" : [ {
+          "description" : "在庫レコード更新",
+          "destinationId" : "32",
+          "id" : "82",
+          "linkedRelationshipId" : "81",
+          "sourceId" : "25",
+          "technology" : "SQL / TCP"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Rust / Axum"
+      }, {
+        "components" : [ {
+          "description" : "Kafkaからのイベント購読・リトライ制御",
+          "documentation" : { },
+          "id" : "29",
+          "name" : "Order Event Consumer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "fulfillment.shippingWorker.orderConsumer"
+          },
+          "relationships" : [ {
+            "description" : "出荷指示生成",
+            "destinationId" : "30",
+            "id" : "88",
+            "sourceId" : "29",
+            "tags" : "Relationship"
+          }, {
+            "description" : "発送通知トリガー",
+            "destinationId" : "31",
+            "id" : "94",
+            "sourceId" : "29",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        }, {
+          "description" : "配送業者APIを呼び出し伝票PDFを生成",
+          "documentation" : { },
+          "id" : "30",
+          "name" : "Label Generator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "fulfillment.shippingWorker.labelGenerator"
+          },
+          "relationships" : [ {
+            "description" : "配送伝票発行",
+            "destinationId" : "5",
+            "id" : "89",
+            "sourceId" : "30",
+            "tags" : "Relationship",
+            "technology" : "HTTPS / REST"
+          }, {
+            "description" : "配送ステータス更新",
+            "destinationId" : "32",
+            "id" : "92",
+            "sourceId" : "30",
+            "tags" : "Relationship",
+            "technology" : "SQL / TCP"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        }, {
+          "description" : "発送完了メールの送信依頼",
+          "documentation" : { },
+          "id" : "31",
+          "name" : "Notification Sender",
+          "properties" : {
+            "structurizr.dsl.identifier" : "fulfillment.shippingWorker.notificationSender"
+          },
+          "relationships" : [ {
+            "description" : "発送完了メール送信",
+            "destinationId" : "4",
+            "id" : "95",
+            "sourceId" : "31",
+            "tags" : "Relationship",
+            "technology" : "HTTPS / API"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go"
+        } ],
+        "description" : "注文確定イベントを購読して配送伝票を発行するワーカー",
+        "documentation" : { },
+        "id" : "28",
+        "name" : "Shipping Worker",
+        "properties" : {
+          "structurizr.dsl.identifier" : "fulfillment.shippingWorker"
+        },
+        "relationships" : [ {
+          "description" : "配送伝票発行",
+          "destinationId" : "5",
+          "id" : "90",
+          "linkedRelationshipId" : "89",
+          "sourceId" : "28",
+          "technology" : "HTTPS / REST"
+        }, {
+          "description" : "配送ステータス更新",
+          "destinationId" : "32",
+          "id" : "93",
+          "linkedRelationshipId" : "92",
+          "sourceId" : "28",
+          "technology" : "SQL / TCP"
+        }, {
+          "description" : "発送完了メール送信",
+          "destinationId" : "4",
+          "id" : "96",
+          "linkedRelationshipId" : "95",
+          "sourceId" : "28",
+          "technology" : "HTTPS / API"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Go"
+      }, {
+        "description" : "在庫数・倉庫ロケーション・配送状態",
+        "documentation" : { },
+        "id" : "32",
+        "name" : "Fulfillment DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "fulfillment.fulfillmentDb"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "PostgreSQL"
+      } ],
+      "description" : "倉庫在庫管理・ピッキング・配送手配を担うシステム",
+      "documentation" : { },
+      "id" : "24",
+      "name" : "Fulfillment System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "fulfillment"
+      },
+      "relationships" : [ {
+        "description" : "配送伝票発行",
+        "destinationId" : "5",
+        "id" : "91",
+        "linkedRelationshipId" : "89",
+        "sourceId" : "24",
+        "technology" : "HTTPS / REST"
+      }, {
+        "description" : "発送完了メール送信",
+        "destinationId" : "4",
+        "id" : "97",
+        "linkedRelationshipId" : "95",
+        "sourceId" : "24",
+        "technology" : "HTTPS / API"
+      } ],
+      "tags" : "Element,Software System,Core"
+    }, {
+      "containers" : [ {
+        "components" : [ {
+          "description" : "スキーマ検証と正規化",
+          "documentation" : { },
+          "id" : "35",
+          "name" : "Event Normalizer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "analytics.ingestPipeline.eventParser"
+          },
+          "relationships" : [ {
+            "description" : "変換済みレコード転送",
+            "destinationId" : "36",
+            "id" : "105",
+            "sourceId" : "35",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Java"
+        }, {
+          "description" : "DWHへのマイクロバッチ書き込み",
+          "documentation" : { },
+          "id" : "36",
+          "name" : "Warehouse Sink",
+          "properties" : {
+            "structurizr.dsl.identifier" : "analytics.ingestPipeline.warehouseSink"
+          },
+          "relationships" : [ {
+            "description" : "分析テーブル追記",
+            "destinationId" : "37",
+            "id" : "106",
+            "sourceId" : "36",
+            "tags" : "Relationship",
+            "technology" : "gRPC / Storage Write"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Java"
+        } ],
+        "description" : "業務イベントをリアルタイム取り込み・変換",
+        "documentation" : { },
+        "id" : "34",
+        "name" : "Stream Ingestor",
+        "properties" : {
+          "structurizr.dsl.identifier" : "analytics.ingestPipeline"
+        },
+        "relationships" : [ {
+          "description" : "分析テーブル追記",
+          "destinationId" : "37",
+          "id" : "107",
+          "linkedRelationshipId" : "106",
+          "sourceId" : "34",
+          "technology" : "gRPC / Storage Write"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Apache Flink"
+      }, {
+        "description" : "分析用カラムナストレージ",
+        "documentation" : { },
+        "id" : "37",
+        "name" : "Data Warehouse",
+        "properties" : {
+          "structurizr.dsl.identifier" : "analytics.dwh"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "BigQuery"
+      }, {
+        "description" : "経営・店舗向け売上レポート可視化",
+        "documentation" : { },
+        "id" : "38",
+        "name" : "BI Dashboard",
+        "properties" : {
+          "structurizr.dsl.identifier" : "analytics.biDashboard"
+        },
+        "relationships" : [ {
+          "description" : "集計クエリ実行",
+          "destinationId" : "37",
+          "id" : "108",
+          "sourceId" : "38",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,Web Browser",
+        "technology" : "Looker"
+      } ],
+      "description" : "売上集計・レコメンド・異常検知を行う分析システム",
+      "documentation" : { },
+      "id" : "33",
+      "name" : "Analytics Platform",
+      "properties" : {
+        "structurizr.dsl.identifier" : "analytics"
+      },
+      "tags" : "Element,Software System,Analytics"
+    } ]
+  },
+  "name" : "CloudShop Platform",
+  "properties" : {
+    "structurizr.inspection.error" : "57",
+    "structurizr.dsl" : "d29ya3NwYWNlICJDbG91ZFNob3AgUGxhdGZvcm0iICLopIfmlbDjgrfjgrnjg4bjg6DjgYxMMeOAnEwz6ZqO5bGk44KS5oyB44Gh44CB44K344K544OG44Og5qiq5pat44Gn6YCj5pC644GZ44KLYzQtem9vbeWLleS9nOeiuuiqjeeUqOOBruS4u+WKm+OCteODs+ODl+ODqyIgewoKICAgICFpZGVudGlmaWVycyBoaWVyYXJjaGljYWwKCiAgICBtb2RlbCB7CiAgICAgICAgLy8gTGV2ZWwgMTog44Ki44Kv44K/44O8CiAgICAgICAgY3VzdG9tZXIgPSBwZXJzb24gIkN1c3RvbWVyIiAiV2Vi44G+44Gf44Gv44Oi44OQ44Kk44Or44Ki44OX44Oq44GL44KJ5ZWG5ZOB44KS6LO85YWl44GZ44KL5Yip55So6ICFIiAiRXh0ZXJuYWwiCiAgICAgICAgbWVyY2hhbnQgPSBwZXJzb24gIk1lcmNoYW50IFN0YWZmIiAi5ZWG5ZOB55m76Yyy44O75Zyo5bqr566h55CG44O75Ye66I235a++5b+c44KS6KGM44GG5bqX6IiX44K544K/44OD44OVIiAiSW50ZXJuYWwiCgogICAgICAgIC8vIExldmVsIDE6IOWklumDqOOCt+OCueODhuODoAogICAgICAgIHN0cmlwZSA9IHNvZnR3YXJlU3lzdGVtICJTdHJpcGUgUGF5bWVudCIgIuOCr+ODrOOCuOODg+ODiOOCq+ODvOODieaxuua4iOODu+i/lOmHkeWHpueQhuOCkuaLheOBhuWklumDqOaxuua4iOWfuuebpCIgIkV4dGVybmFsIiB7CiAgICAgICAgICAgIHVybCAiaHR0cHM6Ly9zdHJpcGUuY29tIgogICAgICAgIH0KICAgICAgICBzZW5kZ3JpZCA9IHNvZnR3YXJlU3lzdGVtICJTZW5kR3JpZCBNYWlsIiAi5rOo5paH56K66KqN44O755m66YCB6YCa55+l44Oh44O844Or44KS6YCB5L+h44GZ44KL5aSW6YOo44Oh44O844Or5Z+655ukIiAiRXh0ZXJuYWwiCiAgICAgICAgY2FycmllckFwaSA9IHNvZnR3YXJlU3lzdGVtICJMb2dpc3RpY3MgQ2FycmllciIgIumFjemAgeS8neelqOeZuuihjOOBqOiNt+eJqei/vei3oeOCkuaPkOS+m+OBmeOCi+WklumDqOmFjemAgUFQSSIgIkV4dGVybmFsIgoKICAgICAgICAvLyBMZXZlbCAxOiDlhoXpg6jjgrfjgrnjg4bjg6AgMe+8iOOCueODiOOCouODleODreODs+ODiCAmIOOCs+ODnuODvOOCue+8iQogICAgICAgIGNvbW1lcmNlID0gc29mdHdhcmVTeXN0ZW0gIkNvbW1lcmNlIFBsYXRmb3JtIiAi5ZWG5ZOB6Zay6Kan44O744Kr44O844OI44O75rOo5paH5Y+X5LuY44O75rG65riI44Kq44O844Kx44K544OI44Os44O844K344On44Oz44KS5ouF44GG5Lit5qC444K344K544OG44OgIiAiQ29yZSIgewogICAgICAgICAgICBncm91cCAiQ2xpZW50IENoYW5uZWxzIiB7CiAgICAgICAgICAgICAgICB3ZWJBcHAgPSBjb250YWluZXIgIldlYiBTdG9yZWZyb250IiAi6aGn5a6i5ZCR44GRRUPjgrXjgqTjg4giICJOZXh0LmpzIC8gVHlwZVNjcmlwdCIgIldlYiBCcm93c2VyIgogICAgICAgICAgICAgICAgbW9iaWxlQXBwID0gY29udGFpbmVyICJNb2JpbGUgQXBwIiAiaU9TIC8gQW5kcm9pZCDlkJHjgZHjgrfjg6fjg4Pjg5Tjg7PjgrDjgqLjg5fjg6oiICJGbHV0dGVyIiAiTW9iaWxlIEFwcCIKICAgICAgICAgICAgICAgIG1lcmNoYW50UG9ydGFsID0gY29udGFpbmVyICJNZXJjaGFudCBQb3J0YWwiICLlupfoiJflkJHjgZHnrqHnkIbnlLvpnaIiICJSZWFjdCAvIFR5cGVTY3JpcHQiICJXZWIgQnJvd3NlciIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZ2F0ZXdheSA9IGNvbnRhaW5lciAiQVBJIEdhdGV3YXkiICLoqo3oqLzjg7vjg6zjg7zjg4jliLbpmZDjg7vjg6vjg7zjg4bjgqPjg7PjgrDjgpLmi4XjgYbjgqjjg4PjgrjjgrLjg7zjg4jjgqbjgqfjgqQiICJFbnZveSAvIEdvIgoKICAgICAgICAgICAgb3JkZXJBcGkgPSBjb250YWluZXIgIk9yZGVyIEFQSSIgIuazqOaWh+S9nOaIkOODu+axuua4iOmAo+aQuuODu+OCreODo+ODs+OCu+ODq+OCkuWHpueQhuOBmeOCi0FQSeOCteODvOODkOODvCIgIkdvIC8gR2luIiB7CiAgICAgICAgICAgICAgICBhdXRoTWlkZGxld2FyZSA9IGNvbXBvbmVudCAiQXV0aCBNaWRkbGV3YXJlIiAiSldU5qSc6Ki844Go5qip6ZmQ44OB44Kn44OD44KvIiAiR28iCiAgICAgICAgICAgICAgICBvcmRlckNvbnRyb2xsZXIgPSBjb21wb25lbnQgIk9yZGVyIENvbnRyb2xsZXIiICJSRVNU44Ko44Oz44OJ44Od44Kk44Oz44OI44Go44Oq44Kv44Ko44K544OI5qSc6Ki8IiAiR28iCiAgICAgICAgICAgICAgICBjaGVja291dFNlcnZpY2UgPSBjb21wb25lbnQgIkNoZWNrb3V0IFNlcnZpY2UiICLlnKjluqvku67mirzjgZXjgYjjgJzmsbrmuIjnorrlrprjga7jg6/jg7zjgq/jg5Xjg63jg7zliLblvqEiICJHbyIKICAgICAgICAgICAgICAgIHBheW1lbnRBZGFwdGVyID0gY29tcG9uZW50ICJQYXltZW50IEFkYXB0ZXIiICLlpJbpg6jmsbrmuIjjgrLjg7zjg4jjgqbjgqfjgqTlkJHjgZFIVFRQ44Kv44Op44Kk44Ki44Oz44OIIiAiR28gLyBIVFRQUyIKICAgICAgICAgICAgICAgIG9yZGVyUmVwbyA9IGNvbXBvbmVudCAiT3JkZXIgUmVwb3NpdG9yeSIgIuazqOaWh+mbhue0hOOBruawuOe2muWMliIgIkdvIC8gcGd4IgogICAgICAgICAgICB9CgogICAgICAgICAgICBjYXRhbG9nQXBpID0gY29udGFpbmVyICJDYXRhbG9nIEFQSSIgIuWVhuWTgeaknOe0ouODu+S+oeagvOODu+OCq+ODhuOCtOODqueuoeeQhuOCkuaPkOS+m+OBmeOCi0FQSeOCteODvOODkOODvCIgIkdvIC8gZ1JQQyIgewogICAgICAgICAgICAgICAgY2F0YWxvZ0hhbmRsZXIgPSBjb21wb25lbnQgIkNhdGFsb2cgSGFuZGxlciIgIuWVhuWTgeeFp+S8muODu+abtOaWsOODj+ODs+ODieODqSIgIkdvIgogICAgICAgICAgICAgICAgc2VhcmNoSW5kZXhlciA9IGNvbXBvbmVudCAiU2VhcmNoIEluZGV4ZXIiICLllYblk4Hmm7TmlrDjgpLlhajmlofmpJzntKLjgqTjg7Pjg4fjg4Pjgq/jgrnjgbjlkIzmnJ8iICJHbyIKICAgICAgICAgICAgICAgIGNhdGFsb2dSZXBvID0gY29tcG9uZW50ICJDYXRhbG9nIFJlcG9zaXRvcnkiICLllYblk4Hjg57jgrnjgr/msLjntprljJYiICJHbyAvIHBneCIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgY29tbWVyY2VEYiA9IGNvbnRhaW5lciAiQ29tbWVyY2UgREIiICLms6jmlofjg7vllYblk4Hjg7vpoaflrqLjg4fjg7zjgr/jgpLmsLjntprljJYiICJQb3N0Z3JlU1FMIiAiRGF0YWJhc2UiCiAgICAgICAgICAgIHNlYXJjaEVuZ2luZSA9IGNvbnRhaW5lciAiU2VhcmNoIEluZGV4IiAi6auY6YCf44Gq5ZWG5ZOB5YWo5paH5qSc57Si44O744OV44Kh44K744OD44OI5qSc57SiIiAiT3BlblNlYXJjaCIgIkRhdGFiYXNlIgogICAgICAgICAgICBldmVudEJ1cyA9IGNvbnRhaW5lciAiRG9tYWluIEV2ZW50IEJ1cyIgIuazqOaWh+ODu+WcqOW6q+ODu+mFjemAgeOCpOODmeODs+ODiOOCkumdnuWQjOacn+mAo+aQuiIgIkFwYWNoZSBLYWZrYSIgIlF1ZXVlIgogICAgICAgIH0KCiAgICAgICAgLy8gTGV2ZWwgMTog5YaF6YOo44K344K544OG44OgIDLvvIjjg5Xjg6vjg5XjgqPjg6vjg6Hjg7Pjg4ggJiDlnKjluqvvvIkKICAgICAgICBmdWxmaWxsbWVudCA9IHNvZnR3YXJlU3lzdGVtICJGdWxmaWxsbWVudCBTeXN0ZW0iICLlgInluqvlnKjluqvnrqHnkIbjg7vjg5Tjg4Pjgq3jg7PjgrDjg7vphY3pgIHmiYvphY3jgpLmi4XjgYbjgrfjgrnjg4bjg6AiICJDb3JlIiB7CiAgICAgICAgICAgIGludmVudG9yeUFwaSA9IGNvbnRhaW5lciAiSW52ZW50b3J5IFNlcnZpY2UiICLlnKjluqvlvJXlvZPjg7vlhaXlh7rluqvnrqHnkIbjgpLooYzjgYbjg57jgqTjgq/jg63jgrXjg7zjg5PjgrkiICJSdXN0IC8gQXh1bSIgewogICAgICAgICAgICAgICAgcmVzZXJ2YXRpb25IYW5kbGVyID0gY29tcG9uZW50ICJSZXNlcnZhdGlvbiBIYW5kbGVyIiAi5Luu5oq844GV44GI44O756K65a6a44O76Kej5pS+QVBJIiAiUnVzdCIKICAgICAgICAgICAgICAgIHN0b2NrTGVkZ2VyID0gY29tcG9uZW50ICJTdG9jayBMZWRnZXIiICLlnKjluqvnp7vli5XlsaXmrbTjga7mlbTlkIjmgKfnrqHnkIYiICJSdXN0IgogICAgICAgICAgICB9CgogICAgICAgICAgICBzaGlwcGluZ1dvcmtlciA9IGNvbnRhaW5lciAiU2hpcHBpbmcgV29ya2VyIiAi5rOo5paH56K65a6a44Kk44OZ44Oz44OI44KS6LO86Kqt44GX44Gm6YWN6YCB5Lyd56Wo44KS55m66KGM44GZ44KL44Ov44O844Kr44O8IiAiR28iIHsKICAgICAgICAgICAgICAgIG9yZGVyQ29uc3VtZXIgPSBjb21wb25lbnQgIk9yZGVyIEV2ZW50IENvbnN1bWVyIiAiS2Fma2HjgYvjgonjga7jgqTjg5njg7Pjg4jos7zoqq3jg7vjg6rjg4jjg6njgqTliLblvqEiICJHbyIKICAgICAgICAgICAgICAgIGxhYmVsR2VuZXJhdG9yID0gY29tcG9uZW50ICJMYWJlbCBHZW5lcmF0b3IiICLphY3pgIHmpa3ogIVBUEnjgpLlkbzjgbPlh7rjgZfkvJ3npahQREbjgpLnlJ/miJAiICJHbyIKICAgICAgICAgICAgICAgIG5vdGlmaWNhdGlvblNlbmRlciA9IGNvbXBvbmVudCAiTm90aWZpY2F0aW9uIFNlbmRlciIgIueZuumAgeWujOS6huODoeODvOODq+OBrumAgeS/oeS+nemgvCIgIkdvIgogICAgICAgICAgICB9CgogICAgICAgICAgICBmdWxmaWxsbWVudERiID0gY29udGFpbmVyICJGdWxmaWxsbWVudCBEQiIgIuWcqOW6q+aVsOODu+WAieW6q+ODreOCseODvOOCt+ODp+ODs+ODu+mFjemAgeeKtuaFiyIgIlBvc3RncmVTUUwiICJEYXRhYmFzZSIKICAgICAgICB9CgogICAgICAgIC8vIExldmVsIDE6IOWGhemDqOOCt+OCueODhuODoCAz77yI44OH44O844K/5YiG5p6Q5Z+655uk77yJCiAgICAgICAgYW5hbHl0aWNzID0gc29mdHdhcmVTeXN0ZW0gIkFuYWx5dGljcyBQbGF0Zm9ybSIgIuWjsuS4iumbhuioiOODu+ODrOOCs+ODoeODs+ODieODu+eVsOW4uOaknOefpeOCkuihjOOBhuWIhuaekOOCt+OCueODhuODoCIgIkFuYWx5dGljcyIgewogICAgICAgICAgICBpbmdlc3RQaXBlbGluZSA9IGNvbnRhaW5lciAiU3RyZWFtIEluZ2VzdG9yIiAi5qWt5YuZ44Kk44OZ44Oz44OI44KS44Oq44Ki44Or44K/44Kk44Og5Y+W44KK6L6844G/44O75aSJ5o+bIiAiQXBhY2hlIEZsaW5rIiB7CiAgICAgICAgICAgICAgICBldmVudFBhcnNlciA9IGNvbXBvbmVudCAiRXZlbnQgTm9ybWFsaXplciIgIuOCueOCreODvOODnuaknOiovOOBqOato+imj+WMliIgIkphdmEiCiAgICAgICAgICAgICAgICB3YXJlaG91c2VTaW5rID0gY29tcG9uZW50ICJXYXJlaG91c2UgU2luayIgIkRXSOOBuOOBruODnuOCpOOCr+ODreODkOODg+ODgeabuOOBjei+vOOBvyIgIkphdmEiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZHdoID0gY29udGFpbmVyICJEYXRhIFdhcmVob3VzZSIgIuWIhuaekOeUqOOCq+ODqeODoOODiuOCueODiOODrOODvOOCuCIgIkJpZ1F1ZXJ5IiAiRGF0YWJhc2UiCiAgICAgICAgICAgIGJpRGFzaGJvYXJkID0gY29udGFpbmVyICJCSSBEYXNoYm9hcmQiICLntYzllrbjg7vlupfoiJflkJHjgZHlo7LkuIrjg6zjg53jg7zjg4jlj6/oppbljJYiICJMb29rZXIiICJXZWIgQnJvd3NlciIKICAgICAgICB9CgogICAgICAgIC8vIC0tLSDjg6bjg7zjgrbjg7zotbfngrnjga7plqLkv4Lnt5ogLS0tCiAgICAgICAgY3VzdG9tZXIgLT4gY29tbWVyY2Uud2ViQXBwICLllYblk4HmpJzntKLjg7vos7zlhaUiICJIVFRQUyIKICAgICAgICBjdXN0b21lciAtPiBjb21tZXJjZS5tb2JpbGVBcHAgIuWVhuWTgeaknOe0ouODu+izvOWFpSIgIkhUVFBTIgogICAgICAgIG1lcmNoYW50IC0+IGNvbW1lcmNlLm1lcmNoYW50UG9ydGFsICLllYblk4Hjg7vlnKjluqvjg7vlo7LkuIrjgpLnrqHnkIYiICJIVFRQUyIKICAgICAgICBtZXJjaGFudCAtPiBhbmFseXRpY3MuYmlEYXNoYm9hcmQgIuWjsuS4iuODu+i7ouaPm+eOh+OCkuWIhuaekCIgIkhUVFBTIgoKICAgICAgICAvLyAtLS0gQ29tbWVyY2Ug5YaF6YOoIC0tLQogICAgICAgIGNvbW1lcmNlLndlYkFwcCAtPiBjb21tZXJjZS5nYXRld2F5ICJBUEnlkbzjgbPlh7rjgZciICJIVFRQUyAvIEpTT04iCiAgICAgICAgY29tbWVyY2UubW9iaWxlQXBwIC0+IGNvbW1lcmNlLmdhdGV3YXkgIkFQSeWRvOOBs+WHuuOBlyIgIkhUVFBTIC8gSlNPTiIKICAgICAgICBjb21tZXJjZS5tZXJjaGFudFBvcnRhbCAtPiBjb21tZXJjZS5nYXRld2F5ICLnrqHnkIZBUEnlkbzjgbPlh7rjgZciICJIVFRQUyAvIEpTT04iCgogICAgICAgIGNvbW1lcmNlLmdhdGV3YXkgLT4gY29tbWVyY2Uub3JkZXJBcGkuYXV0aE1pZGRsZXdhcmUgIuazqOaWh+ezu+ODquOCr+OCqOOCueODiOi7oumAgSIgIkhUVFBTIgogICAgICAgIGNvbW1lcmNlLmdhdGV3YXkgLT4gY29tbWVyY2UuY2F0YWxvZ0FwaS5jYXRhbG9nSGFuZGxlciAi5ZWG5ZOB57O744Oq44Kv44Ko44K544OI6Lui6YCBIiAiZ1JQQyIKCiAgICAgICAgY29tbWVyY2Uub3JkZXJBcGkuYXV0aE1pZGRsZXdhcmUgLT4gY29tbWVyY2Uub3JkZXJBcGkub3JkZXJDb250cm9sbGVyICLoqo3oqLzmuIjjgb/jg6rjgq/jgqjjgrnjg4jlp5TorbIiCiAgICAgICAgY29tbWVyY2Uub3JkZXJBcGkub3JkZXJDb250cm9sbGVyIC0+IGNvbW1lcmNlLm9yZGVyQXBpLmNoZWNrb3V0U2VydmljZSAi44OB44Kn44OD44Kv44Ki44Km44OI5a6f6KGMIgogICAgICAgIGNvbW1lcmNlLm9yZGVyQXBpLmNoZWNrb3V0U2VydmljZSAtPiBjb21tZXJjZS5vcmRlckFwaS5wYXltZW50QWRhcHRlciAi5rG65riI44Kq44O844K944Oq5L6d6aC8IgogICAgICAgIGNvbW1lcmNlLm9yZGVyQXBpLmNoZWNrb3V0U2VydmljZSAtPiBjb21tZXJjZS5vcmRlckFwaS5vcmRlclJlcG8gIuazqOaWh+OCueODhuODvOOCv+OCueS/neWtmCIKICAgICAgICBjb21tZXJjZS5vcmRlckFwaS5vcmRlclJlcG8gLT4gY29tbWVyY2UuY29tbWVyY2VEYiAi5rOo5paH44OH44O844K/6Kqt44G/5pu444GNIiAiU1FMIC8gVENQIgogICAgICAgIGNvbW1lcmNlLm9yZGVyQXBpLmNoZWNrb3V0U2VydmljZSAtPiBjb21tZXJjZS5ldmVudEJ1cyAiT3JkZXJDb25maXJtZWQg44Kk44OZ44Oz44OI55m66KGMIiAiS2Fma2EiCgogICAgICAgIGNvbW1lcmNlLmNhdGFsb2dBcGkuY2F0YWxvZ0hhbmRsZXIgLT4gY29tbWVyY2UuY2F0YWxvZ0FwaS5jYXRhbG9nUmVwbyAi5ZWG5ZOB44Oe44K544K/5Y+W5b6X44O75pu05pawIgogICAgICAgIGNvbW1lcmNlLmNhdGFsb2dBcGkuY2F0YWxvZ0hhbmRsZXIgLT4gY29tbWVyY2Uuc2VhcmNoRW5naW5lICLlhajmlofmpJzntKLjgq/jgqjjg6oiICJIVFRQUyIKICAgICAgICBjb21tZXJjZS5jYXRhbG9nQXBpLmNhdGFsb2dIYW5kbGVyIC0+IGNvbW1lcmNlLmNhdGFsb2dBcGkuc2VhcmNoSW5kZXhlciAi44Kk44Oz44OH44OD44Kv44K55pu05paw6YCa55+lIgogICAgICAgIGNvbW1lcmNlLmNhdGFsb2dBcGkuc2VhcmNoSW5kZXhlciAtPiBjb21tZXJjZS5zZWFyY2hFbmdpbmUgIuODieOCreODpeODoeODs+ODiOeZu+mMsiIgIkhUVFBTIgogICAgICAgIGNvbW1lcmNlLmNhdGFsb2dBcGkuY2F0YWxvZ1JlcG8gLT4gY29tbWVyY2UuY29tbWVyY2VEYiAi5ZWG5ZOB44Oe44K544K/6Kqt44G/5pu444GNIiAiU1FMIC8gVENQIgoKICAgICAgICAvLyAtLS0g44K344K544OG44Og5qiq5pat44O75aSW6YOo6YCj5pC6IC0tLQogICAgICAgIGNvbW1lcmNlLm9yZGVyQXBpLnBheW1lbnRBZGFwdGVyIC0+IHN0cmlwZSAi5rG65riI44Kq44O844K944Oq44O75aOy5LiK56K65a6aIiAiSFRUUFMgLyBSRVNUIgogICAgICAgIGNvbW1lcmNlLm9yZGVyQXBpLmNoZWNrb3V0U2VydmljZSAtPiBmdWxmaWxsbWVudC5pbnZlbnRvcnlBcGkucmVzZXJ2YXRpb25IYW5kbGVyICLlnKjluqvku67mirzjgZXjgYjjg7vnorrlrpoiICJnUlBDIgoKICAgICAgICBmdWxmaWxsbWVudC5pbnZlbnRvcnlBcGkucmVzZXJ2YXRpb25IYW5kbGVyIC0+IGZ1bGZpbGxtZW50LmludmVudG9yeUFwaS5zdG9ja0xlZGdlciAi5Zyo5bqr5Y+w5biz5pu05pawIgogICAgICAgIGZ1bGZpbGxtZW50LmludmVudG9yeUFwaS5zdG9ja0xlZGdlciAtPiBmdWxmaWxsbWVudC5mdWxmaWxsbWVudERiICLlnKjluqvjg6zjgrPjg7zjg4nmm7TmlrAiICJTUUwgLyBUQ1AiCgogICAgICAgIGNvbW1lcmNlLmV2ZW50QnVzIC0+IGZ1bGZpbGxtZW50LnNoaXBwaW5nV29ya2VyLm9yZGVyQ29uc3VtZXIgIk9yZGVyQ29uZmlybWVkIOizvOiqrSIgIkthZmthIgogICAgICAgIGZ1bGZpbGxtZW50LnNoaXBwaW5nV29ya2VyLm9yZGVyQ29uc3VtZXIgLT4gZnVsZmlsbG1lbnQuc2hpcHBpbmdXb3JrZXIubGFiZWxHZW5lcmF0b3IgIuWHuuiNt+aMh+ekuueUn+aIkCIKICAgICAgICBmdWxmaWxsbWVudC5zaGlwcGluZ1dvcmtlci5sYWJlbEdlbmVyYXRvciAtPiBjYXJyaWVyQXBpICLphY3pgIHkvJ3npajnmbrooYwiICJIVFRQUyAvIFJFU1QiCiAgICAgICAgZnVsZmlsbG1lbnQuc2hpcHBpbmdXb3JrZXIubGFiZWxHZW5lcmF0b3IgLT4gZnVsZmlsbG1lbnQuZnVsZmlsbG1lbnREYiAi6YWN6YCB44K544OG44O844K/44K55pu05pawIiAiU1FMIC8gVENQIgogICAgICAgIGZ1bGZpbGxtZW50LnNoaXBwaW5nV29ya2VyLm9yZGVyQ29uc3VtZXIgLT4gZnVsZmlsbG1lbnQuc2hpcHBpbmdXb3JrZXIubm90aWZpY2F0aW9uU2VuZGVyICLnmbrpgIHpgJrnn6Xjg4jjg6rjgqzjg7wiCiAgICAgICAgZnVsZmlsbG1lbnQuc2hpcHBpbmdXb3JrZXIubm90aWZpY2F0aW9uU2VuZGVyIC0+IHNlbmRncmlkICLnmbrpgIHlrozkuobjg6Hjg7zjg6vpgIHkv6EiICJIVFRQUyAvIEFQSSIKICAgICAgICBzZW5kZ3JpZCAtPiBjdXN0b21lciAi5rOo5paH44O755m66YCB6YCa55+l44Oh44O844Or6YWN5L+hIiAiU01UUCIKCiAgICAgICAgLy8gLS0tIOWIhuaekOmAo+aQuiAtLS0KICAgICAgICBjb21tZXJjZS5ldmVudEJ1cyAtPiBhbmFseXRpY3MuaW5nZXN0UGlwZWxpbmUuZXZlbnRQYXJzZXIgIuWFqOODieODoeOCpOODs+OCpOODmeODs+ODiOizvOiqrSIgIkthZmthIgogICAgICAgIGFuYWx5dGljcy5pbmdlc3RQaXBlbGluZS5ldmVudFBhcnNlciAtPiBhbmFseXRpY3MuaW5nZXN0UGlwZWxpbmUud2FyZWhvdXNlU2luayAi5aSJ5o+b5riI44G/44Os44Kz44O844OJ6Lui6YCBIgogICAgICAgIGFuYWx5dGljcy5pbmdlc3RQaXBlbGluZS53YXJlaG91c2VTaW5rIC0+IGFuYWx5dGljcy5kd2ggIuWIhuaekOODhuODvOODluODq+i/veiomCIgImdSUEMgLyBTdG9yYWdlIFdyaXRlIgogICAgICAgIGFuYWx5dGljcy5iaURhc2hib2FyZCAtPiBhbmFseXRpY3MuZHdoICLpm4boqIjjgq/jgqjjg6rlrp/ooYwiICJTUUwiCiAgICB9Cn0=",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "containerId" : "34",
+      "elements" : [ {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "36",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "37",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-001",
+      "name" : "Component View: Analytics Platform - Stream Ingestor",
+      "order" : 4,
+      "relationships" : [ {
+        "id" : "102"
+      }, {
+        "id" : "105"
+      }, {
+        "id" : "106"
+      } ]
+    }, {
+      "containerId" : "17",
+      "elements" : [ {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-002",
+      "name" : "Component View: Commerce Platform - Catalog API",
+      "order" : 7,
+      "relationships" : [ {
+        "id" : "51"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "62"
+      }, {
+        "id" : "64"
+      }, {
+        "id" : "65"
+      }, {
+        "id" : "66"
+      } ]
+    }, {
+      "containerId" : "11",
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-003",
+      "name" : "Component View: Commerce Platform - Order API",
+      "order" : 8,
+      "relationships" : [ {
+        "id" : "49"
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "54"
+      }, {
+        "id" : "55"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "57"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "73"
+      }, {
+        "id" : "85"
+      } ]
+    }, {
+      "containerId" : "25",
+      "elements" : [ {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "32",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-004",
+      "name" : "Component View: Fulfillment System - Inventory Service",
+      "order" : 11,
+      "relationships" : [ {
+        "id" : "77"
+      }, {
+        "id" : "80"
+      }, {
+        "id" : "81"
+      } ]
+    }, {
+      "containerId" : "28",
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "29",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "30",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "31",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "32",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-005",
+      "name" : "Component View: Fulfillment System - Shipping Worker",
+      "order" : 12,
+      "relationships" : [ {
+        "id" : "86"
+      }, {
+        "id" : "88"
+      }, {
+        "id" : "89"
+      }, {
+        "id" : "92"
+      }, {
+        "id" : "94"
+      }, {
+        "id" : "95"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "34",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "37",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "38",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-001",
+      "name" : "Container View: Analytics Platform",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "103"
+      }, {
+        "id" : "107"
+      }, {
+        "id" : "108"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "44"
+      } ],
+      "softwareSystemId" : "33"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-002",
+      "name" : "Container View: Commerce Platform",
+      "order" : 6,
+      "relationships" : [ {
+        "id" : "101"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "45"
+      }, {
+        "id" : "46"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "48"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "67"
+      }, {
+        "id" : "69"
+      }, {
+        "id" : "76"
+      }, {
+        "id" : "85"
+      } ],
+      "softwareSystemId" : "6"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "32",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-003",
+      "name" : "Container View: Fulfillment System",
+      "order" : 10,
+      "relationships" : [ {
+        "id" : "78"
+      }, {
+        "id" : "82"
+      }, {
+        "id" : "87"
+      }, {
+        "id" : "90"
+      }, {
+        "id" : "93"
+      }, {
+        "id" : "96"
+      } ],
+      "softwareSystemId" : "24"
+    } ],
+    "systemContextViews" : [ {
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-001",
+      "name" : "System Context View: Analytics Platform",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "104"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "45"
+      } ],
+      "softwareSystemId" : "33"
+    }, {
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-002",
+      "name" : "System Context View: Commerce Platform",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "104"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "45"
+      }, {
+        "id" : "70"
+      }, {
+        "id" : "79"
+      } ],
+      "softwareSystemId" : "6"
+    }, {
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-003",
+      "name" : "System Context View: Fulfillment System",
+      "order" : 9,
+      "relationships" : [ {
+        "id" : "79"
+      }, {
+        "id" : "91"
+      }, {
+        "id" : "97"
+      } ],
+      "softwareSystemId" : "24"
+    }, {
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-004",
+      "name" : "System Context View: Logistics Carrier",
+      "order" : 13,
+      "relationships" : [ {
+        "id" : "91"
+      } ],
+      "softwareSystemId" : "5"
+    }, {
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-005",
+      "name" : "System Context View: SendGrid Mail",
+      "order" : 14,
+      "relationships" : [ {
+        "id" : "97"
+      }, {
+        "id" : "98"
+      } ],
+      "softwareSystemId" : "4"
+    }, {
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-006",
+      "name" : "System Context View: Stripe Payment",
+      "order" : 15,
+      "relationships" : [ {
+        "id" : "70"
+      } ],
+      "softwareSystemId" : "3"
+    } ],
+    "systemLandscapeViews" : [ {
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemLandscape-001",
+      "name" : "System Landscape View",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "104"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "45"
+      }, {
+        "id" : "70"
+      }, {
+        "id" : "79"
+      }, {
+        "id" : "91"
+      }, {
+        "id" : "97"
+      }, {
+        "id" : "98"
+      } ]
+    } ]
+  }
+}

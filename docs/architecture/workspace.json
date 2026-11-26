@@ -1,0 +1,1342 @@
+{
+  "configuration" : { },
+  "description" : "Structurizr 公式 workspace.json を連続セマンティック・ズームで探索・単一 HTML 配布できる C4 マップビューア自身のアーキテクチャ",
+  "documentation" : { },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "Structurizr DSL を書き、JSON 変換して c4-zoom で可視化・単一 HTML を配布する作成者",
+      "id" : "1",
+      "name" : "Developer / Architect",
+      "properties" : {
+        "structurizr.dsl.identifier" : "architect"
+      },
+      "relationships" : [ {
+        "description" : "workspace.dsl を公式 workspace.json へ変換する",
+        "destinationId" : "3",
+        "id" : "36",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "CLI / Docker"
+      }, {
+        "description" : "c4-zoom build で単一 HTML を生成する",
+        "destinationId" : "31",
+        "id" : "38",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "CLI"
+      }, {
+        "description" : "c4-zoom build で単一 HTML を生成する",
+        "destinationId" : "30",
+        "id" : "39",
+        "linkedRelationshipId" : "38",
+        "sourceId" : "1",
+        "technology" : "CLI"
+      }, {
+        "description" : "c4-zoom build で単一 HTML を生成する",
+        "destinationId" : "7",
+        "id" : "40",
+        "linkedRelationshipId" : "38",
+        "sourceId" : "1",
+        "technology" : "CLI"
+      }, {
+        "description" : "デモ確認や手元 JSON の試行を行う",
+        "destinationId" : "35",
+        "id" : "41",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,External"
+    }, {
+      "description" : "配布された単一 HTML または GitHub Pages サンプルサイトでアーキテクチャを探索する閲覧者",
+      "id" : "2",
+      "name" : "Architecture Reader",
+      "properties" : {
+        "structurizr.dsl.identifier" : "reader"
+      },
+      "relationships" : [ {
+        "description" : "c4-zoom 自身や各種サンプルをブラウザで探索する",
+        "destinationId" : "35",
+        "id" : "42",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "c4-zoom 自身や各種サンプルをブラウザで探索する",
+        "destinationId" : "7",
+        "id" : "43",
+        "linkedRelationshipId" : "42",
+        "sourceId" : "2",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "配布された単一 HTML をブラウザで直接開く",
+        "destinationId" : "5",
+        "id" : "44",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "file:// / HTTPS"
+      }, {
+        "description" : "パン・連続ズーム・ノード選択・トレースを行う",
+        "destinationId" : "23",
+        "id" : "45",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Mouse / Trackpad / Keyboard"
+      }, {
+        "description" : "パン・連続ズーム・ノード選択・トレースを行う",
+        "destinationId" : "19",
+        "id" : "46",
+        "linkedRelationshipId" : "45",
+        "sourceId" : "2",
+        "technology" : "Mouse / Trackpad / Keyboard"
+      }, {
+        "description" : "要素名・技術・タグでスポット検索する",
+        "destinationId" : "24",
+        "id" : "47",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Keyboard (Cmd+K)"
+      }, {
+        "description" : "L1/L2/L3 クイックジャンプや兄弟巡回を行う",
+        "destinationId" : "26",
+        "id" : "48",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Click / 1-3 / [ ]"
+      }, {
+        "description" : "詳細情報や上流・下流の接続先へジャンプする",
+        "destinationId" : "28",
+        "id" : "49",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Click"
+      }, {
+        "description" : "俯瞰位置を確認しドラッグで移動する",
+        "destinationId" : "27",
+        "id" : "50",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Click / Drag"
+      }, {
+        "description" : "現在地確認・1階層上へ戻る",
+        "destinationId" : "25",
+        "id" : "51",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Click / Backspace"
+      }, {
+        "description" : "サンプル切替・workspace.json D&D・単一HTML書き出しを行う",
+        "destinationId" : "29",
+        "id" : "52",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Click / Drag & Drop"
+      } ],
+      "tags" : "Element,Person,External"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Structurizr DSL を公式仕様で workspace.json へ変換する外部公式ツール",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "Structurizr CLI",
+      "properties" : {
+        "structurizr.dsl.identifier" : "structurizrCli"
+      },
+      "relationships" : [ {
+        "description" : "workspace.json を出力する",
+        "destinationId" : "5",
+        "id" : "37",
+        "sourceId" : "3",
+        "tags" : "Relationship",
+        "technology" : "File I/O"
+      } ],
+      "tags" : "Element,Software System,External",
+      "url" : "https://docs.structurizr.com/cli"
+    }, {
+      "description" : "サンプルサイト（デモ用静的アセット）を配信する外部ホスティング基盤",
+      "documentation" : { },
+      "id" : "4",
+      "name" : "GitHub Pages",
+      "properties" : {
+        "structurizr.dsl.identifier" : "githubPages"
+      },
+      "relationships" : [ {
+        "description" : "ビルド済みサンプルサイトと viewer-template.html を配信する",
+        "destinationId" : "35",
+        "id" : "53",
+        "sourceId" : "4",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "ビルド済みサンプルサイトと viewer-template.html を配信する",
+        "destinationId" : "7",
+        "id" : "54",
+        "linkedRelationshipId" : "53",
+        "sourceId" : "4",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "workspace.json や生成済み単一 HTML ファイルを保存するローカル領域",
+      "documentation" : { },
+      "id" : "5",
+      "name" : "Local File System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "localFs"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "手動レイアウト調整差分・テーマ・直近読込状態を保持するブラウザ領域",
+      "documentation" : { },
+      "id" : "6",
+      "name" : "Browser localStorage",
+      "properties" : {
+        "structurizr.dsl.identifier" : "browserStorage"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "containers" : [ {
+        "components" : [ {
+          "description" : "公式 workspace.json を C4Workspace へ正規化（group再構築・Prototype Pollution防御・診断生成）",
+          "documentation" : { },
+          "group" : "Input & Graph Pipeline",
+          "id" : "9",
+          "name" : "Structurizr JSON Adapter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.jsonAdapter"
+          },
+          "relationships" : [ {
+            "description" : "正規化 C4Workspace を生成する",
+            "destinationId" : "10",
+            "id" : "111",
+            "sourceId" : "9",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "親子探索・循環安全な上流/下流トレース（1-hop / Transitive）",
+          "documentation" : { },
+          "group" : "Input & Graph Pipeline",
+          "id" : "10",
+          "name" : "Canonical C4 Graph & Tracer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.c4Graph"
+          },
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "ELK.js による決定的な階層（Compound Graph）自動配置",
+          "documentation" : { },
+          "group" : "Spatial Layout Pipeline",
+          "id" : "11",
+          "name" : "ELK Layout Adapter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.elkAdapter"
+          },
+          "tags" : "Element,Component",
+          "technology" : "TypeScript / elkjs"
+        }, {
+          "description" : "手動ドラッグ差分を非破壊適用し親境界を自動調整",
+          "documentation" : { },
+          "group" : "Spatial Layout Pipeline",
+          "id" : "12",
+          "name" : "Manual Offset Merger",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.offsetMerger"
+          },
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "座標変換・カーソル基準ズーム・慣性パン・放物線 Fly-to・L1/L2/L3 クイックジャンプ計算",
+          "documentation" : { },
+          "group" : "Semantic Zoom & Rendering Pipeline",
+          "id" : "13",
+          "name" : "Camera & Level-Jump Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.cameraController"
+          },
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "画面占有サイズに基づく smoothstep 展開度と支配レベル判定",
+          "documentation" : { },
+          "group" : "Semantic Zoom & Rendering Pipeline",
+          "id" : "14",
+          "name" : "Semantic Zoom LOD Evaluator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.lodEvaluator"
+          },
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "可視アンカー射影・重複エッジ集約・双方向カーブ分離・メモ化",
+          "documentation" : { },
+          "group" : "Semantic Zoom & Rendering Pipeline",
+          "id" : "15",
+          "name" : "Dynamic Edge Rollup Engine",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.edgeRollup"
+          },
+          "relationships" : [ {
+            "description" : "展開状態を参照して有効アンカーを決定する",
+            "destinationId" : "14",
+            "id" : "116",
+            "sourceId" : "15",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "Zオーダー考慮の要素/エッジ判定とビューポート外カリング",
+          "documentation" : { },
+          "group" : "Semantic Zoom & Rendering Pipeline",
+          "id" : "16",
+          "name" : "Hit Tester & Frustum Culler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.hitTester"
+          },
+          "relationships" : [ {
+            "description" : "展開状態に応じた最深ヒット要素を判定する",
+            "destinationId" : "14",
+            "id" : "117",
+            "sourceId" : "16",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "HiDPI 60fps カートグラフィー描画・ラベル衝突回避・トレースパルス",
+          "documentation" : { },
+          "group" : "Semantic Zoom & Rendering Pipeline",
+          "id" : "17",
+          "name" : "Canvas 2D Cartography Renderer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.canvasRenderer"
+          },
+          "relationships" : [ {
+            "description" : "ワールド↔スクリーン座標変換を参照する",
+            "destinationId" : "13",
+            "id" : "112",
+            "sourceId" : "17",
+            "tags" : "Relationship"
+          }, {
+            "description" : "各要素の detailAlpha と支配レベルを取得する",
+            "destinationId" : "14",
+            "id" : "113",
+            "sourceId" : "17",
+            "tags" : "Relationship"
+          }, {
+            "description" : "可視階層へ集約済みの DisplayEdge 群を取得する",
+            "destinationId" : "15",
+            "id" : "114",
+            "sourceId" : "17",
+            "tags" : "Relationship"
+          }, {
+            "description" : "ビューポートカリング済み可視集合を参照する",
+            "destinationId" : "16",
+            "id" : "115",
+            "sourceId" : "17",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript / Canvas 2D"
+        }, {
+          "description" : "XSS安全エスケープ付きブートストラップJSON生成とHTMLテンプレート注入",
+          "documentation" : { },
+          "group" : "Single-HTML Export Pipeline",
+          "id" : "18",
+          "name" : "Single-HTML Payload Serializer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.core.htmlExporter"
+          },
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        } ],
+        "description" : "React/Node非依存の純粋TypeScript製JSON変換・レイアウト・LOD・Canvas 2D描画・HTML埋込エンジン",
+        "documentation" : { },
+        "id" : "8",
+        "name" : "Core Map Engine (@c4-zoom/core)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "c4Zoom.core"
+        },
+        "tags" : "Element,Container",
+        "technology" : "Pure TypeScript / elkjs"
+      }, {
+        "components" : [ {
+          "description" : "#c4-zoom-bootstrap を読み取り Standalone / Sample Site モードと precomputedLayout を初期化",
+          "documentation" : { },
+          "id" : "20",
+          "name" : "Bootstrap Loader",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.bootstrapLoader"
+          },
+          "relationships" : [ {
+            "description" : "初期モデル・precomputedLayout・モード・テーマを投入する",
+            "destinationId" : "21",
+            "id" : "81",
+            "sourceId" : "20",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "低頻度UI状態（useReducer）と 60fps 高頻度ランタイム状態（Ref）の二層管理・永続化",
+          "documentation" : { },
+          "id" : "21",
+          "name" : "AppState Context & Ref Bridge",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.stateBridge"
+          },
+          "relationships" : [ {
+            "description" : "手動オフセット・UI設定を保存/復元する",
+            "destinationId" : "6",
+            "id" : "60",
+            "sourceId" : "21",
+            "tags" : "Relationship",
+            "technology" : "Web Storage API"
+          }, {
+            "description" : "レイアウト未計算モデルの配置計算を依頼する",
+            "destinationId" : "22",
+            "id" : "89",
+            "sourceId" : "21",
+            "tags" : "Relationship"
+          }, {
+            "description" : "選択ノードの上流・下流トレースを算出する",
+            "destinationId" : "10",
+            "id" : "95",
+            "sourceId" : "21",
+            "tags" : "Relationship"
+          }, {
+            "description" : "選択ノードの上流・下流トレースを算出する",
+            "destinationId" : "8",
+            "id" : "96",
+            "linkedRelationshipId" : "95",
+            "sourceId" : "21"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React / TypeScript"
+        }, {
+          "description" : "precomputedLayout 時 0ms スキップ、動的読込時は Worker / file:// 安全フォールバックを実行",
+          "documentation" : { },
+          "id" : "22",
+          "name" : "Layout Execution Bridge",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.layoutRunner"
+          },
+          "relationships" : [ {
+            "description" : "ELK レイアウト計算を実行する",
+            "destinationId" : "11",
+            "id" : "90",
+            "sourceId" : "22",
+            "tags" : "Relationship"
+          }, {
+            "description" : "ELK レイアウト計算を実行する",
+            "destinationId" : "8",
+            "id" : "91",
+            "linkedRelationshipId" : "90",
+            "sourceId" : "22"
+          }, {
+            "description" : "手動オフセットを非破壊適用する",
+            "destinationId" : "12",
+            "id" : "93",
+            "sourceId" : "22",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript / Web Worker"
+        }, {
+          "description" : "Canvas 2D の rAF ループ・ResizeObserver・ポインタ/ホイール/キーボード入力統括",
+          "documentation" : { },
+          "id" : "23",
+          "name" : "MapCanvas Host",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.mapCanvasHost"
+          },
+          "relationships" : [ {
+            "description" : "毎フレームのRef読み書き・選択・スロットルHUD同期を行う",
+            "destinationId" : "21",
+            "id" : "103",
+            "sourceId" : "23",
+            "tags" : "Relationship"
+          }, {
+            "description" : "パン・ズーム・Fly-to・レベルジャンプ補間を進める",
+            "destinationId" : "13",
+            "id" : "104",
+            "sourceId" : "23",
+            "tags" : "Relationship"
+          }, {
+            "description" : "パン・ズーム・Fly-to・レベルジャンプ補間を進める",
+            "destinationId" : "8",
+            "id" : "105",
+            "linkedRelationshipId" : "104",
+            "sourceId" : "23"
+          }, {
+            "description" : "カーソル座標の要素・エッジ判定を依頼する",
+            "destinationId" : "16",
+            "id" : "107",
+            "sourceId" : "23",
+            "tags" : "Relationship"
+          }, {
+            "description" : "毎フレームの地図シーンを描画する",
+            "destinationId" : "17",
+            "id" : "109",
+            "sourceId" : "23",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React"
+        }, {
+          "description" : "スポット検索（Cmd+K / /）と候補選択による Fly-to 起動",
+          "documentation" : { },
+          "id" : "24",
+          "name" : "SearchBar",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.searchBar"
+          },
+          "relationships" : [ {
+            "description" : "検索結果への Fly-to を要求する",
+            "destinationId" : "21",
+            "id" : "98",
+            "sourceId" : "24",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React"
+        }, {
+          "description" : "現在のビューポート中央の階層パス表示とクリック／Zoom Up 移動",
+          "documentation" : { },
+          "id" : "25",
+          "name" : "Breadcrumbs",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.breadcrumbs"
+          },
+          "relationships" : [ {
+            "description" : "親階層への Fly-to / Zoom Up を要求する",
+            "destinationId" : "21",
+            "id" : "99",
+            "sourceId" : "25",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React"
+        }, {
+          "description" : "L1/L2/L3 スマートジャンプ・対象一覧ポップオーバー・兄弟巡回・配置調整/テーマ切替",
+          "documentation" : { },
+          "id" : "26",
+          "name" : "ZoomControls & Level Jumper",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.zoomControls"
+          },
+          "relationships" : [ {
+            "description" : "L1/L2/L3 ジャンプ・兄弟巡回・編集モード・テーマ切替を通知する",
+            "destinationId" : "21",
+            "id" : "100",
+            "sourceId" : "26",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React"
+        }, {
+          "description" : "全体俯瞰サムネイル描画とドラッグによるカメラ移動",
+          "documentation" : { },
+          "id" : "27",
+          "name" : "Minimap",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.minimapUi"
+          },
+          "relationships" : [ {
+            "description" : "カメラ位置の同期とドラッグ移動を行う",
+            "destinationId" : "21",
+            "id" : "101",
+            "sourceId" : "27",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React / Canvas 2D"
+        }, {
+          "description" : "選択要素/エッジの詳細（http/https検証済みURL含む）と上流・下流トレース一覧",
+          "documentation" : { },
+          "id" : "28",
+          "name" : "Inspector",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.inspectorUi"
+          },
+          "relationships" : [ {
+            "description" : "トレースモード切替と接続先 Fly-to を要求する",
+            "destinationId" : "21",
+            "id" : "102",
+            "sourceId" : "28",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React"
+        }, {
+          "description" : "サンプル切替・workspace.json 読込（D&D/選択）・診断表示・単一HTMLダウンロード",
+          "documentation" : { },
+          "id" : "29",
+          "name" : "SourceControls & HTML Exporter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.viewer.sourceControls"
+          },
+          "relationships" : [ {
+            "description" : "workspace.json の読込および単一 HTML のダウンロード保存を行う",
+            "destinationId" : "5",
+            "id" : "57",
+            "sourceId" : "29",
+            "tags" : "Relationship",
+            "technology" : "File API / Blob"
+          }, {
+            "description" : "D&D/選択された workspace.json をパースする",
+            "destinationId" : "9",
+            "id" : "82",
+            "sourceId" : "29",
+            "tags" : "Relationship"
+          }, {
+            "description" : "D&D/選択された workspace.json をパースする",
+            "destinationId" : "8",
+            "id" : "83",
+            "linkedRelationshipId" : "82",
+            "sourceId" : "29"
+          }, {
+            "description" : "現在の地図と手動オフセットを単一 HTML へシリアライズする",
+            "destinationId" : "18",
+            "id" : "86",
+            "sourceId" : "29",
+            "tags" : "Relationship"
+          }, {
+            "description" : "更新モデルと診断結果を通知する",
+            "destinationId" : "21",
+            "id" : "88",
+            "sourceId" : "29",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "React"
+        } ],
+        "description" : "React + Tailwind v4 の探索UIアプリ（通常SPAビルド＋単一HTMLテンプレート出力）",
+        "documentation" : { },
+        "id" : "19",
+        "name" : "Interactive Map Viewer (@c4-zoom/viewer)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "c4Zoom.viewer"
+        },
+        "relationships" : [ {
+          "description" : "workspace.json の読込および単一 HTML のダウンロード保存を行う",
+          "destinationId" : "5",
+          "id" : "58",
+          "linkedRelationshipId" : "57",
+          "sourceId" : "19",
+          "technology" : "File API / Blob"
+        }, {
+          "description" : "手動オフセット・UI設定を保存/復元する",
+          "destinationId" : "6",
+          "id" : "61",
+          "linkedRelationshipId" : "60",
+          "sourceId" : "19",
+          "technology" : "Web Storage API"
+        }, {
+          "description" : "D&D/選択された workspace.json をパースする",
+          "destinationId" : "9",
+          "id" : "84",
+          "linkedRelationshipId" : "82",
+          "sourceId" : "19"
+        }, {
+          "description" : "D&D/選択された workspace.json をパースする",
+          "destinationId" : "8",
+          "id" : "85",
+          "linkedRelationshipId" : "82",
+          "sourceId" : "19"
+        }, {
+          "description" : "現在の地図と手動オフセットを単一 HTML へシリアライズする",
+          "destinationId" : "18",
+          "id" : "87",
+          "linkedRelationshipId" : "86",
+          "sourceId" : "19"
+        }, {
+          "description" : "ELK レイアウト計算を実行する",
+          "destinationId" : "11",
+          "id" : "92",
+          "linkedRelationshipId" : "90",
+          "sourceId" : "19"
+        }, {
+          "description" : "手動オフセットを非破壊適用する",
+          "destinationId" : "12",
+          "id" : "94",
+          "linkedRelationshipId" : "93",
+          "sourceId" : "19"
+        }, {
+          "description" : "選択ノードの上流・下流トレースを算出する",
+          "destinationId" : "10",
+          "id" : "97",
+          "linkedRelationshipId" : "95",
+          "sourceId" : "19"
+        }, {
+          "description" : "パン・ズーム・Fly-to・レベルジャンプ補間を進める",
+          "destinationId" : "13",
+          "id" : "106",
+          "linkedRelationshipId" : "104",
+          "sourceId" : "19"
+        }, {
+          "description" : "カーソル座標の要素・エッジ判定を依頼する",
+          "destinationId" : "16",
+          "id" : "108",
+          "linkedRelationshipId" : "107",
+          "sourceId" : "19"
+        }, {
+          "description" : "毎フレームの地図シーンを描画する",
+          "destinationId" : "17",
+          "id" : "110",
+          "linkedRelationshipId" : "109",
+          "sourceId" : "19"
+        } ],
+        "tags" : "Element,Container,Web Browser",
+        "technology" : "React 19 / TypeScript / Tailwind CSS v4"
+      }, {
+        "components" : [ {
+          "description" : "build コマンド引数・オプション（-o, --prelayout, --overrides, --theme, --strict等）解析",
+          "documentation" : { },
+          "id" : "31",
+          "name" : "CLI Argument Parser",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.cli.cliArgs"
+          },
+          "relationships" : [ {
+            "description" : "入力パス・オプションを渡す",
+            "destinationId" : "32",
+            "id" : "63",
+            "sourceId" : "31",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "ローカルファイルまたは標準入力から workspace.json と任意オフセットJSONを読み込む",
+          "documentation" : { },
+          "id" : "32",
+          "name" : "Workspace File/Stdin Loader",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.cli.workspaceLoader"
+          },
+          "relationships" : [ {
+            "description" : "workspace.json と overrides JSON を読み込む",
+            "destinationId" : "5",
+            "id" : "64",
+            "sourceId" : "32",
+            "tags" : "Relationship",
+            "technology" : "fs/promises"
+          }, {
+            "description" : "JSON 文字列の正規化と診断検証を依頼する",
+            "destinationId" : "9",
+            "id" : "66",
+            "sourceId" : "32",
+            "tags" : "Relationship"
+          }, {
+            "description" : "JSON 文字列の正規化と診断検証を依頼する",
+            "destinationId" : "8",
+            "id" : "67",
+            "linkedRelationshipId" : "66",
+            "sourceId" : "32"
+          }, {
+            "description" : "正規化済み C4Workspace を渡す",
+            "destinationId" : "33",
+            "id" : "70",
+            "sourceId" : "32",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Node.js fs"
+        }, {
+          "description" : "Node.js 上で ELK レイアウトを事前計算し PositionedGraph を生成",
+          "documentation" : { },
+          "id" : "33",
+          "name" : "Pre-Layout Runner",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.cli.preLayoutRunner"
+          },
+          "relationships" : [ {
+            "description" : "事前自動レイアウトを計算する",
+            "destinationId" : "11",
+            "id" : "71",
+            "sourceId" : "33",
+            "tags" : "Relationship"
+          }, {
+            "description" : "事前自動レイアウトを計算する",
+            "destinationId" : "8",
+            "id" : "72",
+            "linkedRelationshipId" : "71",
+            "sourceId" : "33"
+          }, {
+            "description" : "指定された手動オフセットを適用する",
+            "destinationId" : "12",
+            "id" : "74",
+            "sourceId" : "33",
+            "tags" : "Relationship"
+          }, {
+            "description" : "workspace + precomputedLayout を渡す",
+            "destinationId" : "34",
+            "id" : "76",
+            "sourceId" : "33",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "TypeScript"
+        }, {
+          "description" : "viewer-template.html へブートストラップペイロードを注入し単一 HTML を書き出す",
+          "documentation" : { },
+          "id" : "34",
+          "name" : "Template Injector",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c4Zoom.cli.templateInjector"
+          },
+          "relationships" : [ {
+            "description" : "XSS安全シリアライズとテンプレート注入を実行する",
+            "destinationId" : "18",
+            "id" : "77",
+            "sourceId" : "34",
+            "tags" : "Relationship"
+          }, {
+            "description" : "XSS安全シリアライズとテンプレート注入を実行する",
+            "destinationId" : "8",
+            "id" : "78",
+            "linkedRelationshipId" : "77",
+            "sourceId" : "34"
+          }, {
+            "description" : "完成した単一 HTML ファイルを書き出す",
+            "destinationId" : "5",
+            "id" : "80",
+            "sourceId" : "34",
+            "tags" : "Relationship",
+            "technology" : "fs/promises"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Node.js fs"
+        } ],
+        "description" : "workspace.json を事前レイアウト済み単一 HTML へ変換する Node.js CLI",
+        "documentation" : { },
+        "id" : "30",
+        "name" : "Standalone HTML CLI (@c4-zoom/cli)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "c4Zoom.cli"
+        },
+        "relationships" : [ {
+          "description" : "workspace.json と overrides JSON を読み込む",
+          "destinationId" : "5",
+          "id" : "65",
+          "linkedRelationshipId" : "64",
+          "sourceId" : "30",
+          "technology" : "fs/promises"
+        }, {
+          "description" : "JSON 文字列の正規化と診断検証を依頼する",
+          "destinationId" : "9",
+          "id" : "68",
+          "linkedRelationshipId" : "66",
+          "sourceId" : "30"
+        }, {
+          "description" : "JSON 文字列の正規化と診断検証を依頼する",
+          "destinationId" : "8",
+          "id" : "69",
+          "linkedRelationshipId" : "66",
+          "sourceId" : "30"
+        }, {
+          "description" : "事前自動レイアウトを計算する",
+          "destinationId" : "11",
+          "id" : "73",
+          "linkedRelationshipId" : "71",
+          "sourceId" : "30"
+        }, {
+          "description" : "指定された手動オフセットを適用する",
+          "destinationId" : "12",
+          "id" : "75",
+          "linkedRelationshipId" : "74",
+          "sourceId" : "30"
+        }, {
+          "description" : "XSS安全シリアライズとテンプレート注入を実行する",
+          "destinationId" : "18",
+          "id" : "79",
+          "linkedRelationshipId" : "77",
+          "sourceId" : "30"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Node.js / TypeScript"
+      }, {
+        "description" : "c4-zoom 自身を含む複数サンプルを自由に探索・JSON D&D・HTML出力できる公開デモサイト",
+        "documentation" : { },
+        "id" : "35",
+        "name" : "GitHub Pages Sample Site",
+        "properties" : {
+          "structurizr.dsl.identifier" : "c4Zoom.sampleSite"
+        },
+        "relationships" : [ {
+          "description" : "Interactive モード＋内蔵サンプルJSON群でビューアを起動する",
+          "destinationId" : "20",
+          "id" : "55",
+          "sourceId" : "35",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Interactive モード＋内蔵サンプルJSON群でビューアを起動する",
+          "destinationId" : "19",
+          "id" : "56",
+          "linkedRelationshipId" : "55",
+          "sourceId" : "35"
+        } ],
+        "tags" : "Element,Container,Web Browser",
+        "technology" : "Static Web App / Bundled JSON Samples"
+      } ],
+      "description" : "公式 Structurizr JSON を 1 枚の連続地図として探索・単一 HTML 出力できる C4 マッププラットフォーム",
+      "documentation" : { },
+      "id" : "7",
+      "name" : "c4-zoom",
+      "properties" : {
+        "structurizr.dsl.identifier" : "c4Zoom"
+      },
+      "relationships" : [ {
+        "description" : "workspace.json の読込および単一 HTML のダウンロード保存を行う",
+        "destinationId" : "5",
+        "id" : "59",
+        "linkedRelationshipId" : "57",
+        "sourceId" : "7",
+        "technology" : "File API / Blob"
+      }, {
+        "description" : "手動オフセット・UI設定を保存/復元する",
+        "destinationId" : "6",
+        "id" : "62",
+        "linkedRelationshipId" : "60",
+        "sourceId" : "7",
+        "technology" : "Web Storage API"
+      } ],
+      "tags" : "Element,Software System,Core"
+    } ]
+  },
+  "name" : "c4-zoom",
+  "properties" : {
+    "structurizr.inspection.error" : "58",
+    "structurizr.dsl" : "d29ya3NwYWNlICJjNC16b29tIiAiU3RydWN0dXJpenIg5YWs5byPIHdvcmtzcGFjZS5qc29uIOOCkumAo+e2muOCu+ODnuODs+ODhuOCo+ODg+OCr+ODu+OCuuODvOODoOOBp+aOoue0ouODu+WNmOS4gCBIVE1MIOmFjeW4g+OBp+OBjeOCiyBDNCDjg57jg4Pjg5fjg5Pjg6Xjg7zjgqLoh6rouqvjga7jgqLjg7zjgq3jg4bjgq/jg4Hjg6MiIHsKCiAgICAhaWRlbnRpZmllcnMgaGllcmFyY2hpY2FsCgogICAgbW9kZWwgewogICAgICAgIC8vIExldmVsIDE6IOOCouOCr+OCv+ODvAogICAgICAgIGFyY2hpdGVjdCA9IHBlcnNvbiAiRGV2ZWxvcGVyIC8gQXJjaGl0ZWN0IiAiU3RydWN0dXJpenIgRFNMIOOCkuabuOOBjeOAgUpTT04g5aSJ5o+b44GX44GmIGM0LXpvb20g44Gn5Y+v6KaW5YyW44O75Y2Y5LiAIEhUTUwg44KS6YWN5biD44GZ44KL5L2c5oiQ6ICFIiAiRXh0ZXJuYWwiCiAgICAgICAgcmVhZGVyID0gcGVyc29uICJBcmNoaXRlY3R1cmUgUmVhZGVyIiAi6YWN5biD44GV44KM44Gf5Y2Y5LiAIEhUTUwg44G+44Gf44GvIEdpdEh1YiBQYWdlcyDjgrXjg7Pjg5fjg6vjgrXjgqTjg4jjgafjgqLjg7zjgq3jg4bjgq/jg4Hjg6PjgpLmjqLntKLjgZnjgovplrLopqfogIUiICJFeHRlcm5hbCIKCiAgICAgICAgLy8gTGV2ZWwgMTog5aSW6YOo44K344K544OG44OgCiAgICAgICAgc3RydWN0dXJpenJDbGkgPSBzb2Z0d2FyZVN5c3RlbSAiU3RydWN0dXJpenIgQ0xJIiAiU3RydWN0dXJpenIgRFNMIOOCkuWFrOW8j+S7leanmOOBpyB3b3Jrc3BhY2UuanNvbiDjgbjlpInmj5vjgZnjgovlpJbpg6jlhazlvI/jg4Tjg7zjg6siICJFeHRlcm5hbCIgewogICAgICAgICAgICB1cmwgImh0dHBzOi8vZG9jcy5zdHJ1Y3R1cml6ci5jb20vY2xpIgogICAgICAgIH0KICAgICAgICBnaXRodWJQYWdlcyA9IHNvZnR3YXJlU3lzdGVtICJHaXRIdWIgUGFnZXMiICLjgrXjg7Pjg5fjg6vjgrXjgqTjg4jvvIjjg4fjg6LnlKjpnZnnmoTjgqLjgrvjg4Pjg4jvvInjgpLphY3kv6HjgZnjgovlpJbpg6jjg5vjgrnjg4bjgqPjg7PjgrDln7rnm6QiICJFeHRlcm5hbCIKICAgICAgICBsb2NhbEZzID0gc29mdHdhcmVTeXN0ZW0gIkxvY2FsIEZpbGUgU3lzdGVtIiAid29ya3NwYWNlLmpzb24g44KE55Sf5oiQ5riI44G/5Y2Y5LiAIEhUTUwg44OV44Kh44Kk44Or44KS5L+d5a2Y44GZ44KL44Ot44O844Kr44Or6aCY5Z+fIiAiRXh0ZXJuYWwiCiAgICAgICAgYnJvd3NlclN0b3JhZ2UgPSBzb2Z0d2FyZVN5c3RlbSAiQnJvd3NlciBsb2NhbFN0b3JhZ2UiICLmiYvli5Xjg6zjgqTjgqLjgqbjg4joqr/mlbTlt67liIbjg7vjg4bjg7zjg57jg7vnm7Tov5Hoqq3ovrznirbmhYvjgpLkv53mjIHjgZnjgovjg5bjg6njgqbjgrbpoJjln58iICJFeHRlcm5hbCIKCiAgICAgICAgLy8gTGV2ZWwgMTogYzQtem9vbSDmnKzkvZPvvIhwbnBtIHdvcmtzcGFjZSDjg6Ljg47jg6zjg53vvIkKICAgICAgICBjNFpvb20gPSBzb2Z0d2FyZVN5c3RlbSAiYzQtem9vbSIgIuWFrOW8jyBTdHJ1Y3R1cml6ciBKU09OIOOCkiAxIOaemuOBrumAo+e2muWcsOWbs+OBqOOBl+OBpuaOoue0ouODu+WNmOS4gCBIVE1MIOWHuuWKm+OBp+OBjeOCiyBDNCDjg57jg4Pjg5fjg5fjg6njg4Pjg4jjg5Xjgqnjg7zjg6AiICJDb3JlIiB7CgogICAgICAgICAgICAvLyBMZXZlbCAyOiBAYzQtem9vbS9jb3JlCiAgICAgICAgICAgIGNvcmUgPSBjb250YWluZXIgIkNvcmUgTWFwIEVuZ2luZSAoQGM0LXpvb20vY29yZSkiICJSZWFjdC9Ob2Rl6Z2e5L6d5a2Y44Gu57SU57KLVHlwZVNjcmlwdOijvUpTT07lpInmj5vjg7vjg6zjgqTjgqLjgqbjg4jjg7tMT0Tjg7tDYW52YXMgMkTmj4/nlLvjg7tIVE1M5Z+L6L6844Ko44Oz44K444OzIiAiUHVyZSBUeXBlU2NyaXB0IC8gZWxranMiIHsKICAgICAgICAgICAgICAgIGdyb3VwICJJbnB1dCAmIEdyYXBoIFBpcGVsaW5lIiB7CiAgICAgICAgICAgICAgICAgICAganNvbkFkYXB0ZXIgPSBjb21wb25lbnQgIlN0cnVjdHVyaXpyIEpTT04gQWRhcHRlciIgIuWFrOW8jyB3b3Jrc3BhY2UuanNvbiDjgpIgQzRXb3Jrc3BhY2Ug44G45q2j6KaP5YyW77yIZ3JvdXDlho3mp4vnr4njg7tQcm90b3R5cGUgUG9sbHV0aW9u6Ziy5b6h44O76Ki65pat55Sf5oiQ77yJIiAiVHlwZVNjcmlwdCIKICAgICAgICAgICAgICAgICAgICBjNEdyYXBoID0gY29tcG9uZW50ICJDYW5vbmljYWwgQzQgR3JhcGggJiBUcmFjZXIiICLopqrlrZDmjqLntKLjg7vlvqrnkrDlronlhajjgarkuIrmtYEv5LiL5rWB44OI44Os44O844K577yIMS1ob3AgLyBUcmFuc2l0aXZl77yJIiAiVHlwZVNjcmlwdCIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBncm91cCAiU3BhdGlhbCBMYXlvdXQgUGlwZWxpbmUiIHsKICAgICAgICAgICAgICAgICAgICBlbGtBZGFwdGVyID0gY29tcG9uZW50ICJFTEsgTGF5b3V0IEFkYXB0ZXIiICJFTEsuanMg44Gr44KI44KL5rG65a6a55qE44Gq6ZqO5bGk77yIQ29tcG91bmQgR3JhcGjvvInoh6rli5XphY3nva4iICJUeXBlU2NyaXB0IC8gZWxranMiCiAgICAgICAgICAgICAgICAgICAgb2Zmc2V0TWVyZ2VyID0gY29tcG9uZW50ICJNYW51YWwgT2Zmc2V0IE1lcmdlciIgIuaJi+WLleODieODqeODg+OCsOW3ruWIhuOCkumdnuegtOWjiumBqeeUqOOBl+imquWig+eVjOOCkuiHquWLleiqv+aVtCIgIlR5cGVTY3JpcHQiCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgZ3JvdXAgIlNlbWFudGljIFpvb20gJiBSZW5kZXJpbmcgUGlwZWxpbmUiIHsKICAgICAgICAgICAgICAgICAgICBjYW1lcmFDb250cm9sbGVyID0gY29tcG9uZW50ICJDYW1lcmEgJiBMZXZlbC1KdW1wIENvbnRyb2xsZXIiICLluqfmqJnlpInmj5vjg7vjgqvjg7zjgr3jg6vln7rmupbjgrrjg7zjg6Djg7vmhaPmgKfjg5Hjg7Pjg7vmlL7niannt5ogRmx5LXRv44O7TDEvTDIvTDMg44Kv44Kk44OD44Kv44K444Oj44Oz44OX6KiI566XIiAiVHlwZVNjcmlwdCIKICAgICAgICAgICAgICAgICAgICBsb2RFdmFsdWF0b3IgPSBjb21wb25lbnQgIlNlbWFudGljIFpvb20gTE9EIEV2YWx1YXRvciIgIueUu+mdouWNoOacieOCteOCpOOCuuOBq+WfuuOBpeOBjyBzbW9vdGhzdGVwIOWxlemWi+W6puOBqOaUr+mFjeODrOODmeODq+WIpOWumiIgIlR5cGVTY3JpcHQiCiAgICAgICAgICAgICAgICAgICAgZWRnZVJvbGx1cCA9IGNvbXBvbmVudCAiRHluYW1pYyBFZGdlIFJvbGx1cCBFbmdpbmUiICLlj6/oppbjgqLjg7Pjgqvjg7zlsITlvbHjg7vph43opIfjgqjjg4Pjgrjpm4bntITjg7vlj4zmlrnlkJHjgqvjg7zjg5bliIbpm6Ljg7vjg6Hjg6LljJYiICJUeXBlU2NyaXB0IgogICAgICAgICAgICAgICAgICAgIGhpdFRlc3RlciA9IGNvbXBvbmVudCAiSGl0IFRlc3RlciAmIEZydXN0dW0gQ3VsbGVyIiAiWuOCquODvOODgOODvOiAg+aFruOBruimgee0oC/jgqjjg4PjgrjliKTlrprjgajjg5Pjg6Xjg7zjg53jg7zjg4jlpJbjgqvjg6rjg7PjgrAiICJUeXBlU2NyaXB0IgogICAgICAgICAgICAgICAgICAgIGNhbnZhc1JlbmRlcmVyID0gY29tcG9uZW50ICJDYW52YXMgMkQgQ2FydG9ncmFwaHkgUmVuZGVyZXIiICJIaURQSSA2MGZwcyDjgqvjg7zjg4jjgrDjg6njg5XjgqPjg7zmj4/nlLvjg7vjg6njg5njg6vooZ3nqoHlm57pgb/jg7vjg4jjg6zjg7zjgrnjg5Hjg6vjgrkiICJUeXBlU2NyaXB0IC8gQ2FudmFzIDJEIgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIGdyb3VwICJTaW5nbGUtSFRNTCBFeHBvcnQgUGlwZWxpbmUiIHsKICAgICAgICAgICAgICAgICAgICBodG1sRXhwb3J0ZXIgPSBjb21wb25lbnQgIlNpbmdsZS1IVE1MIFBheWxvYWQgU2VyaWFsaXplciIgIlhTU+WuieWFqOOCqOOCueOCseODvOODl+S7mOOBjeODluODvOODiOOCueODiOODqeODg+ODl0pTT07nlJ/miJDjgahIVE1M44OG44Oz44OX44Os44O844OI5rOo5YWlIiAiVHlwZVNjcmlwdCIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQoKICAgICAgICAgICAgLy8gTGV2ZWwgMjogQGM0LXpvb20vdmlld2VyCiAgICAgICAgICAgIHZpZXdlciA9IGNvbnRhaW5lciAiSW50ZXJhY3RpdmUgTWFwIFZpZXdlciAoQGM0LXpvb20vdmlld2VyKSIgIlJlYWN0ICsgVGFpbHdpbmQgdjQg44Gu5o6i57SiVUnjgqLjg5fjg6rvvIjpgJrluLhTUEHjg5Pjg6vjg4nvvIvljZjkuIBIVE1M44OG44Oz44OX44Os44O844OI5Ye65Yqb77yJIiAiUmVhY3QgMTkgLyBUeXBlU2NyaXB0IC8gVGFpbHdpbmQgQ1NTIHY0IiAiV2ViIEJyb3dzZXIiIHsKICAgICAgICAgICAgICAgIGJvb3RzdHJhcExvYWRlciA9IGNvbXBvbmVudCAiQm9vdHN0cmFwIExvYWRlciIgIiNjNC16b29tLWJvb3RzdHJhcCDjgpLoqq3jgb/lj5bjgoogU3RhbmRhbG9uZSAvIFNhbXBsZSBTaXRlIOODouODvOODieOBqCBwcmVjb21wdXRlZExheW91dCDjgpLliJ3mnJ/ljJYiICJUeXBlU2NyaXB0IgogICAgICAgICAgICAgICAgc3RhdGVCcmlkZ2UgPSBjb21wb25lbnQgIkFwcFN0YXRlIENvbnRleHQgJiBSZWYgQnJpZGdlIiAi5L2O6aC75bqmVUnnirbmhYvvvIh1c2VSZWR1Y2Vy77yJ44GoIDYwZnBzIOmrmOmgu+W6puODqeODs+OCv+OCpOODoOeKtuaFi++8iFJlZu+8ieOBruS6jOWxpOeuoeeQhuODu+awuOe2muWMliIgIlJlYWN0IC8gVHlwZVNjcmlwdCIKICAgICAgICAgICAgICAgIGxheW91dFJ1bm5lciA9IGNvbXBvbmVudCAiTGF5b3V0IEV4ZWN1dGlvbiBCcmlkZ2UiICJwcmVjb21wdXRlZExheW91dCDmmYIgMG1zIOOCueOCreODg+ODl+OAgeWLleeahOiqrei+vOaZguOBryBXb3JrZXIgLyBmaWxlOi8vIOWuieWFqOODleOCqeODvOODq+ODkOODg+OCr+OCkuWun+ihjCIgIlR5cGVTY3JpcHQgLyBXZWIgV29ya2VyIgogICAgICAgICAgICAgICAgbWFwQ2FudmFzSG9zdCA9IGNvbXBvbmVudCAiTWFwQ2FudmFzIEhvc3QiICJDYW52YXMgMkQg44GuIHJBRiDjg6vjg7zjg5fjg7tSZXNpemVPYnNlcnZlcuODu+ODneOCpOODs+OCvy/jg5vjgqTjg7zjg6sv44Kt44O844Oc44O844OJ5YWl5Yqb57Wx5ousIiAiUmVhY3QiCiAgICAgICAgICAgICAgICBzZWFyY2hCYXIgPSBjb21wb25lbnQgIlNlYXJjaEJhciIgIuOCueODneODg+ODiOaknOe0ou+8iENtZCtLIC8gL++8ieOBqOWAmeijnOmBuOaKnuOBq+OCiOOCiyBGbHktdG8g6LW35YuVIiAiUmVhY3QiCiAgICAgICAgICAgICAgICBicmVhZGNydW1icyA9IGNvbXBvbmVudCAiQnJlYWRjcnVtYnMiICLnj77lnKjjga7jg5Pjg6Xjg7zjg53jg7zjg4jkuK3lpK7jga7pmo7lsaTjg5HjgrnooajnpLrjgajjgq/jg6rjg4Pjgq/vvI9ab29tIFVwIOenu+WLlSIgIlJlYWN0IgogICAgICAgICAgICAgICAgem9vbUNvbnRyb2xzID0gY29tcG9uZW50ICJab29tQ29udHJvbHMgJiBMZXZlbCBKdW1wZXIiICJMMS9MMi9MMyDjgrnjg57jg7zjg4jjgrjjg6Pjg7Pjg5fjg7vlr77osaHkuIDopqfjg53jg4Pjg5fjgqrjg7zjg5Djg7zjg7vlhYTlvJ/lt6Hlm57jg7vphY3nva7oqr/mlbQv44OG44O844Oe5YiH5pu/IiAiUmVhY3QiCiAgICAgICAgICAgICAgICBtaW5pbWFwVWkgPSBjb21wb25lbnQgIk1pbmltYXAiICLlhajkvZPkv6/nnrDjgrXjg6Djg43jgqTjg6vmj4/nlLvjgajjg4njg6njg4PjgrDjgavjgojjgovjgqvjg6Hjg6nnp7vli5UiICJSZWFjdCAvIENhbnZhcyAyRCIKICAgICAgICAgICAgICAgIGluc3BlY3RvclVpID0gY29tcG9uZW50ICJJbnNwZWN0b3IiICLpgbjmip7opoHntKAv44Ko44OD44K444Gu6Kmz57Sw77yIaHR0cC9odHRwc+aknOiovOa4iOOBv1VSTOWQq+OCgO+8ieOBqOS4iua1geODu+S4i+a1geODiOODrOODvOOCueS4gOimpyIgIlJlYWN0IgogICAgICAgICAgICAgICAgc291cmNlQ29udHJvbHMgPSBjb21wb25lbnQgIlNvdXJjZUNvbnRyb2xzICYgSFRNTCBFeHBvcnRlciIgIuOCteODs+ODl+ODq+WIh+abv+ODu3dvcmtzcGFjZS5qc29uIOiqrei+vO+8iEQmRC/pgbjmip7vvInjg7voqLrmlq3ooajnpLrjg7vljZjkuIBIVE1M44OA44Km44Oz44Ot44O844OJIiAiUmVhY3QiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIC8vIExldmVsIDI6IEBjNC16b29tL2NsaQogICAgICAgICAgICBjbGkgPSBjb250YWluZXIgIlN0YW5kYWxvbmUgSFRNTCBDTEkgKEBjNC16b29tL2NsaSkiICJ3b3Jrc3BhY2UuanNvbiDjgpLkuovliY3jg6zjgqTjgqLjgqbjg4jmuIjjgb/ljZjkuIAgSFRNTCDjgbjlpInmj5vjgZnjgosgTm9kZS5qcyBDTEkiICJOb2RlLmpzIC8gVHlwZVNjcmlwdCIgewogICAgICAgICAgICAgICAgY2xpQXJncyA9IGNvbXBvbmVudCAiQ0xJIEFyZ3VtZW50IFBhcnNlciIgImJ1aWxkIOOCs+ODnuODs+ODieW8leaVsOODu+OCquODl+OCt+ODp+ODs++8iC1vLCAtLXByZWxheW91dCwgLS1vdmVycmlkZXMsIC0tdGhlbWUsIC0tc3RyaWN0562J77yJ6Kej5p6QIiAiVHlwZVNjcmlwdCIKICAgICAgICAgICAgICAgIHdvcmtzcGFjZUxvYWRlciA9IGNvbXBvbmVudCAiV29ya3NwYWNlIEZpbGUvU3RkaW4gTG9hZGVyIiAi44Ot44O844Kr44Or44OV44Kh44Kk44Or44G+44Gf44Gv5qiZ5rqW5YWl5Yqb44GL44KJIHdvcmtzcGFjZS5qc29uIOOBqOS7u+aEj+OCquODleOCu+ODg+ODiEpTT07jgpLoqq3jgb/ovrzjgoAiICJOb2RlLmpzIGZzIgogICAgICAgICAgICAgICAgcHJlTGF5b3V0UnVubmVyID0gY29tcG9uZW50ICJQcmUtTGF5b3V0IFJ1bm5lciIgIk5vZGUuanMg5LiK44GnIEVMSyDjg6zjgqTjgqLjgqbjg4jjgpLkuovliY3oqIjnrpfjgZcgUG9zaXRpb25lZEdyYXBoIOOCkueUn+aIkCIgIlR5cGVTY3JpcHQiCiAgICAgICAgICAgICAgICB0ZW1wbGF0ZUluamVjdG9yID0gY29tcG9uZW50ICJUZW1wbGF0ZSBJbmplY3RvciIgInZpZXdlci10ZW1wbGF0ZS5odG1sIOOBuOODluODvOODiOOCueODiOODqeODg+ODl+ODmuOCpOODreODvOODieOCkuazqOWFpeOBl+WNmOS4gCBIVE1MIOOCkuabuOOBjeWHuuOBmSIgIk5vZGUuanMgZnMiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIC8vIExldmVsIDI6IEdpdEh1YiBQYWdlcyDjgrXjg7Pjg5fjg6vjgrXjgqTjg4gKICAgICAgICAgICAgc2FtcGxlU2l0ZSA9IGNvbnRhaW5lciAiR2l0SHViIFBhZ2VzIFNhbXBsZSBTaXRlIiAiYzQtem9vbSDoh6rouqvjgpLlkKvjgoDopIfmlbDjgrXjg7Pjg5fjg6vjgpLoh6rnlLHjgavmjqLntKLjg7tKU09OIEQmROODu0hUTUzlh7rlipvjgafjgY3jgovlhazplovjg4fjg6LjgrXjgqTjg4giICJTdGF0aWMgV2ViIEFwcCAvIEJ1bmRsZWQgSlNPTiBTYW1wbGVzIiAiV2ViIEJyb3dzZXIiCiAgICAgICAgfQoKICAgICAgICAvLyAtLS0g44Ki44Kv44K/44O86LW354K5IC0tLQogICAgICAgIGFyY2hpdGVjdCAtPiBzdHJ1Y3R1cml6ckNsaSAid29ya3NwYWNlLmRzbCDjgpLlhazlvI8gd29ya3NwYWNlLmpzb24g44G45aSJ5o+b44GZ44KLIiAiQ0xJIC8gRG9ja2VyIgogICAgICAgIHN0cnVjdHVyaXpyQ2xpIC0+IGxvY2FsRnMgIndvcmtzcGFjZS5qc29uIOOCkuWHuuWKm+OBmeOCiyIgIkZpbGUgSS9PIgogICAgICAgIGFyY2hpdGVjdCAtPiBjNFpvb20uY2xpLmNsaUFyZ3MgImM0LXpvb20gYnVpbGQg44Gn5Y2Y5LiAIEhUTUwg44KS55Sf5oiQ44GZ44KLIiAiQ0xJIgogICAgICAgIGFyY2hpdGVjdCAtPiBjNFpvb20uc2FtcGxlU2l0ZSAi44OH44Oi56K66KqN44KE5omL5YWDIEpTT04g44Gu6Kmm6KGM44KS6KGM44GGIiAiSFRUUFMiCgogICAgICAgIHJlYWRlciAtPiBjNFpvb20uc2FtcGxlU2l0ZSAiYzQtem9vbSDoh6rouqvjgoTlkITnqK7jgrXjg7Pjg5fjg6vjgpLjg5bjg6njgqbjgrbjgafmjqLntKLjgZnjgosiICJIVFRQUyIKICAgICAgICByZWFkZXIgLT4gbG9jYWxGcyAi6YWN5biD44GV44KM44Gf5Y2Y5LiAIEhUTUwg44KS44OW44Op44Km44K244Gn55u05o6l6ZaL44GPIiAiZmlsZTovLyAvIEhUVFBTIgogICAgICAgIHJlYWRlciAtPiBjNFpvb20udmlld2VyLm1hcENhbnZhc0hvc3QgIuODkeODs+ODu+mAo+e2muOCuuODvOODoOODu+ODjuODvOODiemBuOaKnuODu+ODiOODrOODvOOCueOCkuihjOOBhiIgIk1vdXNlIC8gVHJhY2twYWQgLyBLZXlib2FyZCIKICAgICAgICByZWFkZXIgLT4gYzRab29tLnZpZXdlci5zZWFyY2hCYXIgIuimgee0oOWQjeODu+aKgOihk+ODu+OCv+OCsOOBp+OCueODneODg+ODiOaknOe0ouOBmeOCiyIgIktleWJvYXJkIChDbWQrSykiCiAgICAgICAgcmVhZGVyIC0+IGM0Wm9vbS52aWV3ZXIuem9vbUNvbnRyb2xzICJMMS9MMi9MMyDjgq/jgqTjg4Pjgq/jgrjjg6Pjg7Pjg5fjgoTlhYTlvJ/lt6Hlm57jgpLooYzjgYYiICJDbGljayAvIDEtMyAvIFsgXSIKICAgICAgICByZWFkZXIgLT4gYzRab29tLnZpZXdlci5pbnNwZWN0b3JVaSAi6Kmz57Sw5oOF5aCx44KE5LiK5rWB44O75LiL5rWB44Gu5o6l57aa5YWI44G444K444Oj44Oz44OX44GZ44KLIiAiQ2xpY2siCiAgICAgICAgcmVhZGVyIC0+IGM0Wm9vbS52aWV3ZXIubWluaW1hcFVpICLkv6/nnrDkvY3nva7jgpLnorroqo3jgZfjg4njg6njg4PjgrDjgafnp7vli5XjgZnjgosiICJDbGljayAvIERyYWciCiAgICAgICAgcmVhZGVyIC0+IGM0Wm9vbS52aWV3ZXIuYnJlYWRjcnVtYnMgIuePvuWcqOWcsOeiuuiqjeODuzHpmo7lsaTkuIrjgbjmiLvjgosiICJDbGljayAvIEJhY2tzcGFjZSIKICAgICAgICByZWFkZXIgLT4gYzRab29tLnZpZXdlci5zb3VyY2VDb250cm9scyAi44K144Oz44OX44Or5YiH5pu/44O7d29ya3NwYWNlLmpzb24gRCZE44O75Y2Y5LiASFRNTOabuOOBjeWHuuOBl+OCkuihjOOBhiIgIkNsaWNrIC8gRHJhZyAmIERyb3AiCgogICAgICAgIC8vIC0tLSDjg5vjgrnjg4bjgqPjg7PjgrDjg7vlpJbpg6hJL08gLS0tCiAgICAgICAgZ2l0aHViUGFnZXMgLT4gYzRab29tLnNhbXBsZVNpdGUgIuODk+ODq+ODiea4iOOBv+OCteODs+ODl+ODq+OCteOCpOODiOOBqCB2aWV3ZXItdGVtcGxhdGUuaHRtbCDjgpLphY3kv6HjgZnjgosiICJIVFRQUyIKICAgICAgICBjNFpvb20uc2FtcGxlU2l0ZSAtPiBjNFpvb20udmlld2VyLmJvb3RzdHJhcExvYWRlciAiSW50ZXJhY3RpdmUg44Oi44O844OJ77yL5YaF6JS144K144Oz44OX44OrSlNPTue+pOOBp+ODk+ODpeODvOOCouOCkui1t+WLleOBmeOCiyIKICAgICAgICBjNFpvb20udmlld2VyLnNvdXJjZUNvbnRyb2xzIC0+IGxvY2FsRnMgIndvcmtzcGFjZS5qc29uIOOBruiqrei+vOOBiuOCiOOBs+WNmOS4gCBIVE1MIOOBruODgOOCpuODs+ODreODvOODieS/neWtmOOCkuihjOOBhiIgIkZpbGUgQVBJIC8gQmxvYiIKICAgICAgICBjNFpvb20udmlld2VyLnN0YXRlQnJpZGdlIC0+IGJyb3dzZXJTdG9yYWdlICLmiYvli5Xjgqrjg5Xjgrvjg4Pjg4jjg7tVSeioreWumuOCkuS/neWtmC/lvqnlhYPjgZnjgosiICJXZWIgU3RvcmFnZSBBUEkiCgogICAgICAgIC8vIC0tLSBDTEkg44OR44Kk44OX44Op44Kk44OzIC0tLQogICAgICAgIGM0Wm9vbS5jbGkuY2xpQXJncyAtPiBjNFpvb20uY2xpLndvcmtzcGFjZUxvYWRlciAi5YWl5Yqb44OR44K544O744Kq44OX44K344On44Oz44KS5rih44GZIgogICAgICAgIGM0Wm9vbS5jbGkud29ya3NwYWNlTG9hZGVyIC0+IGxvY2FsRnMgIndvcmtzcGFjZS5qc29uIOOBqCBvdmVycmlkZXMgSlNPTiDjgpLoqq3jgb/ovrzjgoAiICJmcy9wcm9taXNlcyIKICAgICAgICBjNFpvb20uY2xpLndvcmtzcGFjZUxvYWRlciAtPiBjNFpvb20uY29yZS5qc29uQWRhcHRlciAiSlNPTiDmloflrZfliJfjga7mraPopo/ljJbjgajoqLrmlq3mpJzoqLzjgpLkvp3poLzjgZnjgosiCiAgICAgICAgYzRab29tLmNsaS53b3Jrc3BhY2VMb2FkZXIgLT4gYzRab29tLmNsaS5wcmVMYXlvdXRSdW5uZXIgIuato+imj+WMlua4iOOBvyBDNFdvcmtzcGFjZSDjgpLmuKHjgZkiCiAgICAgICAgYzRab29tLmNsaS5wcmVMYXlvdXRSdW5uZXIgLT4gYzRab29tLmNvcmUuZWxrQWRhcHRlciAi5LqL5YmN6Ieq5YuV44Os44Kk44Ki44Km44OI44KS6KiI566X44GZ44KLIgogICAgICAgIGM0Wm9vbS5jbGkucHJlTGF5b3V0UnVubmVyIC0+IGM0Wm9vbS5jb3JlLm9mZnNldE1lcmdlciAi5oyH5a6a44GV44KM44Gf5omL5YuV44Kq44OV44K744OD44OI44KS6YGp55So44GZ44KLIgogICAgICAgIGM0Wm9vbS5jbGkucHJlTGF5b3V0UnVubmVyIC0+IGM0Wm9vbS5jbGkudGVtcGxhdGVJbmplY3RvciAid29ya3NwYWNlICsgcHJlY29tcHV0ZWRMYXlvdXQg44KS5rih44GZIgogICAgICAgIGM0Wm9vbS5jbGkudGVtcGxhdGVJbmplY3RvciAtPiBjNFpvb20uY29yZS5odG1sRXhwb3J0ZXIgIlhTU+WuieWFqOOCt+ODquOCouODqeOCpOOCuuOBqOODhuODs+ODl+ODrOODvOODiOazqOWFpeOCkuWun+ihjOOBmeOCiyIKICAgICAgICBjNFpvb20uY2xpLnRlbXBsYXRlSW5qZWN0b3IgLT4gbG9jYWxGcyAi5a6M5oiQ44GX44Gf5Y2Y5LiAIEhUTUwg44OV44Kh44Kk44Or44KS5pu444GN5Ye644GZIiAiZnMvcHJvbWlzZXMiCgogICAgICAgIC8vIC0tLSBWaWV3ZXIg5YaF6YOo6YCj5pC6IC0tLQogICAgICAgIGM0Wm9vbS52aWV3ZXIuYm9vdHN0cmFwTG9hZGVyIC0+IGM0Wm9vbS52aWV3ZXIuc3RhdGVCcmlkZ2UgIuWIneacn+ODouODh+ODq+ODu3ByZWNvbXB1dGVkTGF5b3V044O744Oi44O844OJ44O744OG44O844Oe44KS5oqV5YWl44GZ44KLIgogICAgICAgIGM0Wm9vbS52aWV3ZXIuc291cmNlQ29udHJvbHMgLT4gYzRab29tLmNvcmUuanNvbkFkYXB0ZXIgIkQmRC/pgbjmip7jgZXjgozjgZ8gd29ya3NwYWNlLmpzb24g44KS44OR44O844K544GZ44KLIgogICAgICAgIGM0Wm9vbS52aWV3ZXIuc291cmNlQ29udHJvbHMgLT4gYzRab29tLmNvcmUuaHRtbEV4cG9ydGVyICLnj77lnKjjga7lnLDlm7PjgajmiYvli5Xjgqrjg5Xjgrvjg4Pjg4jjgpLljZjkuIAgSFRNTCDjgbjjgrfjg6rjgqLjg6njgqTjgrrjgZnjgosiCiAgICAgICAgYzRab29tLnZpZXdlci5zb3VyY2VDb250cm9scyAtPiBjNFpvb20udmlld2VyLnN0YXRlQnJpZGdlICLmm7TmlrDjg6Ljg4fjg6vjgajoqLrmlq3ntZDmnpzjgpLpgJrnn6XjgZnjgosiCiAgICAgICAgYzRab29tLnZpZXdlci5zdGF0ZUJyaWRnZSAtPiBjNFpvb20udmlld2VyLmxheW91dFJ1bm5lciAi44Os44Kk44Ki44Km44OI5pyq6KiI566X44Oi44OH44Or44Gu6YWN572u6KiI566X44KS5L6d6aC844GZ44KLIgogICAgICAgIGM0Wm9vbS52aWV3ZXIubGF5b3V0UnVubmVyIC0+IGM0Wm9vbS5jb3JlLmVsa0FkYXB0ZXIgIkVMSyDjg6zjgqTjgqLjgqbjg4joqIjnrpfjgpLlrp/ooYzjgZnjgosiCiAgICAgICAgYzRab29tLnZpZXdlci5sYXlvdXRSdW5uZXIgLT4gYzRab29tLmNvcmUub2Zmc2V0TWVyZ2VyICLmiYvli5Xjgqrjg5Xjgrvjg4Pjg4jjgpLpnZ7noLTlo4rpgannlKjjgZnjgosiCiAgICAgICAgYzRab29tLnZpZXdlci5zdGF0ZUJyaWRnZSAtPiBjNFpvb20uY29yZS5jNEdyYXBoICLpgbjmip7jg47jg7zjg4njga7kuIrmtYHjg7vkuIvmtYHjg4jjg6zjg7zjgrnjgpLnrpflh7rjgZnjgosiCgogICAgICAgIGM0Wm9vbS52aWV3ZXIuc2VhcmNoQmFyIC0+IGM0Wm9vbS52aWV3ZXIuc3RhdGVCcmlkZ2UgIuaknOe0oue1kOaenOOBuOOBriBGbHktdG8g44KS6KaB5rGC44GZ44KLIgogICAgICAgIGM0Wm9vbS52aWV3ZXIuYnJlYWRjcnVtYnMgLT4gYzRab29tLnZpZXdlci5zdGF0ZUJyaWRnZSAi6Kaq6ZqO5bGk44G444GuIEZseS10byAvIFpvb20gVXAg44KS6KaB5rGC44GZ44KLIgogICAgICAgIGM0Wm9vbS52aWV3ZXIuem9vbUNvbnRyb2xzIC0+IGM0Wm9vbS52aWV3ZXIuc3RhdGVCcmlkZ2UgIkwxL0wyL0wzIOOCuOODo+ODs+ODl+ODu+WFhOW8n+W3oeWbnuODu+e3qOmbhuODouODvOODieODu+ODhuODvOODnuWIh+abv+OCkumAmuefpeOBmeOCiyIKICAgICAgICBjNFpvb20udmlld2VyLm1pbmltYXBVaSAtPiBjNFpvb20udmlld2VyLnN0YXRlQnJpZGdlICLjgqvjg6Hjg6nkvY3nva7jga7lkIzmnJ/jgajjg4njg6njg4PjgrDnp7vli5XjgpLooYzjgYYiCiAgICAgICAgYzRab29tLnZpZXdlci5pbnNwZWN0b3JVaSAtPiBjNFpvb20udmlld2VyLnN0YXRlQnJpZGdlICLjg4jjg6zjg7zjgrnjg6Ljg7zjg4nliIfmm7/jgajmjqXntprlhYggRmx5LXRvIOOCkuimgeaxguOBmeOCiyIKICAgICAgICBjNFpvb20udmlld2VyLm1hcENhbnZhc0hvc3QgLT4gYzRab29tLnZpZXdlci5zdGF0ZUJyaWRnZSAi5q+O44OV44Os44O844Og44GuUmVm6Kqt44G/5pu444GN44O76YG45oqe44O744K544Ot44OD44OI44OrSFVE5ZCM5pyf44KS6KGM44GGIgoKICAgICAgICAvLyAtLS0gVmlld2VyIDwtPiBDb3JlIOODrOODs+ODgOODquODs+OCsOODkeOCpOODl+ODqeOCpOODsyAtLS0KICAgICAgICBjNFpvb20udmlld2VyLm1hcENhbnZhc0hvc3QgLT4gYzRab29tLmNvcmUuY2FtZXJhQ29udHJvbGxlciAi44OR44Oz44O744K644O844Og44O7Rmx5LXRv44O744Os44OZ44Or44K444Oj44Oz44OX6KOc6ZaT44KS6YCy44KB44KLIgogICAgICAgIGM0Wm9vbS52aWV3ZXIubWFwQ2FudmFzSG9zdCAtPiBjNFpvb20uY29yZS5oaXRUZXN0ZXIgIuOCq+ODvOOCveODq+W6p+aomeOBruimgee0oOODu+OCqOODg+OCuOWIpOWumuOCkuS+nemgvOOBmeOCiyIKICAgICAgICBjNFpvb20udmlld2VyLm1hcENhbnZhc0hvc3QgLT4gYzRab29tLmNvcmUuY2FudmFzUmVuZGVyZXIgIuavjuODleODrOODvOODoOOBruWcsOWbs+OCt+ODvOODs+OCkuaPj+eUu+OBmeOCiyIKCiAgICAgICAgYzRab29tLmNvcmUuanNvbkFkYXB0ZXIgLT4gYzRab29tLmNvcmUuYzRHcmFwaCAi5q2j6KaP5YyWIEM0V29ya3NwYWNlIOOCkueUn+aIkOOBmeOCiyIKICAgICAgICBjNFpvb20uY29yZS5jYW52YXNSZW5kZXJlciAtPiBjNFpvb20uY29yZS5jYW1lcmFDb250cm9sbGVyICLjg6/jg7zjg6vjg4nihpTjgrnjgq/jg6rjg7zjg7PluqfmqJnlpInmj5vjgpLlj4LnhafjgZnjgosiCiAgICAgICAgYzRab29tLmNvcmUuY2FudmFzUmVuZGVyZXIgLT4gYzRab29tLmNvcmUubG9kRXZhbHVhdG9yICLlkITopoHntKDjga4gZGV0YWlsQWxwaGEg44Go5pSv6YWN44Os44OZ44Or44KS5Y+W5b6X44GZ44KLIgogICAgICAgIGM0Wm9vbS5jb3JlLmNhbnZhc1JlbmRlcmVyIC0+IGM0Wm9vbS5jb3JlLmVkZ2VSb2xsdXAgIuWPr+imlumajuWxpOOBuOmbhue0hOa4iOOBv+OBriBEaXNwbGF5RWRnZSDnvqTjgpLlj5blvpfjgZnjgosiCiAgICAgICAgYzRab29tLmNvcmUuY2FudmFzUmVuZGVyZXIgLT4gYzRab29tLmNvcmUuaGl0VGVzdGVyICLjg5Pjg6Xjg7zjg53jg7zjg4jjgqvjg6rjg7PjgrDmuIjjgb/lj6/oppbpm4blkIjjgpLlj4LnhafjgZnjgosiCiAgICAgICAgYzRab29tLmNvcmUuZWRnZVJvbGx1cCAtPiBjNFpvb20uY29yZS5sb2RFdmFsdWF0b3IgIuWxlemWi+eKtuaFi+OCkuWPgueFp+OBl+OBpuacieWKueOCouODs+OCq+ODvOOCkuaxuuWumuOBmeOCiyIKICAgICAgICBjNFpvb20uY29yZS5oaXRUZXN0ZXIgLT4gYzRab29tLmNvcmUubG9kRXZhbHVhdG9yICLlsZXplovnirbmhYvjgavlv5zjgZjjgZ/mnIDmt7Hjg5Ljg4Pjg4jopoHntKDjgpLliKTlrprjgZnjgosiCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbUNvbnRleHQgYzRab29tICJTeXN0ZW1Db250ZXh0IiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0CiAgICAgICAgfQoKICAgICAgICBjb250YWluZXIgYzRab29tICJDb250YWluZXJzIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0CiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgYzRab29tLmNvcmUgIkNvcmVDb21wb25lbnRzIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0CiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgYzRab29tLnZpZXdlciAiVmlld2VyQ29tcG9uZW50cyIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IGM0Wm9vbS5jbGkgIkNsaUNvbXBvbmVudHMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CiAgICB9Cn0=",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "8",
+      "elements" : [ {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "30",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "CoreComponents",
+      "name" : "Component View: c4-zoom - Core Map Engine (@c4-zoom/core)",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "106"
+      }, {
+        "id" : "108"
+      }, {
+        "id" : "110"
+      }, {
+        "id" : "111"
+      }, {
+        "id" : "112"
+      }, {
+        "id" : "113"
+      }, {
+        "id" : "114"
+      }, {
+        "id" : "115"
+      }, {
+        "id" : "116"
+      }, {
+        "id" : "117"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "73"
+      }, {
+        "id" : "75"
+      }, {
+        "id" : "79"
+      }, {
+        "id" : "84"
+      }, {
+        "id" : "87"
+      }, {
+        "id" : "92"
+      }, {
+        "id" : "94"
+      }, {
+        "id" : "97"
+      } ]
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "19",
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "29",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "ViewerComponents",
+      "name" : "Component View: c4-zoom - Interactive Map Viewer (@c4-zoom/viewer)",
+      "order" : 4,
+      "relationships" : [ {
+        "id" : "100"
+      }, {
+        "id" : "101"
+      }, {
+        "id" : "102"
+      }, {
+        "id" : "103"
+      }, {
+        "id" : "105"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "45"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "48"
+      }, {
+        "id" : "49"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "55"
+      }, {
+        "id" : "57"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "81"
+      }, {
+        "id" : "83"
+      }, {
+        "id" : "88"
+      }, {
+        "id" : "89"
+      }, {
+        "id" : "91"
+      }, {
+        "id" : "96"
+      }, {
+        "id" : "98"
+      }, {
+        "id" : "99"
+      } ]
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "30",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "31",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "32",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "34",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "CliComponents",
+      "name" : "Component View: c4-zoom - Standalone HTML CLI (@c4-zoom/cli)",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "38"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "64"
+      }, {
+        "id" : "67"
+      }, {
+        "id" : "70"
+      }, {
+        "id" : "72"
+      }, {
+        "id" : "76"
+      }, {
+        "id" : "78"
+      }, {
+        "id" : "80"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "30",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "Containers",
+      "name" : "Container View: c4-zoom",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "39"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "46"
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "65"
+      }, {
+        "id" : "69"
+      }, {
+        "id" : "85"
+      } ],
+      "softwareSystemId" : "7"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "SystemContext",
+      "name" : "System Context View: c4-zoom",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "40"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "54"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "62"
+      } ],
+      "softwareSystemId" : "7"
+    } ]
+  }
+}

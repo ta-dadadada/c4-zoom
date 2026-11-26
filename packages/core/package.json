@@ -1,0 +1,30 @@
+{
+  "name": "@c4-zoom/core",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./json": {
+      "types": "./src/json/index.ts",
+      "c4-zoom-source": "./src/json/index.ts",
+      "default": "./dist/json/index.js"
+    },
+    "./export": {
+      "types": "./src/export/index.ts",
+      "c4-zoom-source": "./src/export/index.ts",
+      "default": "./dist/export/index.js"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "c4-zoom-source": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "elkjs": "catalog:"
+  }
+}

@@ -1,0 +1,1056 @@
+{
+  "configuration" : { },
+  "description" : "双方向通信・長い依存チェーン・高密度ロールアップと上流/下流トレースを検証するためのサンプル",
+  "documentation" : { },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "口座照会・即時振込を行う個人顧客",
+      "id" : "1",
+      "name" : "Retail Customer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "retailUser"
+      },
+      "relationships" : [ {
+        "description" : "残高照会・振込操作",
+        "destinationId" : "6",
+        "id" : "21",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "残高照会・振込操作",
+        "destinationId" : "5",
+        "id" : "22",
+        "linkedRelationshipId" : "21",
+        "sourceId" : "1",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,External"
+    }, {
+      "description" : "不正検知アラートを審査する担当者",
+      "id" : "2",
+      "name" : "Compliance Officer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "complianceOfficer"
+      },
+      "relationships" : [ {
+        "description" : "アラート審査・解除操作",
+        "destinationId" : "19",
+        "id" : "74",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "アラート審査・解除操作",
+        "destinationId" : "15",
+        "id" : "75",
+        "linkedRelationshipId" : "74",
+        "sourceId" : "2",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person,Internal"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "他行振込を精算する外部決済ネットワーク",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "Interbank Clearing",
+      "properties" : {
+        "structurizr.dsl.identifier" : "clearingNetwork"
+      },
+      "relationships" : [ {
+        "description" : "精算完了コールバック",
+        "destinationId" : "12",
+        "id" : "37",
+        "sourceId" : "3",
+        "tags" : "Relationship",
+        "technology" : "Webhook / TLS"
+      }, {
+        "description" : "精算完了コールバック",
+        "destinationId" : "9",
+        "id" : "38",
+        "linkedRelationshipId" : "37",
+        "sourceId" : "3",
+        "technology" : "Webhook / TLS"
+      }, {
+        "description" : "精算完了コールバック",
+        "destinationId" : "8",
+        "id" : "39",
+        "linkedRelationshipId" : "37",
+        "sourceId" : "3",
+        "technology" : "Webhook / TLS"
+      } ],
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "本人確認・反社チェックを提供する外部API",
+      "documentation" : { },
+      "id" : "4",
+      "name" : "eKYC Provider",
+      "properties" : {
+        "structurizr.dsl.identifier" : "kycProvider"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "containers" : [ {
+        "description" : "生体認証対応バンキングアプリ",
+        "documentation" : { },
+        "id" : "6",
+        "name" : "Mobile Banking App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "channels.mobileBanking"
+        },
+        "relationships" : [ {
+          "description" : "API通信",
+          "destinationId" : "7",
+          "id" : "23",
+          "sourceId" : "6",
+          "tags" : "Relationship",
+          "technology" : "HTTPS / JSON"
+        } ],
+        "tags" : "Element,Container,Mobile App",
+        "technology" : "Swift / Kotlin"
+      }, {
+        "description" : "画面向け集約APIとセッション管理",
+        "documentation" : { },
+        "id" : "7",
+        "name" : "Channel BFF",
+        "properties" : {
+          "structurizr.dsl.identifier" : "channels.bff"
+        },
+        "relationships" : [ {
+          "description" : "振込依頼・照会",
+          "destinationId" : "10",
+          "id" : "24",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "gRPC"
+        }, {
+          "description" : "振込依頼・照会",
+          "destinationId" : "9",
+          "id" : "25",
+          "linkedRelationshipId" : "24",
+          "sourceId" : "7",
+          "technology" : "gRPC"
+        }, {
+          "description" : "振込依頼・照会",
+          "destinationId" : "8",
+          "id" : "26",
+          "linkedRelationshipId" : "24",
+          "sourceId" : "7",
+          "technology" : "gRPC"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "TypeScript / Fastify"
+      } ],
+      "description" : "顧客向けチャネル群",
+      "documentation" : { },
+      "id" : "5",
+      "name" : "Digital Channels",
+      "properties" : {
+        "structurizr.dsl.identifier" : "channels"
+      },
+      "relationships" : [ {
+        "description" : "振込依頼・照会",
+        "destinationId" : "10",
+        "id" : "27",
+        "linkedRelationshipId" : "24",
+        "sourceId" : "5",
+        "technology" : "gRPC"
+      }, {
+        "description" : "振込依頼・照会",
+        "destinationId" : "9",
+        "id" : "28",
+        "linkedRelationshipId" : "24",
+        "sourceId" : "5",
+        "technology" : "gRPC"
+      }, {
+        "description" : "振込依頼・照会",
+        "destinationId" : "8",
+        "id" : "29",
+        "linkedRelationshipId" : "24",
+        "sourceId" : "5",
+        "technology" : "gRPC"
+      } ],
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "components" : [ {
+          "description" : "振込API受付・冪等キー管理",
+          "documentation" : { },
+          "id" : "10",
+          "name" : "Transfer Endpoint",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ledger.transferApi.transferEndpoint"
+          },
+          "relationships" : [ {
+            "description" : "残高チェック依頼",
+            "destinationId" : "11",
+            "id" : "30",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          }, {
+            "description" : "他行送金実行",
+            "destinationId" : "12",
+            "id" : "33",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          }, {
+            "description" : "TransactionPosted 発行",
+            "destinationId" : "14",
+            "id" : "40",
+            "sourceId" : "10",
+            "tags" : "Relationship",
+            "technology" : "Kafka"
+          }, {
+            "description" : "同期リスク判定依頼",
+            "destinationId" : "17",
+            "id" : "42",
+            "sourceId" : "10",
+            "tags" : "Relationship",
+            "technology" : "gRPC"
+          }, {
+            "description" : "同期リスク判定依頼",
+            "destinationId" : "16",
+            "id" : "43",
+            "linkedRelationshipId" : "42",
+            "sourceId" : "10",
+            "technology" : "gRPC"
+          }, {
+            "description" : "同期リスク判定依頼",
+            "destinationId" : "15",
+            "id" : "44",
+            "linkedRelationshipId" : "42",
+            "sourceId" : "10",
+            "technology" : "gRPC"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Java"
+        }, {
+          "description" : "残高検証と二重引落防止ロック",
+          "documentation" : { },
+          "id" : "11",
+          "name" : "Balance Guard",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ledger.transferApi.balanceGuard"
+          },
+          "relationships" : [ {
+            "description" : "残高参照・仮引落",
+            "destinationId" : "13",
+            "id" : "31",
+            "sourceId" : "11",
+            "tags" : "Relationship",
+            "technology" : "SQL"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Java"
+        }, {
+          "description" : "他行決済ネットワーク送受信",
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Clearing Adapter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ledger.transferApi.clearingAdapter"
+          },
+          "relationships" : [ {
+            "description" : "振込電文送信",
+            "destinationId" : "3",
+            "id" : "34",
+            "sourceId" : "12",
+            "tags" : "Relationship",
+            "technology" : "ISO 20022 / TLS"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Java"
+        } ],
+        "description" : "振込オーケストレーション",
+        "documentation" : { },
+        "id" : "9",
+        "name" : "Transfer Engine",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ledger.transferApi"
+        },
+        "relationships" : [ {
+          "description" : "残高参照・仮引落",
+          "destinationId" : "13",
+          "id" : "32",
+          "linkedRelationshipId" : "31",
+          "sourceId" : "9",
+          "technology" : "SQL"
+        }, {
+          "description" : "振込電文送信",
+          "destinationId" : "3",
+          "id" : "35",
+          "linkedRelationshipId" : "34",
+          "sourceId" : "9",
+          "technology" : "ISO 20022 / TLS"
+        }, {
+          "description" : "TransactionPosted 発行",
+          "destinationId" : "14",
+          "id" : "41",
+          "linkedRelationshipId" : "40",
+          "sourceId" : "9",
+          "technology" : "Kafka"
+        }, {
+          "description" : "同期リスク判定依頼",
+          "destinationId" : "17",
+          "id" : "45",
+          "linkedRelationshipId" : "42",
+          "sourceId" : "9",
+          "technology" : "gRPC"
+        }, {
+          "description" : "同期リスク判定依頼",
+          "destinationId" : "16",
+          "id" : "46",
+          "linkedRelationshipId" : "42",
+          "sourceId" : "9",
+          "technology" : "gRPC"
+        }, {
+          "description" : "同期リスク判定依頼",
+          "destinationId" : "15",
+          "id" : "47",
+          "linkedRelationshipId" : "42",
+          "sourceId" : "9",
+          "technology" : "gRPC"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Java / Spring Boot"
+      }, {
+        "description" : "複式簿記の追記専用トランザクションDB",
+        "documentation" : { },
+        "id" : "13",
+        "name" : "Ledger Store",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ledger.ledgerDb"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "CockroachDB"
+      }, {
+        "description" : "取引イベントストリーム",
+        "documentation" : { },
+        "id" : "14",
+        "name" : "Transaction Stream",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ledger.txStream"
+        },
+        "relationships" : [ {
+          "description" : "行動特徴量をリアルタイム更新",
+          "destinationId" : "20",
+          "id" : "63",
+          "sourceId" : "14",
+          "tags" : "Relationship",
+          "technology" : "Kafka Connect"
+        }, {
+          "description" : "行動特徴量をリアルタイム更新",
+          "destinationId" : "15",
+          "id" : "64",
+          "linkedRelationshipId" : "63",
+          "sourceId" : "14",
+          "technology" : "Kafka Connect"
+        }, {
+          "description" : "異常取引パターン検知",
+          "destinationId" : "19",
+          "id" : "66",
+          "sourceId" : "14",
+          "tags" : "Relationship",
+          "technology" : "Kafka"
+        } ],
+        "tags" : "Element,Container,Queue",
+        "technology" : "Apache Kafka"
+      } ],
+      "description" : "勘定系元帳・振込実行システム",
+      "documentation" : { },
+      "id" : "8",
+      "name" : "Core Ledger",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ledger"
+      },
+      "relationships" : [ {
+        "description" : "振込電文送信",
+        "destinationId" : "3",
+        "id" : "36",
+        "linkedRelationshipId" : "34",
+        "sourceId" : "8",
+        "technology" : "ISO 20022 / TLS"
+      }, {
+        "description" : "同期リスク判定依頼",
+        "destinationId" : "17",
+        "id" : "48",
+        "linkedRelationshipId" : "42",
+        "sourceId" : "8",
+        "technology" : "gRPC"
+      }, {
+        "description" : "同期リスク判定依頼",
+        "destinationId" : "16",
+        "id" : "49",
+        "linkedRelationshipId" : "42",
+        "sourceId" : "8",
+        "technology" : "gRPC"
+      }, {
+        "description" : "同期リスク判定依頼",
+        "destinationId" : "15",
+        "id" : "50",
+        "linkedRelationshipId" : "42",
+        "sourceId" : "8",
+        "technology" : "gRPC"
+      }, {
+        "description" : "行動特徴量をリアルタイム更新",
+        "destinationId" : "20",
+        "id" : "65",
+        "linkedRelationshipId" : "63",
+        "sourceId" : "8",
+        "technology" : "Kafka Connect"
+      }, {
+        "description" : "異常取引パターン検知",
+        "destinationId" : "19",
+        "id" : "67",
+        "linkedRelationshipId" : "66",
+        "sourceId" : "8",
+        "technology" : "Kafka"
+      } ],
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "components" : [ {
+          "description" : "直近行動特徴量の取得",
+          "documentation" : { },
+          "id" : "17",
+          "name" : "Feature Fetcher",
+          "properties" : {
+            "structurizr.dsl.identifier" : "risk.scoringApi.featureFetcher"
+          },
+          "relationships" : [ {
+            "description" : "特徴量取得",
+            "destinationId" : "20",
+            "id" : "51",
+            "sourceId" : "17",
+            "tags" : "Relationship",
+            "technology" : "Redis Protocol"
+          }, {
+            "description" : "スコア推論",
+            "destinationId" : "18",
+            "id" : "53",
+            "sourceId" : "17",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "不正確率モデル推論",
+          "documentation" : { },
+          "id" : "18",
+          "name" : "ML Scorer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "risk.scoringApi.mlScorer"
+          },
+          "relationships" : [ {
+            "description" : "スコア結果・拒否判定返却",
+            "destinationId" : "10",
+            "id" : "54",
+            "sourceId" : "18",
+            "tags" : "Relationship",
+            "technology" : "gRPC"
+          }, {
+            "description" : "スコア結果・拒否判定返却",
+            "destinationId" : "9",
+            "id" : "55",
+            "linkedRelationshipId" : "54",
+            "sourceId" : "18",
+            "technology" : "gRPC"
+          }, {
+            "description" : "スコア結果・拒否判定返却",
+            "destinationId" : "8",
+            "id" : "56",
+            "linkedRelationshipId" : "54",
+            "sourceId" : "18",
+            "technology" : "gRPC"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Python / ONNX"
+        } ],
+        "description" : "振込実行前の同期リスクスコアリング",
+        "documentation" : { },
+        "id" : "16",
+        "name" : "Risk Scoring API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "risk.scoringApi"
+        },
+        "relationships" : [ {
+          "description" : "特徴量取得",
+          "destinationId" : "20",
+          "id" : "52",
+          "linkedRelationshipId" : "51",
+          "sourceId" : "16",
+          "technology" : "Redis Protocol"
+        }, {
+          "description" : "スコア結果・拒否判定返却",
+          "destinationId" : "10",
+          "id" : "57",
+          "linkedRelationshipId" : "54",
+          "sourceId" : "16",
+          "technology" : "gRPC"
+        }, {
+          "description" : "スコア結果・拒否判定返却",
+          "destinationId" : "9",
+          "id" : "58",
+          "linkedRelationshipId" : "54",
+          "sourceId" : "16",
+          "technology" : "gRPC"
+        }, {
+          "description" : "スコア結果・拒否判定返却",
+          "destinationId" : "8",
+          "id" : "59",
+          "linkedRelationshipId" : "54",
+          "sourceId" : "16",
+          "technology" : "gRPC"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Python / FastAPI"
+      }, {
+        "description" : "高リスク取引のアラート管理・凍結解除",
+        "documentation" : { },
+        "id" : "19",
+        "name" : "Alert Review Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "risk.alertService"
+        },
+        "relationships" : [ {
+          "description" : "追加KYC照会",
+          "destinationId" : "4",
+          "id" : "68",
+          "sourceId" : "19",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "不正口座の一時凍結指示",
+          "destinationId" : "11",
+          "id" : "70",
+          "sourceId" : "19",
+          "tags" : "Relationship",
+          "technology" : "gRPC"
+        }, {
+          "description" : "不正口座の一時凍結指示",
+          "destinationId" : "9",
+          "id" : "71",
+          "linkedRelationshipId" : "70",
+          "sourceId" : "19",
+          "technology" : "gRPC"
+        }, {
+          "description" : "不正口座の一時凍結指示",
+          "destinationId" : "8",
+          "id" : "72",
+          "linkedRelationshipId" : "70",
+          "sourceId" : "19",
+          "technology" : "gRPC"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Go"
+      }, {
+        "description" : "低遅延特徴量キャッシュ",
+        "documentation" : { },
+        "id" : "20",
+        "name" : "Feature Store",
+        "properties" : {
+          "structurizr.dsl.identifier" : "risk.featureStore"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "Redis"
+      } ],
+      "description" : "リアルタイム不正検知・審査システム",
+      "documentation" : { },
+      "id" : "15",
+      "name" : "Fraud & Risk System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "risk"
+      },
+      "relationships" : [ {
+        "description" : "スコア結果・拒否判定返却",
+        "destinationId" : "10",
+        "id" : "60",
+        "linkedRelationshipId" : "54",
+        "sourceId" : "15",
+        "technology" : "gRPC"
+      }, {
+        "description" : "スコア結果・拒否判定返却",
+        "destinationId" : "9",
+        "id" : "61",
+        "linkedRelationshipId" : "54",
+        "sourceId" : "15",
+        "technology" : "gRPC"
+      }, {
+        "description" : "スコア結果・拒否判定返却",
+        "destinationId" : "8",
+        "id" : "62",
+        "linkedRelationshipId" : "54",
+        "sourceId" : "15",
+        "technology" : "gRPC"
+      }, {
+        "description" : "追加KYC照会",
+        "destinationId" : "4",
+        "id" : "69",
+        "linkedRelationshipId" : "68",
+        "sourceId" : "15",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "不正口座の一時凍結指示",
+        "destinationId" : "11",
+        "id" : "73",
+        "linkedRelationshipId" : "70",
+        "sourceId" : "15",
+        "technology" : "gRPC"
+      } ],
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "NovaBank Event Mesh",
+  "properties" : {
+    "structurizr.inspection.error" : "32",
+    "structurizr.dsl" : "d29ya3NwYWNlICJOb3ZhQmFuayBFdmVudCBNZXNoIiAi5Y+M5pa55ZCR6YCa5L+h44O76ZW344GE5L6d5a2Y44OB44Kn44O844Oz44O76auY5a+G5bqm44Ot44O844Or44Ki44OD44OX44Go5LiK5rWBL+S4i+a1geODiOODrOODvOOCueOCkuaknOiovOOBmeOCi+OBn+OCgeOBruOCteODs+ODl+ODqyIgewoKICAgICFpZGVudGlmaWVycyBoaWVyYXJjaGljYWwKCiAgICBtb2RlbCB7CiAgICAgICAgcmV0YWlsVXNlciA9IHBlcnNvbiAiUmV0YWlsIEN1c3RvbWVyIiAi5Y+j5bqn54Wn5Lya44O75Y2z5pmC5oyv6L6844KS6KGM44GG5YCL5Lq66aGn5a6iIiAiRXh0ZXJuYWwiCiAgICAgICAgY29tcGxpYW5jZU9mZmljZXIgPSBwZXJzb24gIkNvbXBsaWFuY2UgT2ZmaWNlciIgIuS4jeato+aknOefpeOCouODqeODvOODiOOCkuWvqeafu+OBmeOCi+aLheW9k+iAhSIgIkludGVybmFsIgoKICAgICAgICBjbGVhcmluZ05ldHdvcmsgPSBzb2Z0d2FyZVN5c3RlbSAiSW50ZXJiYW5rIENsZWFyaW5nIiAi5LuW6KGM5oyv6L6844KS57K+566X44GZ44KL5aSW6YOo5rG65riI44ON44OD44OI44Ov44O844KvIiAiRXh0ZXJuYWwiCiAgICAgICAga3ljUHJvdmlkZXIgPSBzb2Z0d2FyZVN5c3RlbSAiZUtZQyBQcm92aWRlciIgIuacrOS6uueiuuiqjeODu+WPjeekvuODgeOCp+ODg+OCr+OCkuaPkOS+m+OBmeOCi+WklumDqEFQSSIgIkV4dGVybmFsIgoKICAgICAgICBjaGFubmVscyA9IHNvZnR3YXJlU3lzdGVtICJEaWdpdGFsIENoYW5uZWxzIiAi6aGn5a6i5ZCR44GR44OB44Oj44ON44Or576kIiB7CiAgICAgICAgICAgIG1vYmlsZUJhbmtpbmcgPSBjb250YWluZXIgIk1vYmlsZSBCYW5raW5nIEFwcCIgIueUn+S9k+iqjeiovOWvvuW/nOODkOODs+OCreODs+OCsOOCouODl+ODqiIgIlN3aWZ0IC8gS290bGluIiAiTW9iaWxlIEFwcCIKICAgICAgICAgICAgYmZmID0gY29udGFpbmVyICJDaGFubmVsIEJGRiIgIueUu+mdouWQkeOBkembhue0hEFQSeOBqOOCu+ODg+OCt+ODp+ODs+euoeeQhiIgIlR5cGVTY3JpcHQgLyBGYXN0aWZ5IgogICAgICAgIH0KCiAgICAgICAgbGVkZ2VyID0gc29mdHdhcmVTeXN0ZW0gIkNvcmUgTGVkZ2VyIiAi5YuY5a6a57O75YWD5biz44O75oyv6L685a6f6KGM44K344K544OG44OgIiB7CiAgICAgICAgICAgIHRyYW5zZmVyQXBpID0gY29udGFpbmVyICJUcmFuc2ZlciBFbmdpbmUiICLmjK/ovrzjgqrjg7zjgrHjgrnjg4jjg6zjg7zjgrfjg6fjg7MiICJKYXZhIC8gU3ByaW5nIEJvb3QiIHsKICAgICAgICAgICAgICAgIHRyYW5zZmVyRW5kcG9pbnQgPSBjb21wb25lbnQgIlRyYW5zZmVyIEVuZHBvaW50IiAi5oyv6L68QVBJ5Y+X5LuY44O75Yaq562J44Kt44O8566h55CGIiAiSmF2YSIKICAgICAgICAgICAgICAgIGJhbGFuY2VHdWFyZCA9IGNvbXBvbmVudCAiQmFsYW5jZSBHdWFyZCIgIuaui+mrmOaknOiovOOBqOS6jOmHjeW8leiQvemYsuatouODreODg+OCryIgIkphdmEiCiAgICAgICAgICAgICAgICBjbGVhcmluZ0FkYXB0ZXIgPSBjb21wb25lbnQgIkNsZWFyaW5nIEFkYXB0ZXIiICLku5booYzmsbrmuIjjg43jg4Pjg4jjg6/jg7zjgq/pgIHlj5fkv6EiICJKYXZhIgogICAgICAgICAgICB9CiAgICAgICAgICAgIGxlZGdlckRiID0gY29udGFpbmVyICJMZWRnZXIgU3RvcmUiICLopIflvI/nsL/oqJjjga7ov73oqJjlsILnlKjjg4jjg6njg7Pjgrbjgq/jgrfjg6fjg7NEQiIgIkNvY2tyb2FjaERCIiAiRGF0YWJhc2UiCiAgICAgICAgICAgIHR4U3RyZWFtID0gY29udGFpbmVyICJUcmFuc2FjdGlvbiBTdHJlYW0iICLlj5blvJXjgqTjg5njg7Pjg4jjgrnjg4jjg6rjg7zjg6AiICJBcGFjaGUgS2Fma2EiICJRdWV1ZSIKICAgICAgICB9CgogICAgICAgIHJpc2sgPSBzb2Z0d2FyZVN5c3RlbSAiRnJhdWQgJiBSaXNrIFN5c3RlbSIgIuODquOCouODq+OCv+OCpOODoOS4jeato+aknOefpeODu+Wvqeafu+OCt+OCueODhuODoCIgewogICAgICAgICAgICBzY29yaW5nQXBpID0gY29udGFpbmVyICJSaXNrIFNjb3JpbmcgQVBJIiAi5oyv6L685a6f6KGM5YmN44Gu5ZCM5pyf44Oq44K544Kv44K544Kz44Ki44Oq44Oz44KwIiAiUHl0aG9uIC8gRmFzdEFQSSIgewogICAgICAgICAgICAgICAgZmVhdHVyZUZldGNoZXIgPSBjb21wb25lbnQgIkZlYXR1cmUgRmV0Y2hlciIgIuebtOi/keihjOWLleeJueW+tOmHj+OBruWPluW+lyIgIlB5dGhvbiIKICAgICAgICAgICAgICAgIG1sU2NvcmVyID0gY29tcG9uZW50ICJNTCBTY29yZXIiICLkuI3mraPnorrnjofjg6Ljg4fjg6vmjqjoq5YiICJQeXRob24gLyBPTk5YIgogICAgICAgICAgICB9CiAgICAgICAgICAgIGFsZXJ0U2VydmljZSA9IGNvbnRhaW5lciAiQWxlcnQgUmV2aWV3IFNlcnZpY2UiICLpq5jjg6rjgrnjgq/lj5blvJXjga7jgqLjg6njg7zjg4jnrqHnkIbjg7vlh43ntZDop6PpmaQiICJHbyIKICAgICAgICAgICAgZmVhdHVyZVN0b3JlID0gY29udGFpbmVyICJGZWF0dXJlIFN0b3JlIiAi5L2O6YGF5bu254m55b606YeP44Kt44Oj44OD44K344OlIiAiUmVkaXMiICJEYXRhYmFzZSIKICAgICAgICB9CgogICAgICAgIC8vIOODgeODo+ODjeODqyAtPiDli5jlrprns7sKICAgICAgICByZXRhaWxVc2VyIC0+IGNoYW5uZWxzLm1vYmlsZUJhbmtpbmcgIuaui+mrmOeFp+S8muODu+aMr+i+vOaTjeS9nCIgIkhUVFBTIgogICAgICAgIGNoYW5uZWxzLm1vYmlsZUJhbmtpbmcgLT4gY2hhbm5lbHMuYmZmICJBUEnpgJrkv6EiICJIVFRQUyAvIEpTT04iCiAgICAgICAgY2hhbm5lbHMuYmZmIC0+IGxlZGdlci50cmFuc2ZlckFwaS50cmFuc2ZlckVuZHBvaW50ICLmjK/ovrzkvp3poLzjg7vnhafkvJoiICJnUlBDIgoKICAgICAgICAvLyDli5jlrprns7vlhoXpg6gKICAgICAgICBsZWRnZXIudHJhbnNmZXJBcGkudHJhbnNmZXJFbmRwb2ludCAtPiBsZWRnZXIudHJhbnNmZXJBcGkuYmFsYW5jZUd1YXJkICLmrovpq5jjg4Hjgqfjg4Pjgq/kvp3poLwiCiAgICAgICAgbGVkZ2VyLnRyYW5zZmVyQXBpLmJhbGFuY2VHdWFyZCAtPiBsZWRnZXIubGVkZ2VyRGIgIuaui+mrmOWPgueFp+ODu+S7ruW8leiQvSIgIlNRTCIKICAgICAgICBsZWRnZXIudHJhbnNmZXJBcGkudHJhbnNmZXJFbmRwb2ludCAtPiBsZWRnZXIudHJhbnNmZXJBcGkuY2xlYXJpbmdBZGFwdGVyICLku5booYzpgIHph5Hlrp/ooYwiCiAgICAgICAgbGVkZ2VyLnRyYW5zZmVyQXBpLmNsZWFyaW5nQWRhcHRlciAtPiBjbGVhcmluZ05ldHdvcmsgIuaMr+i+vOmbu+aWh+mAgeS/oSIgIklTTyAyMDAyMiAvIFRMUyIKICAgICAgICBjbGVhcmluZ05ldHdvcmsgLT4gbGVkZ2VyLnRyYW5zZmVyQXBpLmNsZWFyaW5nQWRhcHRlciAi57K+566X5a6M5LqG44Kz44O844Or44OQ44OD44KvIiAiV2ViaG9vayAvIFRMUyIKICAgICAgICBsZWRnZXIudHJhbnNmZXJBcGkudHJhbnNmZXJFbmRwb2ludCAtPiBsZWRnZXIudHhTdHJlYW0gIlRyYW5zYWN0aW9uUG9zdGVkIOeZuuihjCIgIkthZmthIgoKICAgICAgICAvLyDli5jlrprns7sgPC0+IOODquOCueOCr++8iOWPjOaWueWQkeOCqOODg+OCuOaknOiovOeUqO+8iQogICAgICAgIGxlZGdlci50cmFuc2ZlckFwaS50cmFuc2ZlckVuZHBvaW50IC0+IHJpc2suc2NvcmluZ0FwaS5mZWF0dXJlRmV0Y2hlciAi5ZCM5pyf44Oq44K544Kv5Yik5a6a5L6d6aC8IiAiZ1JQQyIKICAgICAgICByaXNrLnNjb3JpbmdBcGkuZmVhdHVyZUZldGNoZXIgLT4gcmlzay5mZWF0dXJlU3RvcmUgIueJueW+tOmHj+WPluW+lyIgIlJlZGlzIFByb3RvY29sIgogICAgICAgIHJpc2suc2NvcmluZ0FwaS5mZWF0dXJlRmV0Y2hlciAtPiByaXNrLnNjb3JpbmdBcGkubWxTY29yZXIgIuOCueOCs+OCouaOqOirliIKICAgICAgICByaXNrLnNjb3JpbmdBcGkubWxTY29yZXIgLT4gbGVkZ2VyLnRyYW5zZmVyQXBpLnRyYW5zZmVyRW5kcG9pbnQgIuOCueOCs+OCoue1kOaenOODu+aLkuWQpuWIpOWumui/lOWNtCIgImdSUEMiCgogICAgICAgIC8vIOmdnuWQjOacn+OCpOODmeODs+ODiCAtPiDjg6rjgrnjgq/nm6Poppbjg7vjgrPjg7Pjg5fjg6njgqTjgqLjg7PjgrkKICAgICAgICBsZWRnZXIudHhTdHJlYW0gLT4gcmlzay5mZWF0dXJlU3RvcmUgIuihjOWLleeJueW+tOmHj+OCkuODquOCouODq+OCv+OCpOODoOabtOaWsCIgIkthZmthIENvbm5lY3QiCiAgICAgICAgbGVkZ2VyLnR4U3RyZWFtIC0+IHJpc2suYWxlcnRTZXJ2aWNlICLnlbDluLjlj5blvJXjg5Hjgr/jg7zjg7PmpJznn6UiICJLYWZrYSIKICAgICAgICByaXNrLmFsZXJ0U2VydmljZSAtPiBreWNQcm92aWRlciAi6L+95YqgS1lD54Wn5LyaIiAiSFRUUFMiCiAgICAgICAgcmlzay5hbGVydFNlcnZpY2UgLT4gbGVkZ2VyLnRyYW5zZmVyQXBpLmJhbGFuY2VHdWFyZCAi5LiN5q2j5Y+j5bqn44Gu5LiA5pmC5YeN57WQ5oyH56S6IiAiZ1JQQyIKICAgICAgICBjb21wbGlhbmNlT2ZmaWNlciAtPiByaXNrLmFsZXJ0U2VydmljZSAi44Ki44Op44O844OI5a+p5p+744O76Kej6Zmk5pON5L2cIiAiSFRUUFMiCiAgICB9Cn0=",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "containerId" : "9",
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-001",
+      "name" : "Component View: Core Ledger - Transfer Engine",
+      "order" : 4,
+      "relationships" : [ {
+        "id" : "27"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      }, {
+        "id" : "33"
+      }, {
+        "id" : "34"
+      }, {
+        "id" : "37"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "64"
+      }, {
+        "id" : "73"
+      } ]
+    }, {
+      "containerId" : "16",
+      "elements" : [ {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-002",
+      "name" : "Component View: Fraud & Risk System - Risk Scoring API",
+      "order" : 9,
+      "relationships" : [ {
+        "id" : "48"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "65"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-001",
+      "name" : "Container View: Core Ledger",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "28"
+      }, {
+        "id" : "32"
+      }, {
+        "id" : "35"
+      }, {
+        "id" : "38"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "64"
+      } ],
+      "softwareSystemId" : "8"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-002",
+      "name" : "Container View: Digital Channels",
+      "order" : 6,
+      "relationships" : [ {
+        "id" : "21"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "26"
+      } ],
+      "softwareSystemId" : "5"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-003",
+      "name" : "Container View: Fraud & Risk System",
+      "order" : 8,
+      "relationships" : [ {
+        "id" : "49"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "65"
+      }, {
+        "id" : "67"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "72"
+      }, {
+        "id" : "74"
+      } ],
+      "softwareSystemId" : "15"
+    } ],
+    "systemContextViews" : [ {
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-001",
+      "name" : "System Context View: Core Ledger",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "29"
+      }, {
+        "id" : "36"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "62"
+      } ],
+      "softwareSystemId" : "8"
+    }, {
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-002",
+      "name" : "System Context View: Digital Channels",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "22"
+      }, {
+        "id" : "29"
+      } ],
+      "softwareSystemId" : "5"
+    }, {
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-003",
+      "name" : "System Context View: Fraud & Risk System",
+      "order" : 7,
+      "relationships" : [ {
+        "id" : "50"
+      }, {
+        "id" : "62"
+      }, {
+        "id" : "69"
+      }, {
+        "id" : "75"
+      } ],
+      "softwareSystemId" : "15"
+    }, {
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-004",
+      "name" : "System Context View: Interbank Clearing",
+      "order" : 10,
+      "relationships" : [ {
+        "id" : "36"
+      }, {
+        "id" : "39"
+      } ],
+      "softwareSystemId" : "3"
+    }, {
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-005",
+      "name" : "System Context View: eKYC Provider",
+      "order" : 11,
+      "relationships" : [ {
+        "id" : "69"
+      } ],
+      "softwareSystemId" : "4"
+    } ],
+    "systemLandscapeViews" : [ {
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemLandscape-001",
+      "name" : "System Landscape View",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "22"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "36"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "62"
+      }, {
+        "id" : "69"
+      }, {
+        "id" : "75"
+      } ]
+    } ]
+  }
+}

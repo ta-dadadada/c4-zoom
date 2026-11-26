@@ -7,3 +7,8 @@ playwright-report/
 test-results/
 # Playwright CLI output (may contain credentials)
 .playwright-cli/
+
+# pnpm のストアをワークスペース内に置く環境向け
+.pnpm-store/
+
+.DS_Store

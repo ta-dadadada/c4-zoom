@@ -1,0 +1,136 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : { },
+  "id" : 0,
+  "model" : {
+    "properties" : {
+      "structurizr.groupSeparator" : "/"
+    },
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "components" : [ {
+          "documentation" : { },
+          "group" : "a-api.jar/API Layer",
+          "id" : "3",
+          "name" : "API Endpoint",
+          "properties" : {
+            "structurizr.dsl.identifier" : "24f59a6b-5931-4336-b832-cd5e34d7ccce"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "group" : "a-api.jar/Data Layer",
+          "id" : "4",
+          "name" : "Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "af424621-5488-4d6b-bd3d-b9f7e136b013"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "documentation" : { },
+        "group" : "Capability 1/Service A",
+        "id" : "2",
+        "name" : "A API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "0938e356-5a4e-4780-b075-3ac58359e532"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "group" : "Capability 1/Service A",
+        "id" : "5",
+        "name" : "A Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "53e56dab-277b-4b85-bc8a-88518d1043b3"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "group" : "Capability 1/Service B",
+        "id" : "6",
+        "name" : "B API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "c5cecb30-d0c8-4655-83b8-ffa1d35a3ed8"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "group" : "Capability 1/Service B",
+        "id" : "7",
+        "name" : "B Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "a4d3e874-fd8e-43af-9450-af44d376be37"
+        },
+        "tags" : "Element,Container"
+      } ],
+      "documentation" : { },
+      "group" : "Organisation/Department A",
+      "id" : "1",
+      "name" : "A",
+      "properties" : {
+        "structurizr.dsl.identifier" : "a"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "documentation" : { },
+      "group" : "Organisation/Department B",
+      "id" : "8",
+      "name" : "B",
+      "properties" : {
+        "structurizr.dsl.identifier" : "b"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "documentation" : { },
+      "group" : "Organisation",
+      "id" : "9",
+      "name" : "C",
+      "properties" : {
+        "structurizr.dsl.identifier" : "c"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.inspection.error" : "34",
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKCiAgICBtb2RlbCB7CiAgICAgICAgcHJvcGVydGllcyB7CiAgICAgICAgICAgIHN0cnVjdHVyaXpyLmdyb3VwU2VwYXJhdG9yIC8KICAgICAgICB9CgogICAgICAgIGdyb3VwICJPcmdhbmlzYXRpb24iIHsKICAgICAgICAgICAgZ3JvdXAgIkRlcGFydG1lbnQgQSIgewogICAgICAgICAgICAgICAgYSA9IHNvZnR3YXJlU3lzdGVtICJBIiB7CiAgICAgICAgICAgICAgICAgICAgZ3JvdXAgIkNhcGFiaWxpdHkgMSIgewogICAgICAgICAgICAgICAgICAgICAgICBncm91cCAiU2VydmljZSBBIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb250YWluZXIgIkEgQVBJIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZ3JvdXAgImEtYXBpLmphciIgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb21wb25lbnQgIkFQSSBFbmRwb2ludCIgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZ3JvdXAgIkFQSSBMYXllciIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb21wb25lbnQgIlJlcG9zaXRvcnkiIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGdyb3VwICJEYXRhIExheWVyIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgY29udGFpbmVyICJBIERhdGFiYXNlIgogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgIGdyb3VwICJTZXJ2aWNlIEIiIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRhaW5lciAiQiBBUEkiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb250YWluZXIgIkIgRGF0YWJhc2UiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGdyb3VwICJEZXBhcnRtZW50IEIiIHsKICAgICAgICAgICAgICAgIGIgPSBzb2Z0d2FyZVN5c3RlbSAiQiIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgYyA9IHNvZnR3YXJlU3lzdGVtICJDIgogICAgICAgIH0KICAgIH0KCiAgICB2aWV3cyB7CiAgICAgICAgc3lzdGVtTGFuZHNjYXBlIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQKICAgICAgICB9CiAgICB9CiAgICAKfQ==",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "systemLandscapeViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemLandscape-001",
+      "name" : "System Landscape View",
+      "order" : 1
+    } ]
+  }
+}

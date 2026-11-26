@@ -9,7 +9,7 @@
 ### 1.1 目指す体験
 「システムアーキテクチャを、Google Maps や Apple Maps を眺めるように直感的に旅する体験」を実現します。
 
-- **Architecture as Code をそのまま地図へ**: 公式ツール（`structurizr-cli`）で変換した `workspace.json` を入力するだけで、`views` 定義に縛られず 1 枚の探索可能な地図が自動生成される。
+- **Architecture as Code をそのまま地図へ**: 公式 [Structurizr `export`](https://docs.structurizr.com/export) で変換した `workspace.json` を入力するだけで、`views` 定義に縛られず 1 枚の探索可能な地図が自動生成される。
 - **単一 HTML でそのまま配布**: サーバーや SaaS なしで、1 枚のスタンドアロン HTML として PR・Slack・社内ポータルへそのまま共有し、`file://` で開いて即座に探索できる。
 - **空間記憶（Spatial Memory）と瞬時ジャンプの両立**: 1 枚の連続空間に全階層を配置して横パン移動できる一方、C4 の L1 / L2 / L3 単位へ 1 クリック・1 キーでサッと飛べる。
 - **情報過多の解消**: 広域では抽象化されたランドマークと幹線だけを見せ、ズームインした場所だけ細部が立ち上がる **セマンティック・ズーム（LOD）** と **エッジの動的ロールアップ** により、大規模構成でもスパゲッティ化を防ぐ。
@@ -32,7 +32,7 @@
 ### 1.3 Non-Goals（あえてやらないこと）と背景
 現時点のプロダクト方針として、以下は意図的にスコープ外とします：
 
-- **自前 Structurizr DSL パーサーの実装・保守**: `!include`・`!extend`・`!script`・`!components` 等を含む公式仕様の完全追従は保守コストが大きいため、DSL パースは公式 `structurizr-cli` に委譲し、本アプリは公式 `workspace.json` のみに専念する（[ADR 0007](./adr/0007-parser-maintenance-boundary-and-workspace-json-option.md)）。
+- **自前 Structurizr DSL パーサーの実装・保守**: `!include`・`!extend`・`!script`・`!components` 等を含む公式仕様の完全追従は保守コストが大きいため、DSL パースは公式 Structurizr（`export -format json`）に委譲し、本アプリは公式 `workspace.json` のみに専念する（[ADR 0007](./adr/0007-parser-maintenance-boundary-and-workspace-json-option.md)）。
 - **アプリ内での DSL エディタ機能**: 構文ハイライトや編集体験の作り込みに工数が分散するのを避け、「地図として探索する体験」の完成度に集中するため。DSL の編集はユーザーが普段使う IDE／エディタで行う前提とする。
 - **GUI 作図エディタ（箱や線を直接描くツール）**: Architecture as Code（テキスト定義を Single Source of Truth とする）の利点を損なわないため。手動操作は「既存ノードの位置微調整」までに留める。
 - **サーバーサイド処理・外部 API へのモデル送信**: ブラウザ完結・オフライン単一 HTML 動作の手軽さと、社外秘になりやすいアーキテクチャ構成を外部へ送らないプライバシーを保つため。
@@ -290,7 +290,7 @@ MVP は明るく澄んだ **Cartography Light** をデフォルトとし、ト�
 
 ```mermaid
 flowchart LR
-    DSL["Structurizr DSL"] -->|"structurizr-cli export -f json"| JSON["workspace.json"]
+    DSL["Structurizr DSL"] -->|"Structurizr export -format json"| JSON["workspace.json"]
     JSON --> Adapter["@c4-zoom/core/json<br/>JSON Adapter"]
     Adapter -->|"C4Workspace + Diagnostics"| Layout["@c4-zoom/core/layout<br/>ELK.js + Offsets"]
     Layout -->|"PositionedGraph"| Export["@c4-zoom/core/export<br/>Bootstrap Serializer"]

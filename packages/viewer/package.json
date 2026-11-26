@@ -1,0 +1,31 @@
+{
+  "name": "@c4-zoom/viewer",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./viewer-template.html": "./dist/template/viewer-template.html"
+  },
+  "scripts": {
+    "dev": "pnpm build:template && vite",
+    "build": "pnpm build:template && pnpm build:site",
+    "build:template": "vite build --config vite.singlefile.config.ts",
+    "build:site": "vite build && cp dist/template/viewer-template.html dist/site/viewer-template.html",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@c4-zoom/core": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "tailwindcss": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-singlefile": "catalog:"
+  }
+}

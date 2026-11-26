@@ -1,15 +1,18 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const site = 'http://127.0.0.1:43791/c4-zoom/';
+
 export default defineConfig({
   testDir: './e2e',
   use: {
     ...devices['Desktop Chrome'],
     viewport: { width: 1440, height: 900 },
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: site,
   },
   webServer: {
-    command: 'pnpm dev --host 127.0.0.1 --port 4173 --strictPort',
-    url: 'http://127.0.0.1:4173',
-    reuseExistingServer: !process.env.CI,
+    command:
+      'pnpm build && pnpm preview --host 127.0.0.1 --port 43791 --strictPort --base /c4-zoom/',
+    url: site,
+    timeout: 120_000,
   },
 });

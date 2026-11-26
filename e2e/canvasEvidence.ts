@@ -1,5 +1,5 @@
 import { expect, type Page } from '@playwright/test';
-import type { Rect } from '../src/core/layout/types';
+import type { Rect } from '../packages/core/src/layout/types';
 
 interface Label {
   text: string;

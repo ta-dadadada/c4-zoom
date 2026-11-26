@@ -4,13 +4,14 @@ This document provides architectural context, conventions, and engineering rules
 
 ## 1. Project Overview
 
-**c4-zoom** is a C4 architecture map viewer and standalone single-HTML exporter powered by **official Structurizr `workspace.json`** (delegating DSL parsing to `structurizr-cli`). It renders the entire `System ⊃ Container ⊃ Component` hierarchy onto a single continuous 2D canvas with **semantic zoom (LOD)**, **C4 level quick-jump**, **dynamic edge rollup**, **hybrid layout (ELK.js + saved manual offsets)**, and a **modern cartography** visual style.
+**c4-zoom** is a C4 architecture map viewer and standalone single-HTML exporter powered by **official Structurizr `workspace.json`** (delegating DSL parsing to official Structurizr `export`). It renders the entire `System ⊃ Container ⊃ Component` hierarchy onto a single continuous 2D canvas with **semantic zoom (LOD)**, **C4 level quick-jump**, **dynamic edge rollup**, **hybrid layout (ELK.js + saved manual offsets)**, and a **modern cartography** visual style.
 
 Key reference documents:
 - `AGENTS.local.md` (optional, git-ignored): If present in the repo root, read and follow it for local-only rules and conventions.
+- `docs/development.md` (Japanese): Developer setup, validation commands, Git hooks, GitHub Pages build/deploy, and workspace package guide.
 - `docs/design.md` (Japanese): Detailed product, spatial zoom, level quick-jump, edge rollup, layout, rendering, single-HTML export, and security specification.
 - `docs/input-spec.md` (Japanese): Official Structurizr `workspace.json` input specification, group tree reconstruction, diagnostics, and security defenses.
-- `docs/architecture/workspace.dsl` (Structurizr DSL): Self-hosted C4 architecture model of c4-zoom itself (L1–L3; exported via `structurizr-cli` to `docs/architecture/workspace.json` and featured on the GitHub Pages sample site).
+- `docs/architecture/workspace.dsl` (Structurizr DSL): Self-hosted C4 architecture model of c4-zoom itself (L1–L3; exported via official Structurizr `export -format json` to `docs/architecture/workspace.json` and featured on the GitHub Pages sample site).
 - `docs/adr/` (Japanese, MADR): Architecture Decision Records (`0001`–`0009`) capturing architecturally significant technical/structural decisions only (1 ADR = 1 decision; product scope & Non-Goals live in `docs/design.md`).
 - `docs/test-samples.md` (Japanese): Catalog of bundled fixtures (`fixtures/json/` & `docs/architecture/workspace.json`), attribution/licenses, and verification checklists.
 - `SECURITY.md` (Japanese): Security posture and vulnerability disclosure policy.
@@ -42,7 +43,7 @@ packages/
 ├── viewer/                # @c4-zoom/viewer — React + Tailwind CSS v4 (SPA sample site + single-HTML template)
 │   └── src/
 │       ├── bootstrap.ts   # Reads #c4-zoom-bootstrap (standalone vs sample-site mode + precomputedLayout)
-│       ├── samples/       # Sample site registry (featuring c4-zoom self model first)
+│       ├── samples/       # Sample site registry (CloudShop default + official & c4-zoom self models)
 │       ├── state/         # React Context + useReducer + Ref bridge + layout runner + persistence
 │       └── ui/            # MapCanvas, SearchBar, Breadcrumbs, ZoomControls(+LevelJumper), Minimap, Inspector, SourceControls(+Export HTML)
 └── cli/                   # @c4-zoom/cli — Node.js CLI (bin: c4-zoom)
@@ -65,7 +66,7 @@ Note: **Custom Structurizr DSL parsing and in-app DSL editing are explicitly out
 
 ## 4. Toolchain, Coding & Testing Guidelines
 
-- **Toolchain**: `mise`, `pnpm` workspace (`catalog:`), TypeScript (`strict: true`, `noUncheckedIndexedAccess: true`), Vite, Tailwind CSS v4 (`@tailwindcss/vite`), `vite-plugin-singlefile`, `oxlint`, `oxfmt`, `lefthook`, `lint-staged`.
+- **Toolchain**: `pnpm` workspace (`catalog:`), TypeScript (`strict: true`, `noUncheckedIndexedAccess: true`), Vite, Tailwind CSS v4 (`@tailwindcss/vite`), `vite-plugin-singlefile`, `oxlint`, `oxfmt`, `lefthook`, `lint-staged`.
 - **State Management**: React Context + `useReducer` + `Ref` (no external state management libraries). Keep high-frequency canvas state in mutable refs to avoid React re-renders during pan/zoom.
 - **TypeScript**: Avoid `any`. Prefer explicit domain types.
 - **Unit Tests (Vitest)**: Required for all pure core modules & CLI:

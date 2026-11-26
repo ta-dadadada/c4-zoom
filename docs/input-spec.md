@@ -1,24 +1,23 @@
 # Structurizr 公式 `workspace.json` 入力仕様 (`docs/input-spec.md`)
 
-**c4-zoom** は、DSL の構文解析を公式ツール（`structurizr-cli` 等）に委譲し、公式ツールが出力する **Structurizr `workspace.json`** を唯一の入力契約とします（[ADR 0007](./adr/0007-parser-maintenance-boundary-and-workspace-json-option.md)）。
+**c4-zoom** は、DSL の構文解析を公式ツール（[Structurizr `export` コマンド](https://docs.structurizr.com/export)）に委譲し、公式ツールが出力する **Structurizr `workspace.json`** を唯一の入力契約とします（[ADR 0007](./adr/0007-parser-maintenance-boundary-and-workspace-json-option.md)）。
 
 ---
 
 ## 1. 標準ワークフロー（DSL → JSON → 地図 / 単一 HTML）
 
-```sh
-# 1. 公式 Structurizr CLI で .dsl を workspace.json へ変換
-structurizr-cli export -workspace workspace.dsl -format json -output ./out
+旧 `structurizr/cli` は EOL となり、現行公式は統合ツール `structurizr/structurizr` の `export` コマンド（Docker または Java 21+）へ移行しています。
 
-# Docker を使う場合
-docker run --rm -v "$PWD:/usr/local/structurizr" structurizr/cli \
+```sh
+# 1. 公式 Structurizr の export コマンドで .dsl を workspace.json へ変換（Docker の例）
+docker run --rm -v "$PWD:/usr/local/structurizr" structurizr/structurizr \
   export -workspace workspace.dsl -format json -output ./out
 
 # 2. c4-zoom CLI でスタンドアロン単一 HTML を生成
-c4-zoom build ./out/workspace.json -o ./architecture.html
+pnpm c4-zoom build ./out/workspace.json -o ./architecture.html
 ```
 
-※ サンプルサイト（GitHub Pages）やローカル開発サーバー上では、生成した `workspace.json` をそのままブラウザへドラッグ＆ドロップ（またはファイル選択）して探索できます。
+※ 公式の `export` コマンドは入力 DSL のベース名で JSON を出力します（例: `foo.dsl` → `foo.json`）。サンプルサイト（GitHub Pages）やローカル開発サーバー上では、生成した JSON をそのままブラウザへドラッグ＆ドロップ（またはファイル選択）して探索できます。
 
 ---
 

@@ -1,4 +1,20 @@
 pre-commit:
+  piped: true
   commands:
+    staged-safety:
+      priority: 1
+      run: node scripts/check-staged-safety.mjs
     lint-staged:
-      run: mise exec -- pnpm exec lint-staged
+      priority: 2
+      run: pnpm exec lint-staged
+    gitleaks:
+      priority: 3
+      run: |
+        if command -v gitleaks >/dev/null 2>&1; then
+          gitleaks protect --staged --redact --no-banner
+        fi
+
+pre-push:
+  commands:
+    verify:
+      run: pnpm typecheck && pnpm test && pnpm build
